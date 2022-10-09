@@ -5,6 +5,96 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
+		},
+		{
+			"path": "pages/cover/cover",
+			"style": {
+				// "navigationBarTitleText": "封面",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/register/login",
+			"style": {
+				// "navigationBarTitleText": "登录页面-邮箱",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/register/loginPhone",
+			"style": {
+				// "navigationBarTitleText": "登录页面-手机号",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/register/forget",
+			"style": {
+				// "navigationBarTitleText": "忘记密码",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/register/register",
+			"style": {
+				// "navigationBarTitleText": "注册页面",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/register/sex",
+			"style": {
+				// "navigationBarTitleText": "性别选择",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/register/age",
+			"style": {
+				// "navigationBarTitleText": "年龄",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/register/like",
+			"style": {
+				// "navigationBarTitleText": "选择喜好",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/user/user",
+			"style": {
+				// "navigationBarTitleText": "个人页面",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/user/wallet",
+			"style": {
+				// "navigationBarTitleText": "钱包",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
 		}
 	],
 	"globalStyle": {
