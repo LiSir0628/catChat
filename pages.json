@@ -95,6 +95,33 @@
 					"titleNView": false
 				}
 			}
+		},
+		{
+			"path": "pages/user/balance",
+			"style": {
+				// "navigationBarTitleText": "余额",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/user/invitation",
+			"style": {
+				// "navigationBarTitleText": "邀请详情",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/order/order",
+			"style": {
+				// "navigationBarTitleText": "订单",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
 		}
 	],
 	"globalStyle": {

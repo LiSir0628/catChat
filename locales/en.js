@@ -2,7 +2,7 @@ export const lang = {
 	"cover": {
 		"remind01": "Choose your friends at",
 		"remind02": "random",
-		"remind03": "Random choice of chat objects, select topics of interest, a powerful card flip function, improve your social skills",	
+		"remind03": "Random choice of chat objects, select topics of interest, a powerful card flip function, improve your social skills",
 		"remind04": "Perfect Mall system",
 		"remind05": "Built-in mall system in the mall to buy what you need to solve your problems",
 		"remind06": "Find your best friend",
@@ -56,26 +56,85 @@ export const lang = {
 		"level": "Membership level",
 		"not": "You're not a member yet",
 		"Go": "Go open",
-			
+
 		"wallet": "wallet",
 		"order": "order",
 		"browse": "browse",
 		"invitation": "invitation",
-		
+
 		"Menyedihkan": "Menyedihkan",
 		"Album": "Album",
 		"Video": "Video",
-		"Collection": "Collection",	
+		"Collection": "Collection",
 	},
-	"wallet":{
+	"wallet": {
 		"wallet": "wallet",
+		"coins": "My gold coins",
+		"fund": "Set off fund",
 		"exclusive": "My exclusive",
 		"money": "Gold coin",
 		"tips": "Available for amount deduction and consumption",
-		"range": "No threshold",
+		// "range": "No threshold",
+		"range": "",
 	},
-	
-	
+	"balance": {
+		"balance": "balance",
+		"recharge_title": "Recharge amount",
+		"withdrawal_title": "Withdrawal amount",
+		"quota": "quota",
+		"banking": "online banking",
+		"card": "Debit/credit card",
+		"recharge": "Recharge",
+		"withdrawal": "Withdrawal",
+	},
+	"pay": {
+		"confirm": "confirm"
+	},
+	"payAdd": {
+		"methid": "Payment methid",
+		"number": "Card number",
+		"expiration": "Expiration data (MM/YY)",
+		"code": "CVV/CVC",
+		"name": "Full name",
+		"continue": "Continue"
+	},
+	"payment": {
+		"payment": "payment",
+		"determine": "Determine",
+		
+		"balance_deduction": "Balance deduction",
+		"deductible_gold_coins": "Deductible gold coins",
+		"insufficient_amount": "Insufficient amount",
+	},
+	"invitation": {
+		"invitation": "invitation",
+		"detailed": "detailed",
+	},
+	"order": {
+		"order": "order",
+		"whole": "whole",
+		"paid": "To be paid",
+		"shipped": "To be shipped",
+		"received": "To be received",
+		"refund": "Refund",
+		"evaluate": "Evaluate",
+		"order_completion": "Order completion",
+		"transaction_closure": "Transaction closure",
+		
+		"price": "price",
+		"buy_again": "Buy again",
+		"to_evaluate": "To evaluate",
+		
+		"recommend": "recommend",
+		"points": "Points",
+		"sales": "sales",
+		
+		"payment": "Payment",
+		"logistics": "Logistics",
+		"determine": "Determine",
+		"cancel": "Cancel refund",
+		
+	},
 	"bottom": {
 		"Pair": "Pair",
 		"Shop": "Shop",

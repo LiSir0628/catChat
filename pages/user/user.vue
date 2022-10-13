@@ -305,7 +305,7 @@
 		align-items: center;
 		font-size: 34rpx;
 		line-height: 34rpx;
-		font-family: Inter-Bold, Inter;
+		font-family: Inter-Bold;
 		font-weight: bold;
 		color: #1A1D26;
 	}
@@ -319,7 +319,7 @@
 	.age {
 		font-size: 28rpx;
 		line-height: 28rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #333333;
 		margin: 16rpx 0 15rpx 0;
@@ -330,7 +330,7 @@
 		align-items: center;
 		font-size: 28rpx;
 		line-height: 28rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #6A6A6C;
 	}
@@ -398,21 +398,21 @@
 	
 	.level-text {
 		font-size: 34rpx;
-		font-family: Inter-Bold Italic, Inter;
+		font-family: Inter-Bold;
 		font-weight: normal;
 		color: #FFFFFF;
 	}
 	
 	.level-open{
 		font-size: 34rpx;
-		font-family: Inter-Semi Bold, Inter;
+		font-family: Inter-SemiBold;
 		font-weight: normal;
 		color: #FFFFFF;
 	}
 	
 	.level-num {
 		font-size: 80rpx;
-		font-family: Inter-Medium Italic, Inter;
+		font-family: Inter-Medium;
 		font-weight: normal;
 		color: #FFFFFF;
 	}
@@ -423,7 +423,7 @@
 		padding: 0 65rpx;
 		box-sizing: border-box;
 		font-size: 30rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #1A1D26;
 		display: flex;
@@ -477,14 +477,14 @@
 
 	.video-text {
 		font-size: 30rpx;
-		font-family: Inter-Medium, Inter;
+		font-family: Inter-Medium;
 		font-weight: 500;
 		color: #6A6A6C;
 	}
 
 	.video-text-active {
 		font-size: 30rpx;
-		font-family: Inter-Semi Bold, Inter;
+		font-family: Inter-SemiBold;
 		font-weight: normal;
 		color: #1A1D26;
 		padding-bottom: 21rpx;
@@ -511,7 +511,7 @@
 	.meny-time {
 		font-size: 28rpx;
 		line-height: 30rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #6A6A6C;
 	}
@@ -519,7 +519,7 @@
 	.meny-comment {
 		font-size: 30rpx;
 		line-height: 35rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #1A1D26;
 		margin-top: 16rpx;
@@ -583,7 +583,7 @@
 	}
 	.collection-name{
 		font-size: 30rpx;
-		font-family: Inter-Medium, Inter;
+		font-family: Inter-Medium;
 		font-weight: 500;
 		color: #1A1D26;
 		line-height: 35rpx;
@@ -596,7 +596,7 @@
 	}
 	.collection-price{
 		font-size: 28rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #1A1D26;
 		line-height: 33rpx;
@@ -624,7 +624,7 @@
 		border-top: 2rpx solid rgba(155, 155, 155, 0.1);
 
 		font-size: 22rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #6A6A6C;
 	}

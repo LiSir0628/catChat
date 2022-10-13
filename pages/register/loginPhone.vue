@@ -71,7 +71,7 @@
 		display: flex;
 		align-items: center;
 		font-size: 30rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #1A1D26;
 		
@@ -90,7 +90,7 @@
 	}
 	.title{
 		font-size: 40rpx;
-		font-family: Inter-Bold, Inter;
+		font-family: Inter-Bold;
 		font-weight: bold;
 		color: #1A1D26;
 		text-align: center;
@@ -100,7 +100,7 @@
 		padding: 13rpx 0;
 		
 		font-size: 28rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #999999;
 		border-bottom: 2rpx solid  #999999;
@@ -114,7 +114,7 @@
 		width: 460rpx;
 		padding: 13rpx 0;	
 		font-size: 28rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #999999;
 		border-bottom: 2rpx solid  #999999;
@@ -127,14 +127,14 @@
 		background: #1A1D26;
 		border-radius: 200rpx 200rpx 200rpx 200rpx;
 		font-size: 30rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #FFFFFF;
 		text-align: center;
 	}
 	.register{
 		font-size: 30rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #1A1D26;
 		margin-top: 24rpx;
@@ -149,7 +149,7 @@
 		opacity: 1;
 		
 		font-size: 30rpx;
-		font-family: Inter-Bold, Inter;
+		font-family: Inter-Bold;
 		font-weight: bold;
 		color: #FFFFFF;
 		text-align: center;
@@ -158,7 +158,7 @@
 	
 	.forget{
 		font-size: 26rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #333333;
 		margin-top: 35rpx;
@@ -168,7 +168,7 @@
 	.read-nav{
 		margin-top: 30rpx;
 		font-size: 26rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #333333;
 		display: flex;
@@ -204,7 +204,7 @@
 	}
 	.area{
 		font-size: 26rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #6A6A6C;
 	}

@@ -156,7 +156,7 @@
 		display: flex;
 		align-items: center;
 		font-size: 30rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #1A1D26;
 		
@@ -175,7 +175,7 @@
 	}
 	.title{
 		font-size: 40rpx;
-		font-family: Inter-Bold, Inter;
+		font-family: Inter-Bold;
 		font-weight: bold;
 		color: #1A1D26;
 		text-align: center;
@@ -198,7 +198,7 @@
 	.modular{
 		font-size: 28rpx;
 		line-height: 28rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #1A1D26;
 		padding: 11rpx 19rpx;
@@ -221,7 +221,7 @@
 		opacity: 1;
 		
 		font-size: 30rpx;
-		font-family: Inter-Bold, Inter;
+		font-family: Inter-Bold;
 		font-weight: bold;
 		color: #FFFFFF;
 		text-align: center;
@@ -240,7 +240,7 @@
 	}
 	.area{
 		font-size: 26rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #6A6A6C;
 	}

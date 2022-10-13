@@ -339,6 +339,7 @@
 	}
 
 	.uni-ellipsis-1 {
+		text-transform: capitalize;
 		overflow: hidden;
 		/* #ifndef APP-NVUE */
 		white-space: nowrap;

@@ -120,7 +120,7 @@
 		margin-left: 50rpx;
 		font-size: 40rpx;
 		line-height: 40rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		/* font-weight: 400; */
 		font-weight: bold;
 		color: #222222;
@@ -129,7 +129,7 @@
 	.remind03{
 		padding: 58rpx 42rpx 0 50rpx;
 		font-size: 28rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #333333;
 		line-height: 46rpx;
@@ -137,7 +137,7 @@
 	.remind05,.remind07{
 		padding: 49rpx 42rpx 0 50rpx;
 		font-size: 28rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #333333;
 		line-height: 46rpx;
