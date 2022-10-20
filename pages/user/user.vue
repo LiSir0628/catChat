@@ -4,7 +4,7 @@
 		<view class="top">
 			<view>
 				<image class="top-logo left-logo" src="../../static/images/user/icon08.png"></image>
-				<image class="top-logo" src="../../static/images/user/icon14.png"></image>
+				<image class="top-logo" src="../../static/images/user/icon14.png" @click="invitationBtn"></image>
 			</view>
 			<image class="top-logo" src="../../static/images/user/icon02.png"></image>
 		</view>
@@ -65,11 +65,31 @@
 						<view class="meny-time">2022-08-08</view>
 						<view class="meny-comment">Very beautiful scenery</view>
 						<image class="meny-logo" src="../../static/images/user/photo03.jpg"></image>
+						<view class="talk-modular">
+							<view class="talk-list">
+								<image class="talk-logo" src="../../static/images/user/icon19.png"></image>
+								<view class="talk-text">15</view>
+							</view>
+							<view class="talk-list">
+								<image class="talk-logo" src="../../static/images/user/icon20.png"></image>
+								<view class="talk-text">15</view>
+							</view>
+						</view>
 					</view>
 					<view class="meny">
 						<view class="meny-time">2022-08-08</view>
 						<view class="meny-comment">Very beautiful scenery</view>
 						<image class="meny-logo" src="../../static/images/user/photo03.jpg"></image>
+						<view class="talk-modular">
+							<view class="talk-list">
+								<image class="talk-logo" src="../../static/images/user/icon19.png"></image>
+								<view class="talk-text">15</view>
+							</view>
+							<view class="talk-list">
+								<image class="talk-logo" src="../../static/images/user/icon20.png"></image>
+								<view class="talk-text">15</view>
+							</view>
+						</view>
 					</view>
 				</view>
 
@@ -138,16 +158,25 @@
 				<view :class="{'bottom-nav-active': kindex == index}">{{item.name}}</view>
 			</view>
 		</view>
+		
+		<user-msg ref="userMsg" :userList="userList"></user-msg>
 	</view>
 </template>
 
 <script>
+	import userMsg from "@/pages/common/userMsg.vue"
 	export default {
 		data() {
 			return {
+				userList: {
+					id: 89596665,
+					name: "Michael jackson",
+					tel: "152xxxxxxx",
+					photo: "../../static/images/user/photo01.jpg",
+				},
 				isMember: false,
 				
-				cindex: 3,
+				cindex: 0,
 				navList: [{
 					id: 1,
 					name: this.$t('user').wallet,
@@ -231,9 +260,18 @@
 				}]
 			}
 		},
+		components:{
+			userMsg,
+		},
+		mounted() {
+			
+		},
 		methods: {
 			back() {
 				window.history.go(-1)
+			},
+			invitationBtn() {
+				this.$refs.userMsg.open()
 			},
 			switchTab(index) {
 				if (this.cindex == index) return
@@ -243,7 +281,7 @@
 				if (this.kindex == index) return
 				this.kindex = index
 				console.log("我要去:" + index)
-			}
+			},
 		}
 	}
 </script>
@@ -387,7 +425,7 @@
 	
 	.no-level {
 		width: 690rpx;
-		padding: 43rpx 27rpx 0 30rpx;
+		padding: 53rpx 27rpx 0 30rpx;
 		box-sizing: border-box;
 		position: absolute;
 		top: 0;
@@ -505,7 +543,7 @@
 	}
 	
 	.meny{
-		margin-bottom: 30rpx;
+		margin-bottom: 54rpx;
 	}
 	
 	.meny-time {
@@ -532,7 +570,23 @@
 		border-radius: 20rpx 20rpx 20rpx 20rpx;
 		display: block;
 	}
-
+	
+	.talk-modular{
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		margin-top: 30rpx;
+	}	.talk-list{
+		display: flex;
+		margin-left: 28rpx;
+	}	.talk-logo{
+		width: 44rpx;
+		height: 41rpx;
+		display: block;
+	}	.talk-text{
+		margin-left: 8rpx;
+	}
+	/* 相册 */
 	.camera-list {
 		width: 690rpx;
 		margin: 50rpx auto 0;

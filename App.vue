@@ -13,6 +13,9 @@
 </script>
 
 <style>
+	page{
+		text-transform: capitalize;
+	}
 	/*每个页面公共css */
 	@font-face {
 		font-family: Inter-Bold;

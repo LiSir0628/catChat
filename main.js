@@ -8,6 +8,11 @@ Vue.prototype.$utils = utils;
 import myRequest from '@/request.js'
 Vue.prototype.$myRequest = myRequest
 
+// 复制
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
+
+
 // 语法切换
 import VueI18n from 'vue-i18n'
 Vue.use(VueI18n);

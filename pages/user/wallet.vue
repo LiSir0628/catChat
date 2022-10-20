@@ -109,7 +109,7 @@
 	
 	.gold-coins-title-text{
 		font-size: 28rpx;
-		font-family: Inter-Regular, Inter;
+		font-family: Inter-Regular;
 		font-weight: 400;
 		color: rgba(255,255,255,0.8);
 		line-height: 33rpx;
@@ -123,7 +123,7 @@
 	
 	.gold-coins-price{
 		font-size: 40rpx;
-		font-family: Inter-Bold, Inter;
+		font-family: Inter-Bold;
 		font-weight: bold;
 		color: #FFFFFF;
 		line-height: 47rpx;

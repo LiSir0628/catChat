@@ -26,7 +26,7 @@
 			<view class="forget">{{ $t('login.forget') }}</view>
 			
 			<view class="read-nav">
-				<checkbox :checked="is_default" color="#ffffff" @change="switchChange" />
+				<checkbox :checked="is_default" color="#ffffff" @click="switchChange" />
 				<view class="read-text">{{ $t('login.read') }}</view>
 			</view>
 		</view>
@@ -49,7 +49,10 @@
 			}
 		},
 		methods: {
-
+			switchChange(){
+				this.is_default = !this.is_default
+				console.log(this.is_default)
+			},
 		}
 	}
 </script>

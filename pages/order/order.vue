@@ -12,16 +12,20 @@
 							<view class="whole-state-modular">
 								<view v-if="item.state == 7" class="whole-state">{{ $t('order.transaction_closure') }}</view>
 								<view v-else-if="item.state == 5 || item.state == 6" class="whole-state">{{ $t('order.order_completion') }}</view>
-								<view v-if="item.state == 7" class="refund">Refund succeeded</view>
+								<view v-if="item.state == 7" class="refund">{{ $t('order.refund_succeeded') }}</view>
 							</view>
 							
 							<view class="whole-content">
 								<image class="whole-order-logo" :src="item.sp_lists[0].url"></image>
 								<view class="whole-msg">
 									<view class="whole-sp-name">{{item.sp_lists[0].title}}</view>
-									<view class="whole-sp-specs">{{item.sp_lists[0].specs.name}}</view>
+									<view class="whole-sp-specs">
+										<template v-for="citem in item.sp_lists[0].specs">
+											{{citem.name}}
+										</template>
+									</view>
 								</view>
-								<view class="whole-num">x{{item.sp_lists[0].num}}</view>
+								<view class="whole-num">x{{item.total_num}}</view>
 							</view>
 							<view class="whole-price">{{ $t('order.price') }}:<text class="whole-price-num">${{item.total_price}}</text></view>
 							<view class="all-btn">
@@ -30,25 +34,79 @@
 							</view>
 						</view>
 						<view v-if="item.sp_lists.length > 1">
+							<view class="whole-state-modular">
+								<view v-if="item.state == 7" class="whole-state">{{ $t('order.transaction_closure') }}</view>
+								<view v-else-if="item.state == 5 || item.state == 6" class="whole-state">{{ $t('order.order_completion') }}</view>
+								<view v-if="item.state == 7" class="refund">{{ $t('order.refund_succeeded') }}</view>
+								<view v-else-if="item.state == 5 || item.state == 6" class="total_num">{{item.total_num}} {{ $t('order.pieces_in_total') }}</view>
+							</view>
+							
+							<!-- 这里是可滚动商品展示 -->
+							<scroll-view class="scroll-logo-list" scroll-x="true" @scroll="scroll"
+								:show-scrollbar="false">
+								<view class="logo-list">
+									<view v-for="good in item.sp_lists">
+										<image class="many-logo" :src="good.url"></image>
+									</view>
+								</view>
+							</scroll-view>
+							<view class="whole-price">{{ $t('order.price') }}:<text class="whole-price-num">${{item.total_price}}</text></view>
+							<view class="all-btn">
+								<view class="buy-btn">{{ $t('order.buy_again') }}</view>
+								<view v-if="item.state == 5" class="evaluate-btn">{{ $t('order.to_evaluate') }}</view>
+							</view>
 							
 						</view>
 					</view>
 				</view>
 				<view v-else>
-					<view class="order-list" v-for="item,index in orderList" v-if="state == item.state">
-						<image class="order-logo" :src="item.url"></image>
-						<view class="order-msg">
-							<view class="order-title">{{item.title}}</view>
-							<view class="order-price">${{item.price}}</view>
-							<view v-if="item.state == 1" class="order-method" @click="goPayment">{{ $t('order.payment') }}</view>
-							<!-- <view v-else-if="item.state == 2" class="order-method"></view> -->
-							<view class="wait" v-else-if="item.state == 3">
-								<view class="order-method logistics">{{ $t('order.logistics') }}</view>
-								<view class="order-method determine">{{ $t('order.determine') }}</view>
+					<view v-for="item,index in orderList" v-if="state == item.state">
+						<view class="order-list" v-for="citem in item.sp_lists">
+							<image class="order-logo" :src="citem.url"></image>
+							<view class="order-msg">
+								<view class="order-title">{{citem.title}}</view>
+								<view class="order-price">${{citem.price}}</view>
+								<view v-if="item.state == 1" class="order-method" @click="goPayment">{{ $t('order.payment') }}</view>
+								<view class="wait" v-else-if="item.state == 3">
+									<view class="order-method logistics">{{ $t('order.logistics') }}</view>
+									<view class="order-method determine">{{ $t('order.determine') }}</view>
+								</view>
+								<view v-else-if="item.state == 4" class="order-method">{{ $t('order.cancel') }}</view>
+								<view v-else-if="item.state == 5" class="order-method">{{ $t('order.evaluate') }}</view>
 							</view>
-							<view v-else-if="item.state == 4" class="order-method">{{ $t('order.cancel') }}</view>
-							<view v-else-if="item.state == 5" class="order-method">{{ $t('order.evaluate') }}</view>
 						</view>
+						<!-- <template v-if="item.sp_lists.length > 1">
+							<view class="order-list" v-for="citem in item.sp_lists">
+								<image class="order-logo" :src="citem.url"></image>
+								<view class="order-msg">
+									<view class="order-title">{{citem.title}}</view>
+									<view class="order-price">${{citem.price}}</view>
+									<view v-if="item.state == 1" class="order-method" @click="goPayment">{{ $t('order.payment') }}</view>
+									<view class="wait" v-else-if="item.state == 3">
+										<view class="order-method logistics">{{ $t('order.logistics') }}</view>
+										<view class="order-method determine">{{ $t('order.determine') }}</view>
+									</view>
+									<view v-else-if="item.state == 4" class="order-method">{{ $t('order.cancel') }}</view>
+									<view v-else-if="item.state == 5" class="order-method">{{ $t('order.evaluate') }}</view>
+								</view>
+							</view>
+						</template>
+						<template v-else>
+							<view class="order-list" v-for="citem in item.sp_lists">
+								<image class="order-logo" :src="citem.url"></image>
+								<view class="order-msg">
+									<view class="order-title">{{citem.title}}</view>
+									<view class="order-price">${{citem.price}}</view>
+									<view v-if="item.state == 1" class="order-method" @click="goPayment">{{ $t('order.payment') }}</view>
+									<view class="wait" v-else-if="item.state == 3">
+										<view class="order-method logistics">{{ $t('order.logistics') }}</view>
+										<view class="order-method determine">{{ $t('order.determine') }}</view>
+									</view>
+									<view v-else-if="item.state == 4" class="order-method">{{ $t('order.cancel') }}</view>
+									<view v-else-if="item.state == 5" class="order-method">{{ $t('order.evaluate') }}</view>
+								</view>
+							</view>
+						</template> -->
 					</view>
 				</view>
 			</view>
@@ -115,8 +173,8 @@
 	export default {
 		data() {
 			return {
-				cindex: 0,
-				state: 0,
+				cindex: 5,
+				state: 5,
 				stateList:[{
 					id: 1,
 					name: this.$t('order').whole,
@@ -151,63 +209,308 @@
 				}],
 				newOrderList: [{
 					order_id: 1,
-					state: 5,// 1待支付  2待发货  3待接收  4取消退款  5已完成-待评论 6已完成-已评价 7.已完成-退款(不可评价)
+					state: 6,// 1待支付  2待发货  3待接收  4待退款  5已完成-待评论 6已完成-已评价 7.已完成-退款(不可评价)
 					total_price: '50.6',
+					total_num: 10,
 					sp_lists:[{
-						id: 1,
+						product_id: 1,
 						url: '../../static/images/user/photo02.png',
 						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
 						price: '5.6',
 						num: 10,
-						specs: {
+						specs: [{
+							specs_id: 1,
 							name: "升级款白色（送电池）"
-						},
+						}],
 					}]
 				},{
 					order_id: 2,
-					state: 7,// 1待支付  2待发货  3待接收  4取消退款  5已完成-待评论 6已完成-已评价 7.已完成-退款(不可评价)
+					state: 7,// 1待支付  2待发货  3待接收  4待退款  5已完成-待评论 6已完成-已评价 7.已完成-退款(不可评价)
 					total_price: '500.6',
+					total_num: 100,
 					sp_lists:[{
-						id: 1,
+						product_id: 1,
 						url: '../../static/images/user/photo02.png',
 						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
 						price: '5.6',
 						num: 100,
-						specs: {
+						specs: [{
+							specs_id: 1,
+							name: "新款"
+						},{
+							specs_id: 1,
 							name: "升级款白色（送电池）"
-						},
+						}],
+					}]
+				},{
+					order_id: 3,
+					state: 5,// 1待支付  2待发货  3待接收  4取消退款  5已完成-待评论 6已完成-已评价 7.已完成-退款(不可评价)
+					total_price: 500,
+					total_num: 30,
+					sp_lists:[{
+						product_id: 1,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '10',
+						num: 10,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 2,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '20',
+						num: 20,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 1,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '10',
+						num: 10,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 2,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '20',
+						num: 20,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 1,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '10',
+						num: 10,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 2,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '20',
+						num: 20,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
 					}]
 				}],
 				orderList:[{
 					order_id: 1,
-					url: '../../static/images/user/photo02.png',
-					title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
-					price: '50.6',
-					state: 1
+					state: 1,// 1待支付  2待发货  3待接收  4待退款  5已完成-待评论 6已完成-已评价 7.已完成-退款(不可评价)
+					total_price: '50.6',
+					total_num: 10,
+					sp_lists:[{
+						product_id: 1,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '5.6',
+						num: 10,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					}]
 				},{
 					order_id: 2,
-					url: '../../static/images/user/photo02.png',
-					title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
-					price: '150.6',
-					state: 2
+					state: 1,// 1待支付  2待发货  3待接收  4待退款  5已完成-待评论 6已完成-已评价 7.已完成-退款(不可评价)
+					total_price: '500.6',
+					total_num: 100,
+					sp_lists:[{
+						product_id: 1,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '5.6',
+						num: 100,
+						specs: [{
+							specs_id: 1,
+							name: "新款"
+						},{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					}]
 				},{
 					order_id: 3,
-					url: '../../static/images/user/photo02.png',
-					title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
-					price: '250.6',
-					state: 3
+					state: 3,// 1待支付  2待发货  3待接收  4取消退款  5已完成-待评论 6已完成-已评价 7.已完成-退款(不可评价)
+					total_price: 500,
+					total_num: 30,
+					sp_lists:[{
+						product_id: 1,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '10',
+						num: 10,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 2,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '20',
+						num: 20,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 1,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '10',
+						num: 10,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 2,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '20',
+						num: 20,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 1,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '10',
+						num: 10,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 2,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '20',
+						num: 20,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					}]
 				},{
 					order_id: 4,
-					url: '../../static/images/user/photo02.png',
-					title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
-					price: '350.6',
-					state: 4
+					state: 3,// 1待支付  2待发货  3待接收  4待退款  5已完成-待评论 6已完成-已评价 7.已完成-退款(不可评价)
+					total_price: '50.6',
+					total_num: 10,
+					sp_lists:[{
+						product_id: 1,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '5.6',
+						num: 10,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					}]
 				},{
 					order_id: 5,
-					url: '../../static/images/user/photo02.png',
-					title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
-					price: '450.6',
-					state: 5
+					state: 4,// 1待支付  2待发货  3待接收  4待退款  5已完成-待评论 6已完成-已评价 7.已完成-退款(不可评价)
+					total_price: '500.6',
+					total_num: 100,
+					sp_lists:[{
+						product_id: 1,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '5.6',
+						num: 100,
+						specs: [{
+							specs_id: 1,
+							name: "新款"
+						},{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					}]
+				},{
+					order_id: 6,
+					state: 5,// 1待支付  2待发货  3待接收  4取消退款  5已完成-待评论 6已完成-已评价 7.已完成-退款(不可评价)
+					total_price: 500,
+					total_num: 30,
+					sp_lists:[{
+						product_id: 1,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '10',
+						num: 10,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 2,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '20',
+						num: 20,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 1,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '10',
+						num: 10,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 2,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '20',
+						num: 20,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 1,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '10',
+						num: 10,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					},{
+						product_id: 2,
+						url: '../../static/images/user/photo02.png',
+						title: 'Liziqi Liuzhou snail powderLiziqi Liuzhou snail powder',
+						price: '20',
+						num: 20,
+						specs: [{
+							specs_id: 1,
+							name: "升级款白色（送电池）"
+						}],
+					}]
 				}],
 				
 				isShowLove: false,
@@ -230,7 +533,12 @@
 			},
 			goPayment() {
 				this.$refs.payment.open()
-			}
+			},
+			scroll(e) {
+				//this.scrollLeft = e.detail.scrollLeft
+				// console.log(e)
+				// console.log(this.scrollLeft)
+			},
 		}
 	}
 </script>
@@ -245,10 +553,13 @@
 	}
 	
 	.state-list{
-		margin-top: 24rpx;
+		/* margin-top: 24rpx; */
 		display: flex;
 		flex-wrap: wrap;
-		padding: 0 20rpx;
+		padding: 24rpx 20rpx 0;
+		position: fixed;
+		background: #ffffff;
+		z-index: 998;
 	}
 	
 	.state-style{
@@ -275,6 +586,7 @@
 	/* 主要商品展示 */
 	
 	.content{
+		margin-top: 176rpx;
 		padding: 20rpx 30rpx;
 	}
 	/* 全部区域展示 */
@@ -303,6 +615,13 @@
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #ED4C4C;
+		line-height: 35rpx;
+	}
+	.total_num{
+		font-size: 30rpx;
+		font-family: Inter-Regular;
+		font-weight: 400;
+		color: #6A6A6C;
 		line-height: 35rpx;
 	}	.whole-content{
 		display: flex;
@@ -411,7 +730,36 @@
 		margin-left: 20rpx;
 		padding: 0 22rpx;
 	}
+	/deep/ ::-webkit-scrollbar {
+		display: none;
+		width: 0 !important;
+		height: 0 !important;
+		-webkit-appearance: none;
+		background: transparent;
+	}
+	.scroll-logo-list{
+		width: 690rpx;
+		margin: 0 auto;
+		white-space: nowrap;
+	}
+	.logo-list{
+		display: flex;
+		margin-top: 44rpx;
+	}
+	.logo-list-other{
+		display: flex;
+		margin-top: 20rpx;
+	}
+	.many-logo{
+		width: 160rpx;
+		height: 160rpx;
+		display: block;
+		border-radius: 20rpx;
+		margin-right: 24rpx;
+		border: 2rpx solid rgba(26,29,38,0.2);
+	}
 	
+	/* 其他状态展示 */
 	.order-lists{
 		width: 690rpx;
 		box-sizing: border-box;

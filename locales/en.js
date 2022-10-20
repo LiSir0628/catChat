@@ -66,6 +66,14 @@ export const lang = {
 		"Album": "Album",
 		"Video": "Video",
 		"Collection": "Collection",
+		
+		"save_to_album": "Save to album",
+	},
+	"browse": {
+		"browse": "browse",
+		"three_days_ago": "Three days ago",
+		"seven_days_ago": "Seven days ago",
+		"a_month_ago": "A month ago",
 	},
 	"wallet": {
 		"wallet": "wallet",
@@ -78,7 +86,7 @@ export const lang = {
 		"range": "",
 	},
 	"balance": {
-		"balance": "balance",
+		"balance": "wallet",
 		"recharge_title": "Recharge amount",
 		"withdrawal_title": "Withdrawal amount",
 		"quota": "quota",
@@ -106,9 +114,18 @@ export const lang = {
 		"deductible_gold_coins": "Deductible gold coins",
 		"insufficient_amount": "Insufficient amount",
 	},
+	"notice": {
+		"cancel": "cancel",
+		"determine": "determine",
+	},
 	"invitation": {
 		"invitation": "invitation",
 		"detailed": "detailed",
+		"id": "My invitation ID",
+		
+		"placeholder": "Enter the invitation ID number",
+		"my_invitation": "My invitation",
+		"clipboard": "Contents copied to clipboard"
 	},
 	"order": {
 		"order": "order",
@@ -120,6 +137,8 @@ export const lang = {
 		"evaluate": "Evaluate",
 		"order_completion": "Order completion",
 		"transaction_closure": "Transaction closure",
+		"refund_succeeded": "Refund succeeded",
+		"pieces_in_total": "pieces in total",
 		
 		"price": "price",
 		"buy_again": "Buy again",
@@ -135,6 +154,61 @@ export const lang = {
 		"cancel": "Cancel refund",
 		
 	},
+	"order_detail": {
+		"received": "To be received",
+		"product_information": "Product information",
+		"delivery_service": "Delivery service",
+		"free": "Express mail free",
+		"remarks": "Order Remarks",
+		"no_remarks": "No Remarks",
+		"number": "Order No",
+		"copy": "Copy",
+		"time": "Creation time",
+		"rule": "No return or exchange without reason is supported",
+		
+		"total": "Total price of goods",
+		"discount": "Shop discount",
+		"gold_coin": "Gold coin deduction",
+		"freight": "freight",
+		
+		"refund": "refund",
+		"view_logistics": "view logistics",
+		"cancel_order": "cancellation of order",
+		"payment": "payment",
+		"cancel_refund": "cancel refund",
+		"evaluate": "Evaluate",
+		
+	},
+	"evaluate": {
+		"evaluate": "evaluate",
+		"description": "Product description",
+		"placeholder": "Evaluating items from multiple dimensions can help more people who want to buy...",
+		"is_anonymous": "Public or not",
+		"text": "Return will not save the edited evaluation"
+	},
+	"information": {
+		"information": "order information",
+		"completed": "Completed",
+		"meeting": "Looking forward to meeting you again",
+		"product_information": "Product information",
+		"pieces": "pieces",
+		
+		"receipt": "Receipt",
+		"number": "Order No",
+		"copy": "Copy",
+		"method": "Payment method",
+		"remarks": "Order Remarks",
+		"no_remarks": "No Remarks",
+		"create_time": "Creation time",
+		"payment_time": "Payment time",
+		"close_time": "Closing time",
+		"to_evaluate": "To evaluate",
+	},
+	"refund": {
+		"apply_for_refund": "Apply for refund"
+	},
+	
+	
 	"bottom": {
 		"Pair": "Pair",
 		"Shop": "Shop",
@@ -147,6 +221,7 @@ export const lang = {
 		"It¡¯s_empty": "It's empty",
 		"Tip": "Tip",
 		"Network": "Network error, please try again later",
-		"limit": "Cannot continue to select, the upper limit has been reached"
+		"limit": "Cannot continue to select, the upper limit has been reached",
+		"success": "success",
 	}
 }
