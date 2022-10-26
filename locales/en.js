@@ -311,7 +311,10 @@ export const lang = {
 		"close": "Close",
 		
 	},
-
+	"share": {
+		"share": "Share to friends",
+		"copy_link": "Copy Link",
+	},
 
 	"bottom": {
 		"Pair": "Pair",

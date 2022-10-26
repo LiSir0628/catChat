@@ -13,9 +13,9 @@
 			<view>
 				<input class="phone" v-model="phone" :placeholder="$t('register.number')" />
 				<view class="code-nav">
-					<input class="code" v-model="code" :placeholder="$t('loginPhone.code')" />
+					<input class="code" v-model="code" :placeholder="$t('login_phone.code')" />
 					<view class="code-btn">
-						{{ $t('loginPhone.obtain') }}
+						{{ $t('login_phone.obtain') }}
 					</view>
 				</view>
 				<input class="password" v-model="password" :placeholder="$t('login.password')" />

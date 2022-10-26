@@ -21,7 +21,7 @@
 			<scroll-view class="scroll-logo-list" scroll-x="true" @scroll="scroll"
 				:show-scrollbar="false">
 				<view class="logo-list">
-					<view class="logo-list-other" v-for="item,index in reTopicLists">
+					<view class="logo-list-other" v-for="item,index in reTopicLists" @click="goTopic(item)">
 						<view class="logo-modular">
 							<image class="many-logo" :src="item.image"></image>
 							<image class="topic-logo" src="../../static/images/square/icon06.png"></image>
@@ -274,6 +274,11 @@
 				// console.log(e)
 				// console.log(this.scrollLeft)
 			},
+			goTopic(item) {
+				uni.navigateTo({
+					url: 'topic?topic_name=' + item.title
+				});
+			},
 			goDetail() {
 				uni.navigateTo({
 					url: 'squareDetails'
@@ -417,6 +422,7 @@
 		height: 128rpx;
 		display: block;
 		border-radius: 50%;
+		margin: 0 auto;
 	}
 	
 	.topic-logo{
