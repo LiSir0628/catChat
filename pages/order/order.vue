@@ -7,7 +7,7 @@
 		<view class="content">
 			<view class="order-lists">
 				<view v-if="state == 0">
-					<view class="whole-modular" v-for="item,index in newOrderList">
+					<view class="whole-modular" v-for="item,index in newOrderList" @click="goOrderDeatil(item)">
 						<view v-if="item.sp_lists.length == 1">
 							<view class="whole-state-modular">
 								<view v-if="item.state == 7" class="whole-state">{{ $t('order.transaction_closure') }}</view>
@@ -173,8 +173,8 @@
 	export default {
 		data() {
 			return {
-				cindex: 5,
-				state: 5,
+				cindex: 0,
+				state: 0,
 				stateList:[{
 					id: 1,
 					name: this.$t('order').whole,
@@ -530,6 +530,11 @@
 				if(this.cindex == index) return
 				this.cindex = index
 				this.state = this.stateList[index].state
+			},
+			goOrderDeatil() {
+				uni.navigateTo({
+					url: 'orderDetail'
+				});
 			},
 			goPayment() {
 				this.$refs.payment.open()

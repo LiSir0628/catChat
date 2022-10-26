@@ -30,7 +30,7 @@
 					</view>
 					
 					<!-- <textarea class="textarea" placeholder-style="textarea-placeholder" v-model="evaluate_lists[index].introduction" placeholder="从多维度评价物品，可以帮助更多想买的人..." /> -->
-					<textarea class="textarea" placeholder-style="textarea-placeholder" v-model="evaluate_lists[index].introduction" :placeholder="$t('evaluate.placeholder')" />
+					<textarea maxlength="150" class="textarea" placeholder-style="textarea-placeholder" v-model="evaluate_lists[index].introduction" :placeholder="$t('evaluate.placeholder')" />
 				
 					<!-- <image class="evaluate-logo" src="../../static/images/order/evaluate/icon03.png" @click="photo"></image> -->
 					<view>
@@ -333,6 +333,11 @@
 		padding: 26rpx 30rpx;
 		box-sizing: border-box;
 		margin-top: 35rpx;
+		
+		font-size: 28rpx;
+		font-family: Inter-Regular;
+		font-weight: 400;
+		color: #6A6A6C;
 	}
 	.textarea-placeholder{
 		color:#6A6A6C;

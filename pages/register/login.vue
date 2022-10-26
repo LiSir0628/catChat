@@ -1,7 +1,8 @@
 <template>
 	<view class="container">
 		<view class="top">
-			<image class="banner" src="../../static/images/register/icon01.png"></image>
+			<!-- <image class="banner" src="../../static/images/register/icon01.png"></image> -->
+			<view class="banner"></view>
 			<view class="top-right">
 				<view>U.S.A</view>
 				<image class="arrow" src="../../static/images/register/icon02.png"></image>
@@ -15,7 +16,7 @@
 			</view>
 			<view class="register">{{ $t('login.register') }}</view>
 			
-			<view class="login-btn">{{ $t('login.log') }}</view>
+			<view class="login-btn" @click="goIndex">{{ $t('login.log') }}</view>
 			
 			<view class="forget">{{ $t('login.forget') }}</view>
 			
@@ -46,6 +47,12 @@
 			switchChange(){
 				this.is_default = !this.is_default
 				console.log(this.is_default)
+			},
+			
+			goIndex() {
+				uni.navigateTo({
+					url: '/pages/user/user'
+				});
 			},
 		}
 	}
@@ -85,14 +92,14 @@
 		padding: 0 55rpx;
 	}
 	.title{
-		font-size: 40rpx;
-		font-family: Inter-Bold;
+		font-size: 46rpx;
+		font-family: Inter-Black;
 		font-weight: bold;
 		color: #1A1D26;
 		text-align: center;
 	}
 	.email{
-		margin-top: 104rpx;
+		margin-top: 96rpx;
 		padding: 13rpx 0;
 		
 		font-size: 28rpx;

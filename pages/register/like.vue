@@ -150,7 +150,7 @@
 		width: 750rpx;
 		height: 169rpx;
 		display: block;
-		background: linear-gradient(rgba(1,64,226,0.06) 0%, rgba(255,255,255, 0) 100%);
+		/* background: linear-gradient(rgba(1,64,226,0.06) 0%, rgba(255,255,255, 0) 100%); */
 	}
 	.top-right{
 		display: flex;
@@ -174,8 +174,8 @@
 		padding: 0 48rpx;
 	}
 	.title{
-		font-size: 40rpx;
-		font-family: Inter-Bold;
+		font-size: 46rpx;
+		font-family: Inter-Black;
 		font-weight: bold;
 		color: #1A1D26;
 		text-align: center;
@@ -190,7 +190,7 @@
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-evenly;
-		margin-top: 100rpx;
+		margin-top: 92rpx;
 	}
 	.modular-lists::-webkit-scrollbar {
 	  display: none;

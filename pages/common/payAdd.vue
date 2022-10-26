@@ -31,7 +31,7 @@
 		</uni-popup>
 		
 		<uni-popup class="popup-time" ref="popupTime" background-color="#fff" type="bottom" @maskClick="closeTime">
-			<!-- <view></view> -->
+			<view class="popup-ok" @click="closeTime">determine</view>
 			<picker-view v-if="visible" :indicator-style="indicatorStyle" :value="value" @change="bindChange"
 				class="picker-view">
 				<picker-view-column>
@@ -248,6 +248,18 @@
 	/* 日期选择 */
 	.popup-time{
 		/* z-index: 10001; */
+	}
+	
+	.popup-ok{
+		width: 750rpx;
+		text-align: right;
+		padding: 20rpx 30rpx;
+		font-size: 28rpx;
+		background: #ffffff;
+		top: -70rpx;
+		right: 0;
+		position: absolute;
+		z-index: 100;
 	}
 	
 	.picker-view {

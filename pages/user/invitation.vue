@@ -10,7 +10,7 @@
 			</view>
 			<input class="search-id" :placeholder="$t('invitation.placeholder')">
 			
-			<view class="banner">
+			<!-- <view class="banner">
 				<image class="banner-logo" src="../../static/images/user/wallet/icon01.png"></image>
 				<view class="gold-coins">
 					<view class="gold-coins-title">
@@ -26,7 +26,7 @@
 					</view>
 					<view class="gold-coins-price">2.81</view>
 				</view>
-			</view>
+			</view> -->
 			
 			<view class="invitation-record">
 				<view class="record-title">{{ $t('invitation.my_invitation') }}</view>
@@ -145,8 +145,8 @@
 		color: #1A1D26;
 	}
 	.copy-logo{
-		width: 32rpx;
-		height: 32rpx;
+		width: 30rpx;
+		height: 34rpx;
 		display: block;
 	}
 	

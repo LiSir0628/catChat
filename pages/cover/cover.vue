@@ -74,6 +74,9 @@
 			},
 			goIndex() {
 				console.log("进入主页")
+				uni.navigateTo({
+					url: '/pages/register/register'
+				});
 			},
 			goSwitch(e) {
 				this.current = e.detail.current
@@ -118,10 +121,8 @@
 	
 	.tips{
 		margin-left: 50rpx;
-		font-size: 40rpx;
-		line-height: 40rpx;
-		font-family: Inter-Regular;
-		/* font-weight: 400; */
+		font-size: 46rpx;
+		font-family: Inter-Black;
 		font-weight: bold;
 		color: #222222;
 	}

@@ -6,22 +6,26 @@
 				<image class="top-logo left-logo" src="../../static/images/user/icon08.png"></image>
 				<image class="top-logo" src="../../static/images/user/icon14.png" @click="invitationBtn"></image>
 			</view>
-			<image class="top-logo" src="../../static/images/user/icon02.png"></image>
+			<!-- <image class="top-logo" src="../../static/images/user/icon02.png"></image> -->
 		</view>
 
 		<view class="user-msg">
 			<view class="user-left">
 				<view class="name-modular">
 					<view>Michael jackson</view>
-					<image class="sex-logo" src="../../static/images/user/icon12.png"></image>
+					<!-- <image class="sex-logo" src="../../static/images/user/icon12.png"></image> -->
 				</view>
 
-				<view class="age">26 {{ $t('user.old') }}</view>
+				<view class="age">
+					26 {{ $t('user.old') }},
+					<template>male</template>
+					<!-- <template>female</template> -->
+				</view>
 
-				<view class="inviter">
+				<!-- <view class="inviter">
 					<image class="photo-small" src="../../static/images/user/photo02.png"></image>
 					<view>Mi Qiren</view>
-				</view>
+				</view> -->
 			</view>
 			<image class="photo" src="../../static/images/user/photo01.jpg"></image>
 		</view>
@@ -42,8 +46,8 @@
 				</view>
 			</view>
 			<view class="nav-list">
-				<view class="logo-modular" v-for="item in navList">
-					<image class="nav-logo" :style="item.styleClass" :src="item.url"></image>
+				<view class="logo-modular" v-for="item in navList" @click="goUrl(item)">
+					<image class="nav-logo" :style="item.styleClass" :src="item.image"></image>
 					<view>{{item.name}}</view>
 				</view>
 			</view>
@@ -64,14 +68,14 @@
 					<view class="meny">
 						<view class="meny-time">2022-08-08</view>
 						<view class="meny-comment">Very beautiful scenery</view>
-						<image class="meny-logo" src="../../static/images/user/photo03.jpg"></image>
+						<image class="meny-logo" src="../../static/images/user/photo03.jpg" @click="previewImage"></image>
 						<view class="talk-modular">
 							<view class="talk-list">
 								<image class="talk-logo" src="../../static/images/user/icon19.png"></image>
 								<view class="talk-text">15</view>
 							</view>
 							<view class="talk-list">
-								<image class="talk-logo" src="../../static/images/user/icon20.png"></image>
+								<image class="talk-logo" src="../../static/images/user/icon26.png"></image>
 								<view class="talk-text">15</view>
 							</view>
 						</view>
@@ -86,7 +90,7 @@
 								<view class="talk-text">15</view>
 							</view>
 							<view class="talk-list">
-								<image class="talk-logo" src="../../static/images/user/icon20.png"></image>
+								<image class="talk-logo" src="../../static/images/user/icon26.png"></image>
 								<view class="talk-text">15</view>
 							</view>
 						</view>
@@ -154,7 +158,7 @@
 
 		<view class="bottom">
 			<view class="bottom-list" v-for="item,index in bottomList" @click="goIndex(index)">
-				<image class="bottom-logo" :style="item.styleClass" :src="item.url"></image>
+				<image class="bottom-logo" :style="item.styleClass" :src="item.image"></image>
 				<view :class="{'bottom-nav-active': kindex == index}">{{item.name}}</view>
 			</view>
 		</view>
@@ -180,7 +184,8 @@
 				navList: [{
 					id: 1,
 					name: this.$t('user').wallet,
-					url: "../../static/images/user/icon10.png",
+					url: 'wallet',
+					image: "../../static/images/user/icon10.png",
 					styleClass: {
 						width: '58rpx',
 						height: '52rpx'
@@ -188,7 +193,8 @@
 				}, {
 					id: 2,
 					name: this.$t('user').order,
-					url: "../../static/images/user/icon07.png",
+					url: '/pages/order/order',
+					image: "../../static/images/user/icon07.png",
 					styleClass: {
 						width: '46rpx',
 						height: '50rpx'
@@ -196,7 +202,8 @@
 				}, {
 					id: 3,
 					name: this.$t('user').browse,
-					url: "../../static/images/user/icon09.png",
+					url: '',
+					image: "../../static/images/user/icon09.png",
 					styleClass: {
 						width: '55rpx',
 						height: '55rpx'
@@ -204,7 +211,8 @@
 				}, {
 					id: 4,
 					name: this.$t('user').invitation,
-					url: "../../static/images/user/icon13.png",
+					url: 'invitation',
+					image: "../../static/images/user/icon13.png",
 					styleClass: {
 						width: '56rpx',
 						height: '53rpx'
@@ -224,11 +232,12 @@
 					name: this.$t('user').Collection
 				}],
 
-				kindex: 3,
+				kindex: 4,
 				bottomList: [{
 					id: 1,
 					name: this.$t('bottom').Pair,
-					url: "../../static/images/user/icon03.png",
+					image: "../../static/images/user/icon03.png",
+					url: "",
 					styleClass: {
 						width: '50rpx',
 						height: '40rpx'
@@ -236,23 +245,35 @@
 				}, {
 					id: 2,
 					name: this.$t('bottom').Shop,
-					url: "../../static/images/user/icon06.png",
+					image: "../../static/images/user/icon06.png",
+					url: "",
 					styleClass: {
 						width: '41rpx',
 						height: '37rpx'
 					},
 				}, {
 					id: 3,
+					name: this.$t('bottom').square,
+					image: "../../static/images/user/icon23.png",
+					url: '/pages/square/square',
+					styleClass: {
+						width: '46rpx',
+						height: '46rpx'
+					},
+				}, {
+					id: 4,
 					name: this.$t('bottom').News,
-					url: "../../static/images/user/icon04.png",
+					image: "../../static/images/user/icon04.png",
+					url: "",
 					styleClass: {
 						width: '42rpx',
 						height: '39rpx'
 					},
 				}, {
-					id: 4,
+					id: 5,
 					name: this.$t('bottom').Me,
-					url: "../../static/images/user/icon11.png",
+					image: "../../static/images/user/icon11.png",
+					url: "",
 					styleClass: {
 						width: '40rpx',
 						height: '44rpx'
@@ -273,14 +294,28 @@
 			invitationBtn() {
 				this.$refs.userMsg.open()
 			},
+			goUrl(item) {
+				uni.navigateTo({
+					url: item.url
+				});
+			},
 			switchTab(index) {
 				if (this.cindex == index) return
 				this.cindex = index
 			},
+			previewImage() {
+				uni.previewImage({
+					current: "https://api.domefish.com/storage/banner/6a3b5aeb6638e3c3eb166cf173cc4efe.png",
+					urls: ["https://api.domefish.com/storage/banner/6a3b5aeb6638e3c3eb166cf173cc4efe.png","https://api.domefish.com/storage/banner/7c29347477ba440a4ad17e9e3adc1e6e.png","https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/3639a3488a93425ca108e9ce85cc6f40~tplv-dx0w9n1ysr-origin-jpeg.jpeg"],
+				});
+			},
 			goIndex(index) {
 				if (this.kindex == index) return
 				this.kindex = index
-				console.log("我要去:" + index)
+				if (!this.bottomList[index].url) return
+				uni.navigateTo({
+					url: this.bottomList[index].url
+				});
 			},
 		}
 	}
@@ -578,13 +613,17 @@
 		margin-top: 30rpx;
 	}	.talk-list{
 		display: flex;
+		align-items: center;
 		margin-left: 28rpx;
 	}	.talk-logo{
-		width: 44rpx;
-		height: 41rpx;
+		width: 48rpx;
+		height: 48rpx;
 		display: block;
 	}	.talk-text{
 		margin-left: 8rpx;
+		font-size: 28rpx;
+		font-family: Inter-Regular;
+		color: #6A6A6C;
 	}
 	/* 相册 */
 	.camera-list {

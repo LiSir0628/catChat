@@ -20,7 +20,7 @@
 				</view>
 				<input class="password" v-model="password" :placeholder="$t('login.password')" />
 			</view>
-			<view class="register">{{ $t('register.login') }}</view>
+			<view class="register" @click="login">{{ $t('register.login') }}</view>
 			
 			<view class="login-btn">{{ $t('register.next') }}</view>
 			
@@ -56,6 +56,11 @@
 				this.is_default = !this.is_default
 				console.log(this.is_default)
 			},
+			login() {
+				uni.navigateTo({
+					url: '/pages/register/login'
+				});
+			},
 		}
 	}
 </script>
@@ -71,7 +76,7 @@
 		width: 750rpx;
 		height: 323rpx;
 		display: block;
-		background: linear-gradient(rgba(1,64,226,0.06) 0%, rgba(255,255,255, 0) 60%);
+		/* background: linear-gradient(rgba(1,64,226,0.06) 0%, rgba(255,255,255, 0) 60%); */
 	}
 	.top-right{
 		display: flex;
@@ -95,14 +100,14 @@
 		padding: 0 55rpx;
 	}
 	.title{
-		font-size: 40rpx;
-		font-family: Inter-Bold;
+		font-size: 46rpx;
+		font-family: Inter-Black;
 		font-weight: bold;
 		color: #1A1D26;
 		text-align: center;
 	}
 	.phone{
-		margin-top: 104rpx;
+		margin-top: 96rpx;
 		padding: 13rpx 0;
 		
 		font-size: 28rpx;

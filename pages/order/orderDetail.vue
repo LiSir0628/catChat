@@ -82,7 +82,7 @@
 			
 			<template v-if="list.state == 1">
 				<view class="refund-btn">{{ $t('order_detail.cancel_order') }}</view>
-				<view class="logistics-btn">{{ $t('order_detail.payment') }}</view>
+				<view class="logistics-btn" @click="goPay">{{ $t('order_detail.payment') }}</view>
 			</template>
 			<template v-if="list.state == 4">
 				<view class="logistics-btn">{{ $t('order_detail.cancel_refund') }}</view>
@@ -100,7 +100,7 @@
 			return {
 				list: {
 					order_id: 3,
-					state: 3,// 1待支付  2待发货  3待接收  4取消退款  5已完成-待评论 6已完成-已评价 7.已完成-退款(不可评价)
+					state: 1,// 1待支付  2待发货  3待接收  4取消退款  5已完成-待评论 6已完成-已评价 7.已完成-退款(不可评价)
 					total_price: 500,
 					total_num: 30,
 					sp_lists:[{
@@ -182,6 +182,12 @@
 		methods: {
 			back() {
 				window.history.go(-1)
+			},
+			
+			goPay() {
+				uni.navigateTo({
+					url: '/pages/user/balance'
+				});
 			},
 		}
 	}

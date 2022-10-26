@@ -9,13 +9,13 @@
 			</view>
 		</view>
 		<view class="content">
-			<view class="title">{{ $t('loginPhone.title') }}</view>
+			<view class="title">{{ $t('login_phone.title') }}</view>
 			<view>
-				<input class="phone" v-model="phone" :placeholder="$t('loginPhone.phone')" />
+				<input class="phone" v-model="phone" :placeholder="$t('login_phone.phone')" />
 				<view class="code-nav">
-					<input class="code" v-model="code" :placeholder="$t('loginPhone.code')" />
+					<input class="code" v-model="code" :placeholder="$t('login_phone.code')" />
 					<view class="code-btn">
-						{{ $t('loginPhone.obtain') }}
+						{{ $t('login_phone.obtain') }}
 					</view>
 				</view>
 			</view>
@@ -68,7 +68,7 @@
 		width: 750rpx;
 		height: 323rpx;
 		display: block;
-		background: linear-gradient(rgba(1,226,91, 0.06) 0%, rgba(255,255,255, 0) 60%);
+		/* background: linear-gradient(rgba(1,226,91, 0.06) 0%, rgba(255,255,255, 0) 60%); */
 	}
 	.top-right{
 		display: flex;
@@ -92,14 +92,14 @@
 		padding: 0 55rpx;
 	}
 	.title{
-		font-size: 40rpx;
-		font-family: Inter-Bold;
+		font-size: 46rpx;
+		font-family: Inter-Black;
 		font-weight: bold;
 		color: #1A1D26;
 		text-align: center;
 	}
 	.phone{
-		margin-top: 104rpx;
+		margin-top: 96rpx;
 		padding: 13rpx 0;
 		
 		font-size: 28rpx;

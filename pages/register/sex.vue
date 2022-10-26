@@ -58,7 +58,7 @@
 		width: 750rpx;
 		height: 323rpx;
 		display: block;
-		background: linear-gradient(rgba(1,64,226,0.06) 0%, rgba(255,255,255, 0) 60%);
+		/* background: linear-gradient(rgba(1,64,226,0.06) 0%, rgba(255,255,255, 0) 60%); */
 	}
 	.top-right{
 		display: flex;
@@ -82,14 +82,14 @@
 		padding: 0 55rpx;
 	}
 	.title{
-		font-size: 40rpx;
-		font-family: Inter-Bold;
+		font-size: 46rpx;
+		font-family: Inter-Black;
 		font-weight: bold;
 		color: #1A1D26;
 		text-align: center;
 	}
 	.icon{
-		margin-top: 119rpx;
+		margin-top: 110rpx;
 		display: flex;
 		align-items: center;
 		justify-content: space-around;

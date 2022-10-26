@@ -18,7 +18,7 @@ export const lang = {
 		"read": "I have read the privacy policy and user manual",
 		"area": "Current location",
 	},
-	"loginPhone": {
+	"login_phone": {
 		"title": "Log in with your phone",
 		"phone": "phone number",
 		"code": "Verification Code",
@@ -48,7 +48,7 @@ export const lang = {
 		"tip": "Can not be changed after sex is determined",
 	},
 	"like": {
-		"title": "Select your label",
+		"title": "Select Interests",
 		"Done": "Done",
 	},
 	"user": {
@@ -66,7 +66,7 @@ export const lang = {
 		"Album": "Album",
 		"Video": "Video",
 		"Collection": "Collection",
-		
+
 		"save_to_album": "Save to album",
 	},
 	"browse": {
@@ -109,7 +109,7 @@ export const lang = {
 	"payment": {
 		"payment": "payment",
 		"determine": "Determine",
-		
+
 		"balance_deduction": "Balance deduction",
 		"deductible_gold_coins": "Deductible gold coins",
 		"insufficient_amount": "Insufficient amount",
@@ -122,11 +122,60 @@ export const lang = {
 		"invitation": "invitation",
 		"detailed": "detailed",
 		"id": "My invitation ID",
-		
+
 		"placeholder": "Enter the invitation ID number",
 		"my_invitation": "My invitation",
 		"clipboard": "Contents copied to clipboard"
 	},
+	"personal": {
+		"edit_information": "Edit information",	
+		"name": "Nickname",
+		"location": "Location",
+		"mood": "Mood",
+		"birthday": "Birthday",
+		"gender": "Gender",
+		"signature": "Signature",
+		"interests": "Interests",
+		"height": "Height",
+		"emotional_state": "Emotional state",
+		"constellation": "Constellation",
+		"language": "Language",
+		"city": "City",
+		"registration_date": "Registration date",
+		"receiving_location": "Receiving location",
+		"education": "Education",
+		"revenue": "Revenue",
+		"occupation": "Occupation",
+		"income": "Income",
+		"balance": "balance",
+		"sign_out": "Sign Out",
+		
+		"male": "Male",
+		"female": "Female",
+		
+		"input_none": "input...",
+		"choice_none": "choice...",
+		"date_none": "date...",
+		"position_none": "Positioning..."
+	},
+	"birthday": {
+		"birthday": "Edit birthday",
+		"date": "Enter date",
+		"determine": "determine",
+	},
+	"inviter": {
+		"inviter": "Edit inviter",
+		"code": "Enter invitation code",
+		"determine": "determine",
+	},
+	"occupation":{
+		"occupation": "Enter occupation",
+		"title": "Enter your occupation",
+		"determine": "determine",
+	},
+	
+	
+	
 	"order": {
 		"order": "order",
 		"whole": "whole",
@@ -139,20 +188,20 @@ export const lang = {
 		"transaction_closure": "Transaction closure",
 		"refund_succeeded": "Refund succeeded",
 		"pieces_in_total": "pieces in total",
-		
+
 		"price": "price",
 		"buy_again": "Buy again",
 		"to_evaluate": "To evaluate",
-		
+
 		"recommend": "recommend",
 		"points": "Points",
 		"sales": "sales",
-		
+
 		"payment": "Payment",
 		"logistics": "Logistics",
 		"determine": "Determine",
 		"cancel": "Cancel refund",
-		
+
 	},
 	"order_detail": {
 		"received": "To be received",
@@ -165,19 +214,19 @@ export const lang = {
 		"copy": "Copy",
 		"time": "Creation time",
 		"rule": "No return or exchange without reason is supported",
-		
+
 		"total": "Total price of goods",
 		"discount": "Shop discount",
 		"gold_coin": "Gold coin deduction",
 		"freight": "freight",
-		
+
 		"refund": "refund",
 		"view_logistics": "view logistics",
 		"cancel_order": "cancellation of order",
 		"payment": "payment",
 		"cancel_refund": "cancel refund",
 		"evaluate": "Evaluate",
-		
+
 	},
 	"evaluate": {
 		"evaluate": "evaluate",
@@ -192,7 +241,7 @@ export const lang = {
 		"meeting": "Looking forward to meeting you again",
 		"product_information": "Product information",
 		"pieces": "pieces",
-		
+
 		"receipt": "Receipt",
 		"number": "Order No",
 		"copy": "Copy",
@@ -205,13 +254,69 @@ export const lang = {
 		"to_evaluate": "To evaluate",
 	},
 	"refund": {
-		"apply_for_refund": "Apply for refund"
+		"apply_for_refund": "Apply for refund",
+		"cargo_status": "Cargo Status",
+		"please_select": "Please select",
+		"refund_reason": "Refund Reason",
+		"refund_amount": "Refund amount",
+
+		"des_title": "Additional description",
+		"description": "Additional descriptions to help better deal with after-sales issues",
+		"submit": "Submit",
+		"determine": "Determine",
+
+		"no_goods": "No goods received",
+		"receive_goods": "Receive the goods",
+
+		"does_not_meet": "The size of the product description does not match the physical picture",
+		"dissatisfaction": "Not satisfied with the results",
+		"breakage": "Packaging/goods breakage/smudges",
+		"send_wrong": "Wrong shipment of goods",
 	},
-	
-	
+
+
+	"square": {
+		"topic_tribe": "Topic Tribe",
+		"communication": "Communication",
+		"search_placeholder": "Enter search content",
+		"focus": "Focus",
+		"people_rewarded": "people rewarded"
+	},
+	"square_details":{
+		"content_details": "Content details",
+		"focus": "Focus",
+		"reward": "Reward",
+		"people_rewarded": "people rewarded",
+		"comments": "Comments",
+		"ip": "IP",
+		"reply": "Reply",
+		"expand_more_reviews": "Expand more reviews",
+		"no_more": "No more for now",
+		"comment_placeholder": "Please enter your comment",
+		"published": "Published",
+	},
+	"reward": {
+		"reward": "Reward",
+		"record": "Record",
+		"reward_placeholder": "Please enter your reward coins",
+		"determine": "Determine",
+		
+	},
+	"reward_record": {
+		"reward_record": "Reward record",
+		"reward_coins": "Reward coins",
+		
+	},
+	"topic": {
+		"close": "Close",
+		
+	},
+
+
 	"bottom": {
 		"Pair": "Pair",
 		"Shop": "Shop",
+		"square": "Square",
 		"News": "News",
 		"Me": "Me",
 	},
