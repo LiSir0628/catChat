@@ -633,6 +633,7 @@
 	.talk-lists{
 		display: flex;
 		align-items: center;
+		margin: 0 0 0 auto;
 	}
 	.talk-list{
 		display: flex;

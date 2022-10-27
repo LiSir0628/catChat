@@ -142,6 +142,15 @@
 			}
 		},
 		{
+			"path": "pages/user/userCard",
+			"style": {
+				// "navigationBarTitleText": "用户信息",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
 			"path": "pages/edit/birthday",
 			"style": {
 				// "navigationBarTitleText": "编辑生日",

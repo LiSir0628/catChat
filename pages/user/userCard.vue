@@ -1,46 +1,55 @@
 <template>
 	<view class="container">
-		<view class="top-modular">
-			<view class="top">
-				<view class="top-title">
-					<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :title="title">
-					</uni-nav-bar>
-					<view class="new-sort" @click="close">
-						{{ $t('topic.close') }}
-					</view>
+		<image class="banner" src="../../static/images/user/card/icon01.png"></image>
+		<!-- <uni-nav-bar fixed background-color="rgba(0,0,0,0)"> -->
+		<uni-nav-bar fixed background-color="rgb(245,247,249)">
+			<block slot="left">
+				<view class="back">
+					<uni-icons type="back" color="#666" size="18" />
 				</view>
-				<view class="search-modular">
-					<image class="search-logo" src="../../static/images/square/icon02.png"></image>
-					<input class="search-input" :placeholder="$t('topic.search_placeholder')"/>
-				</view>
+			</block>
+			<view class="area-card-modular">
+				<image class="area-card-logo" src="../../static/images/square/icon05.png"></image>
+				<view class="area-card-text">Fuzhou City</view>
 			</view>
-			
-			<image class="banner" src="../../static/images/square/topic/icon03.png"></image>
-			
-			<view class="look-modular">
-				<view class="look-style">
-					<view class="look-num">48.3k {{ $t('topic.views') }}</view>
-					<view class="published-num">150 {{ $t('topic.number_people_published') }}</view>
-				</view>
-				<image class="share-logo" src="../../static/images/square/topic/icon02.png" @click="toShare"></image>
+			<block slot="right">
+				<uni-icons type="more-filled" color="#666" size="18" />	
+			</block>
+		</uni-nav-bar>
+		
+		<view class="user-card-msg">
+			<image class="user-card-photo" src="../../static/images/user/photo01.jpg"></image>
+			<view class="user-card-name-modular">
+				<view class="user-card-name">Michael jackson</view>
+				<image class="grade-logo" src="../../static/images/user/card/icon02.png"></image>
+			</view>
+			<view class="user-card-age">{{ $t('userCard.female') }} , 26 {{ $t('userCard.years_old') }} , {{ $t('userCard.single') }}</view>
+			<view class="span-lists">
+				<view class="span-list">Social expert</view>
+				<view class="span-list">Handsome boy</view>
+				<view class="span-list">lovely</view>
+				...
 			</view>
 		</view>
+		
 		<view class="content">
-			<view class="nav-list">
-				<view class="nav-sort" :class="{'nav-sort-active': cindex == 0}" @click="goSort(0)">{{ $t('topic.recommend') }}</view>
-				<view class="nav-sort" :class="{'nav-sort-active': cindex == 1}" @click="goSort(1)">{{ $t('topic.follow') }}</view>
-			</view>
+			<scroll-view class="nav-lists" scroll-x="true" @scroll="scroll"
+				:show-scrollbar="false">
+				<view class="nav-list">
+					<view class="nav-sort" v-for="item,index in sortList" :class="{'nav-sort-active': cindex == index}" @click="goSort(index)">
+						{{item.title}}
+					</view>
+				</view>
+			</scroll-view>
 			
 			<view class="square-lists">
 				<view class="square-list" @click="goDetail">
-					<image class="user-logo" src="../../static/images/user/photo02.png"></image>
+					<!-- <image class="user-logo" src="../../static/images/user/photo02.png"></image> -->
 					<view class="user-notice">
 						<view class="user-msg">
 							<view class="user-msg-top"> 
-								<view class="user-name">九亿少女的偶像ADHKA</view>
 								<view class="user-time">2022-08-02 22:12:12</view>
 							</view>
-							<view class="user-btn">{{ $t('topic.focus') }}</view>
 						</view>
 						<view class="space-title">你见过最阴暗的事是什么？</view>
 						<view class="space-content">
@@ -75,14 +84,14 @@
 								<image class="reward-user-logo" src="../../static/images/user/photo02.png"></image>
 								<image class="reward-user-logo" src="../../static/images/user/photo02.png"></image>
 							</view>
-							<view class="reward-sm">105 {{ $t('topic.people_rewarded') }}</view>
+							<view class="reward-sm">105 {{ $t('userCard.people_rewarded') }}</view>
 						</view>
 						
 						<view class="talk-modular">
-							<view class="area-modular">
+							<!-- <view class="area-modular">
 								<image class="area-logo" src="../../static/images/square/icon05.png"></image>
 								<view class="area-text">Fuzhou City</view>
-							</view>
+							</view> -->
 							<view class="talk-lists">
 								<view class="talk-list">
 									<image class="talk-logo" src="../../static/images/square/icon07.png"></image>
@@ -100,54 +109,55 @@
 				</view>
 				
 			</view>
-		</view>
-		<view class="comment-bottom">
-			<input disabled class="comment-text" :placeholder="$t('topic.talking_with_them')"/>
+			
 		</view>
 		
-		<share ref="share"></share>
+		<view class="card-bottom">
+			<view class="focus">{{ $t('userCard.focus') }}</view>
+			<view class="message">{{ $t('userCard.message') }}</view>
+		</view>
 	</view>
 </template>
 
 <script>
-	import share from '@/pages/common/share.vue'
 	export default {
 		data() {
 			return {
-				title: "#话题部落",
 				cindex: 0,
+				sortList: [{
+					id: 1,
+					title: this.$t('userCard').menyedihkan
+				},{
+					id: 2,
+					title: this.$t('userCard').focus
+				},{
+					id: 3,
+					title: this.$t('userCard').getting_noticed
+				},{
+					id: 4,
+					title: this.$t('userCard').be_rewarded
+				},]
 			}
-		},
-		components: {
-			share,
-		},
-		onLoad(option) {
-			//如果参数有值，渠道入口-请求
-			//如果首页、分类特殊值有值-请求（不与上方同时触发）
-			if (option.topic_name) this.title = "#" + option.topic_name
-		},
-		mounted() {
-			
 		},
 		methods: {
 			back() {
 				window.history.go(-1)
 			},
 			
-			close() {
-				console.log("取消关注")
+			scroll(e) {
+				//this.scrollLeft = e.detail.scrollLeft
+				// console.log(e)
+				// console.log(this.scrollLeft)
 			},
 			
 			goSort(index) {
-				if(this.cindex == index) return
+				if(this.cindex == index ) return
 				this.cindex = index
 			},
-			toShare() {
-				this.$refs.share.open()
-			},
+			
 			goDetail() {
 				uni.navigateTo({
-					url: 'squareDetails'
+					url: '/pages/square/squareDetails'
 				});
 			},
 			previewImage() {
@@ -162,147 +172,161 @@
 
 <style scoped>
 	.container {
-		padding-bottom: 100rpx;
+		padding-bottom: 140rpx;
 	}
 	
-	/* 分类 */
-	.top-modular{
-		border-bottom: 16rpx solid rgba(26,29,38,0.08);
-	}
-	
-	.top{
-		width: 100%;
-		position: fixed;
+	.banner{
+		width: 750rpx;
+		height: 886rpx;
+		position: absolute;
 		top: 0;
 		left: 0;
-		z-index: 100;
-		background: #ffffff;
-		padding-bottom: 30rpx;
+		z-index: -1;
+	}
+
+	.back {
+		/* #ifndef APP-PLUS-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		width: 160rpx;
+		margin-left: 4px;
+	}
+
+	.area-card-modular{
+		display: flex;
+		align-items: center;
 	}
 	
-	.top-title{
-		position: relative;
+	.area-card-logo{
+		width: 36rpx;
+		height: 44rpx;
+		display: block;
 	}
 	
-	.new-sort{
-		min-width: 100rpx;
-		padding: 0 10rpx;
+	.area-card-text{
+		font-size: 32rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		color: #ED4C4C;
+		margin-left: 8rpx;
+	}
+	
+	/deep/ .uni-navbar__header-container {
+		justify-content: flex-end;
+		padding: 0;
+	}
+	/deep/ .uni-navbar__header-btns-right {
+		width: 48rpx !important;
+		display: flex;
+	}
+	/deep/ .uniui-more-filled{
+		transform: rotate(90deg);
+	}
+	/deep/ .uni-navbar--border {
+		border-bottom-color: rgba(0,0,0,0);
+	}
+	
+	/* 用戶信息 */
+	.user-card-msg{
+		padding: 60rpx 0;
+	}
+	.user-card-photo{
+		width: 140rpx;
+		height: 140rpx;
+		display: block;
+		box-shadow: 0rpx 6rpx 10rpx 0rpx rgba(0,0,0,0.2);
+		border-radius: 30rpx;
+		margin:0 auto;
+	}
+	.user-card-name-modular{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-top: 40rpx;
+	}
+	.user-card-name{
+		font-size: 34rpx;
+		font-family: Inter-Bold;
+		font-weight: bold;
+		color: #1A1D26;
+	}
+	.grade-logo{
+		width: 42rpx;
+		height: 42rpx;
+		display: block;
+		margin-left: 12rpx;
+	}
+	.user-card-age{
+		font-size: 30rpx;
+		font-family: Inter-Regular;
+		font-weight: 400;
+		color: #333333;
+		margin: 18rpx auto;
+		text-align: center;
+	}
+	.span-lists{
+		margin: 10rpx auto 0;
+		display: flex;
+		justify-content: center;
+	}
+	.span-list{
+		padding: 0 19rpx;
 		height: 56rpx;
+		line-height: 56rpx;
 		background: rgba(26,29,38,0.1);
 		border-radius: 60rpx;
+		
 		font-size: 28rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #1A1D26;
-		position: absolute;
-		right: 30rpx;
-		top: 0;
-		bottom: 0;
-		margin: auto;
-		vertical-align: middle;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		text-align: center;
+		margin-right: 20rpx;
 	}
-	
-	/deep/ .uni-navbar--border {
-		border-bottom-color: white;
-	}
-	
-	/* 搜索框 */
-	.search-modular{
-		margin: 24rpx auto 0;
-		position: relative;
-	}
-	.search-logo{
-		width: 32rpx;
-		height: 32rpx;
-		position: absolute;
-		left: 60rpx;
-		top: 0;
-		bottom: 0;
-		margin: auto;
-		vertical-align: middle;
-	}
-	.search-input{
-		width: 690rpx;
-		height: 88rpx;
+	/* 主要內容 */
+	.content{	
+		width: 750rpx;
+		min-height: 600rpx;
+		padding: 40rpx 30rpx 0;
+		background: #ffffff;
 		box-sizing: border-box;
-		background: #F5F5F5;
-		border-radius: 60rpx;
-		margin: 0 auto;
-		padding: 0 80rpx;
-		
-		font-size: 28rpx;
-		font-family: Inter-Regular;
-		font-weight: 400;
-		color: #999999;
+		border-radius: 40rpx 40rpx 0rpx 0rpx
 	}
 	
-	.banner{
+	/deep/ ::-webkit-scrollbar {
+		display: none;
+		width: 0 !important;
+		height: 0 !important;
+		-webkit-appearance: none;
+		background: transparent;
+	}
+	
+	.nav-lists{
 		width: 690rpx;
-		height: 200rpx;
-		display: block;
-		border-radius: 20rpx;
-		margin: 232rpx auto 0;
-	}
-	
-	.look-modular{
-		width: 690rpx;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin: 0 auto;
-		padding: 32rpx 0 40rpx;
-	}
-	
-	.look-style{
-		
-	}
-	
-	.look-num{
-		font-size: 30rpx;
-		font-family: Inter-Regular;
-		font-weight: 400;
-		color: #6A6A6C;
-	}
-	
-	.published-num{
-		font-size: 30rpx;
-		font-family: Inter-Regular;
-		font-weight: 400;
-		color: #6A6A6C;
-		margin-top: 12rpx;
-	}
-	
-	.share-logo{
-		width: 56rpx;
-		height: 56rpx;
-	}
-	
-	/* 主要内容 */
-	.content {
-		padding: 32rpx 30rpx 0;
-	}
-	.nav-list{
-		display: flex;
-		align-items: center;
+		white-space: nowrap;
 		border-bottom: 2rpx solid rgba(155,155,155,0.4);
 	}
 	
+	.nav-list{
+		display: flex;
+	}
+	
 	.nav-sort{
-		font-size: 28rpx;
+		font-size: 30rpx;
 		font-family: Inter-Medium;
 		font-weight: 500;
-		color: #999999;
-		margin-right: 36rpx;
+		color: #6A6A6C;
+		margin-right: 52rpx;
 		padding: 0 0 14rpx;
 	}
 	
 	.nav-sort-active{
-		font-size: 32rpx;
-		font-family: Inter-Bold;
-		font-weight: bold;
+		font-size: 30rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
 		color: #1A1D26;
 		border-bottom: 4rpx solid #1A1D26;
 	}
@@ -310,7 +334,9 @@
 	/* 广场话题 */
 	.square-lists{
 		width: 690rpx;
-		margin: 50rpx auto 0;
+		margin: 40rpx auto 0;
+		padding: 0 10rpx;
+		box-sizing: border-box;
 	}
 	.square-list{
 		display: flex;
@@ -323,17 +349,16 @@
 		margin-right: 28rpx;
 	}
 	.user-notice{
-		width: 574rpx;
+		width: 670rpx;
 		box-sizing: border-box;
 	}
 	.user-msg{
-		height: 88rpx;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 	}
 	.user-msg-top{
-		width: 420rpx;
+		width: 600rpx;
 	}
 	.user-name{
 		font-size: 28rpx;
@@ -347,7 +372,7 @@
 		-o-text-overflow: ellipsis;
 	}
 	.user-time{
-		font-size: 24rpx;
+		font-size: 28rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #6A6A6C;
@@ -435,7 +460,7 @@
 	
 	.reward-modular{
 		display: flex;
-		justify-content: space-between;
+		justify-content: flex-start;
 		align-items: center;
 		margin-top: 20rpx;
 		padding-bottom: 12rpx;
@@ -460,12 +485,13 @@
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #1A1D26;
-		margin-left: 35rpx;
+		margin-left: 38rpx;
 	}
 	
 	.area-modular{
 		display: flex;
 		align-items: center;
+		display: none;
 	}
 	
 	.area-logo{
@@ -509,46 +535,44 @@
 		font-family: Inter-Regular;
 		color: #6A6A6C;
 	}
-	/* 发布评论 */
-	.comment-bottom {
-		width: 690rpx;
-		height: 78rpx;
-		/* box-sizing: border-box; */
+	
+	/* 底部按鈕 */
+	.card-bottom{
+		width: 750rpx;
+		height: 128rpx;
 		background: #FFFFFF;
+		
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
 		position: fixed;
 		bottom: 0;
-		left: 0;
-		right: 0;
-		margin: 0 auto;
-		border-top: 2rpx solid #D9D9D9;
-		display: flex;
-		padding: 20rpx 30rpx;
+		border-top: 2rpx solid #E9E9EA;
 	}
-	.comment-text{
-		width: 690rpx;
-		height: 80rpx;
-		background: #F5F5F5;
+	.focus{
+		width: 335rpx;
+		height: 88rpx;
+		line-height: 88rpx;
+		background: #1A1D26;
 		border-radius: 60rpx;
 		
-		font-size: 28rpx;
-		font-family: Inter-Regular;
-		font-weight: 400;
-		color: #999999;
-		padding: 0 30rpx;
-		box-sizing: border-box;
-	}
-	/* .commit-btn{
-		width: 180rpx;
-		height: 80rpx;
-		background: #1A1D26;
-		border-radius: 200rpx;
-		
 		font-size: 30rpx;
-		font-family: Inter-Regular;
-		font-weight: 400;
+		font-family: Inter-Bold;
+		font-weight: bold;
 		color: #FFFFFF;
 		text-align: center;
-		line-height: 80rpx;
-		margin-left: 20rpx;
-	} */
+	}
+	.message{
+		width: 335rpx;
+		height: 88rpx;
+		line-height: 88rpx;
+		background: #1A1D26;
+		border-radius: 60rpx;
+	
+		font-size: 30rpx;
+		font-family: Inter-Bold;
+		font-weight: bold;
+		color: #FFFFFF;
+		text-align: center;
+	}
 </style>

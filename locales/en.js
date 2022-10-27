@@ -158,6 +158,21 @@ export const lang = {
 		"date_none": "date...",
 		"position_none": "Positioning..."
 	},
+	"userCard": {
+		"female": "Female",
+		"years_old": "years old",
+		"single": "Single",
+		
+		"menyedihkan": "Menyedihkan",
+		"focus": "Focus",
+		"getting_noticed": "Getting noticed",
+		"be_rewarded": "Be rewarded",
+		
+		"people_rewarded": "people rewarded",
+		"message": "Message",
+		
+	},
+	
 	"birthday": {
 		"birthday": "Edit birthday",
 		"date": "Enter date",
@@ -309,6 +324,14 @@ export const lang = {
 	},
 	"topic": {
 		"close": "Close",
+		"search_placeholder": "Enter search content",
+		"views": "views",
+		"number_people_published": "Number of people published",
+		"recommend": "Recommend",
+		"follow": "Follow",
+		"focus": "Focus",
+		"people_rewarded": "people rewarded",
+		"talking_with_them": "Talking with them",
 		
 	},
 	"share": {
