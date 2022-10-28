@@ -29,8 +29,8 @@
 						</view>
 					</view>
 					
-					<!-- <textarea class="textarea" placeholder-style="textarea-placeholder" v-model="evaluate_lists[index].introduction" placeholder="从多维度评价物品，可以帮助更多想买的人..." /> -->
-					<textarea maxlength="150" class="textarea" placeholder-style="textarea-placeholder" v-model="evaluate_lists[index].introduction" :placeholder="$t('evaluate.placeholder')" />
+					<!-- <textarea class="textarea" placeholder-class="textarea-placeholder" v-model="evaluate_lists[index].introduction" placeholder="从多维度评价物品，可以帮助更多想买的人..." /> -->
+					<textarea maxlength="150" class="textarea" placeholder-class="textarea-placeholder" v-model="evaluate_lists[index].introduction" :placeholder="$t('evaluate.placeholder')" />
 				
 					<!-- <image class="evaluate-logo" src="../../static/images/order/evaluate/icon03.png" @click="photo"></image> -->
 					<view>

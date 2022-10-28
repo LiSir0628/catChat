@@ -349,6 +349,10 @@ export const lang = {
 		"read": "Whether to open the reward?",
 		"publish": "Publish",
 	},
+	"search_topic": {
+		"add_topic": "Add topic",
+		"topic-placeholder": "Search Topics",
+	},
 	
 
 	"bottom": {

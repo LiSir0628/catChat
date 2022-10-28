@@ -32,7 +32,7 @@
 					<view class="evaluate-title">{{ $t('refund.des_title') }}</view>
 				</view>
 				
-				<textarea maxlength="150" class="textarea" placeholder-style="textarea-placeholder" v-model="refund_description" :placeholder="$t('refund.description')" />
+				<textarea maxlength="150" class="textarea" placeholder-class="textarea-placeholder" v-model="refund_description" :placeholder="$t('refund.description')" />
 			
 				<view>
 					<image v-if="refund_images" class="evaluate-logo" :src="refund_images" @click="photo"></image>

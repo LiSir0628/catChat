@@ -4,9 +4,9 @@
 		</uni-nav-bar>
 		
 		<view class="content">
-			<input class="title" placeholder-style="title-placeholder" v-model="title" :placeholder="$t('release.title_placeholder')" />
+			<input class="title" placeholder-class="title-placeholder" v-model="title" :placeholder="$t('release.title_placeholder')" />
 			
-			<textarea maxlength="2000" class="textarea" placeholder-style="textarea-placeholder" v-model="content" :placeholder="$t('release.content_placeholder')" />
+			<textarea maxlength="2000" class="textarea" placeholder-class="textarea-placeholder" v-model="content" :placeholder="$t('release.content_placeholder')" />
 		
 			<image class="upload" src="../../static/images/square/release/icon01.png"></image>
 			
