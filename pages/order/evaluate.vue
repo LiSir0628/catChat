@@ -337,7 +337,7 @@
 		font-size: 28rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
-		color: #6A6A6C;
+		/* color: #6A6A6C; */
 	}
 	.textarea-placeholder{
 		color:#6A6A6C;

@@ -386,7 +386,7 @@
 		font-size: 28rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
-		color: #999999;
+		/* color: #999999; */
 	}
 	/* 用户推荐 */
 	/deep/ ::-webkit-scrollbar {

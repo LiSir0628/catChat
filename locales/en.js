@@ -297,6 +297,22 @@ export const lang = {
 		"focus": "Focus",
 		"people_rewarded": "people rewarded"
 	},
+	"topic": {
+		"close": "Close",
+		"search_placeholder": "Enter search content",
+		"views": "views",
+		"number_people_published": "Number of people published",
+		"recommend": "Recommend",
+		"follow": "Follow",
+		"focus": "Focus",
+		"people_rewarded": "people rewarded",
+		"talking_with_them": "Talking with them",
+		
+	},
+	"share": {
+		"share": "Share to friends",
+		"copy_link": "Copy Link",
+	},
 	"square_details":{
 		"content_details": "Content details",
 		"focus": "Focus",
@@ -322,22 +338,18 @@ export const lang = {
 		"reward_coins": "Reward coins",
 		
 	},
-	"topic": {
-		"close": "Close",
-		"search_placeholder": "Enter search content",
-		"views": "views",
-		"number_people_published": "Number of people published",
-		"recommend": "Recommend",
-		"follow": "Follow",
-		"focus": "Focus",
-		"people_rewarded": "people rewarded",
-		"talking_with_them": "Talking with them",
-		
+	"release": {
+		"publishing_space": "publishing space",
+		"title_placeholder": "Please enter a title",
+		"content_placeholder": "Enter the content of the comment or topic you want to post...",
+		"positon": "Positon",
+		"cancel": "Cancel",
+		"add_topic": "Add topic",
+		"whether_public": "Whether public",
+		"read": "Whether to open the reward?",
+		"publish": "Publish",
 	},
-	"share": {
-		"share": "Share to friends",
-		"copy_link": "Copy Link",
-	},
+	
 
 	"bottom": {
 		"Pair": "Pair",

@@ -158,7 +158,7 @@
 		font-size: 30rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
-		color: #999999;
+		/* color: #999999; */
 	}
 	/* 金币 */
 	.banner{

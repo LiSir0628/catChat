@@ -113,7 +113,7 @@
 		font-size: 28rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
-		color: #999999;
+		/* color: #999999; */
 		border-bottom: 2rpx solid  #999999;
 	}
 	.code-nav{
@@ -127,7 +127,7 @@
 		font-size: 28rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
-		color: #999999;
+		/* color: #999999; */
 		border-bottom: 2rpx solid  #999999;
 	}
 	.code-btn{
@@ -150,7 +150,7 @@
 		font-size: 28rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
-		color: #999999;
+		/* color: #999999; */
 		border-bottom: 2rpx solid  #999999;
 	}
 	.register{

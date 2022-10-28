@@ -275,6 +275,15 @@
 					"titleNView": false
 				}
 			}
+		},
+		{
+			"path": "pages/square/release",
+			"style": {
+				// "navigationBarTitleText": "发布界面",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
 		}
 	],
 	"globalStyle": {

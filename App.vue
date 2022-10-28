@@ -14,7 +14,10 @@
 
 <style>
 	page{
-		text-transform: capitalize;
+		/* text-transform: capitalize; */
+	}
+	/deep/ .uni-input-placeholder{
+		color: #999999;
 	}
 	/*每个页面公共css */
 	@font-face {
