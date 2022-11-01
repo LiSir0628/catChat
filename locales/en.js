@@ -1,4 +1,7 @@
 export const lang = {
+	"start": {
+		"start_text": "Making friends makes you happier",
+	},
 	"cover": {
 		"remind01": "Choose your friends at",
 		"remind02": "random",
@@ -182,7 +185,6 @@ export const lang = {
 		"message": "Message",
 		
 		"close": "Close",
-		"focus": "Focus",
 		"gold_coin": "Gold coin",
 		
 	},
@@ -302,7 +304,13 @@ export const lang = {
 		"breakage": "Packaging/goods breakage/smudges",
 		"send_wrong": "Wrong shipment of goods",
 	},
-
+	"pair": {
+		"chat": "Chat",
+		"friends": "Friends",
+		"search_placeholder": "Find chat you like...",
+		"pm": "PM",
+		
+	},
 
 	"square": {
 		"topic_tribe": "Topic Tribe",

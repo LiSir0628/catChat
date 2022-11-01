@@ -4,8 +4,8 @@
 			<!-- <image class="banner" src="../../static/images/register/icon01.png"></image> -->
 			<view class="sort-modular">
 				<view class="top-left">
-					<view class="sort-friends" :class="{'sort-chat-active': cindex == 0}" @click="goSwitch(0)">Chat</view>
-					<view class="sort-friends" :class="{'sort-chat-active': cindex == 1}" @click="goSwitch(1)">Friends</view>
+					<view class="sort-friends" :class="{'sort-chat-active': cindex == 0}" @click="goSwitch(0)">{{ $t('pair.chat') }}</view>
+					<view class="sort-friends" :class="{'sort-chat-active': cindex == 1}" @click="goSwitch(1)">{{ $t('pair.friends') }}</view>
 				</view>
 				<view class="top-right">
 					<image class="tips-logo" src="../../static/images/chat/icon01.png"></image>
@@ -14,7 +14,7 @@
 			</view>
 			<view class="search-modular">
 				<image class="search-logo" src="../../static/images/chat/icon03.png"></image>
-				<input class="search-input" placeholder="Find chat you like..."/>
+				<input class="search-input" :placeholder="$t('pair.search_placeholder')"/>
 			</view>
 		</view>
 		<view class="content">
@@ -31,7 +31,7 @@
 					</view>
 					<view class="time-modular">
 						<view class="times">35</view>
-						<view class="time">3:26PM</view>
+						<view class="time">3:26{{ $t('pair.pm') }}</view>
 					</view>
 				</view>
 			</view>
@@ -48,7 +48,7 @@
 					</view>
 					<view class="time-modular">
 						<view class="times">35</view>
-						<view class="time">3:26PM</view>
+						<view class="time">3:26{{ $t('pair.pm') }}</view>
 					</view>
 				</view>
 			</view>
@@ -65,7 +65,7 @@
 					</view>
 					<view class="time-modular">
 						<!-- <view class="times">35</view> -->
-						<view class="time">3:26PM</view>
+						<view class="time">3:26{{ $t('pair.pm') }}</view>
 					</view>
 				</view>
 			</view>
@@ -82,7 +82,7 @@
 					</view>
 					<view class="time-modular">
 						<!-- <view class="times">35</view> -->
-						<view class="time">3:26PM</view>
+						<view class="time">3:26{{ $t('pair.pm') }}</view>
 					</view>
 				</view>
 			</view>
@@ -99,7 +99,7 @@
 					</view>
 					<view class="time-modular">
 						<!-- <view class="times">35</view> -->
-						<view class="time">3:26PM</view>
+						<view class="time">3:26{{ $t('pair.pm') }}</view>
 					</view>
 				</view>
 			</view>
@@ -116,7 +116,7 @@
 					</view>
 					<view class="time-modular">
 						<!-- <view class="times">35</view> -->
-						<view class="time">3:26PM</view>
+						<view class="time">3:26{{ $t('pair.pm') }}</view>
 					</view>
 				</view>
 			</view>
