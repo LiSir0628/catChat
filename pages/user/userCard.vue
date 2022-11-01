@@ -4,7 +4,7 @@
 		<!-- <uni-nav-bar fixed background-color="rgba(0,0,0,0)"> -->
 		<uni-nav-bar fixed background-color="rgb(245,247,249)">
 			<block slot="left">
-				<view class="back">
+				<view class="back" @click="back">
 					<uni-icons type="back" color="#666" size="18" />
 				</view>
 			</block>
@@ -23,7 +23,7 @@
 				<view class="user-card-name">Michael jackson</view>
 				<image class="grade-logo" src="../../static/images/user/card/icon02.png"></image>
 			</view>
-			<view class="user-card-age">{{ $t('userCard.female') }} , 26 {{ $t('userCard.years_old') }} , {{ $t('userCard.single') }}</view>
+			<view class="user-card-age">{{ $t('user_card.female') }} , 26 {{ $t('user_card.years_old') }} , {{ $t('user_card.single') }}</view>
 			<view class="span-lists">
 				<view class="span-list">Social expert</view>
 				<view class="span-list">Handsome boy</view>
@@ -42,7 +42,7 @@
 				</view>
 			</scroll-view>
 			
-			<view class="square-lists">
+			<view class="square-lists" v-if="cindex == 0">
 				<view class="square-list" @click="goDetail">
 					<!-- <image class="user-logo" src="../../static/images/user/photo02.png"></image> -->
 					<view class="user-notice">
@@ -84,7 +84,7 @@
 								<image class="reward-user-logo" src="../../static/images/user/photo02.png"></image>
 								<image class="reward-user-logo" src="../../static/images/user/photo02.png"></image>
 							</view>
-							<view class="reward-sm">105 {{ $t('userCard.people_rewarded') }}</view>
+							<view class="reward-sm">105 {{ $t('user_card.people_rewarded') }}</view>
 						</view>
 						
 						<view class="talk-modular">
@@ -106,15 +106,125 @@
 							</view>
 						</view>
 					</view>
+				</view>	
+			</view>
+			
+			<view class="square-lists" v-if="cindex == 1">
+				<view class="user-list">
+					<view class="focus-user">
+						<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
+						<view class="focus-user-msg">
+							<view class="focus-user-name">九亿少女的偶像ADHKA</view>
+							<view class="focus-user-gender">Handsome boy</view>
+						</view>
+					</view>
+					<view class="close-focus">{{ $t('user_card.close') }}</view>
 				</view>
-				
+				<view class="user-list">
+					<view class="focus-user">
+						<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
+						<view class="focus-user-msg">
+							<view class="focus-user-name">九亿少女的偶像ADHKA</view>
+							<view class="focus-user-gender">Handsome boy</view>
+						</view>
+					</view>
+					<view class="close-focus">{{ $t('user_card.focus') }}</view>
+				</view>
+			</view>
+			
+			<view class="square-lists" v-if="cindex == 2">
+				<view class="user-list">
+					<view class="focus-user">
+						<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
+						<view class="focus-user-msg">
+							<view class="focus-user-name">九亿少女的偶像ADHKA</view>
+							<view class="focus-user-gender">Handsome boy</view>
+						</view>
+					</view>
+					<view class="close-focus">{{ $t('user_card.close') }}</view>
+				</view>
+				<view class="user-list">
+					<view class="focus-user">
+						<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
+						<view class="focus-user-msg">
+							<view class="focus-user-name">九亿少女的偶像ADHKA</view>
+							<view class="focus-user-gender">Handsome boy</view>
+						</view>
+					</view>
+					<view class="close-focus">{{ $t('user_card.focus') }}</view>
+				</view>
+			</view>
+			
+			<view class="square-lists" v-if="cindex == 3">
+				<view class="user-list">
+					<view class="focus-user">
+						<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
+						<view class="focus-user-msg">
+							<view class="focus-user-name">九亿少女的偶像ADHKA</view>
+							<view class="focus-user-gender">+500 {{ $t('user_card.gold_coin') }}</view>
+						</view>
+					</view>
+					<view class="close-focus">{{ $t('user_card.close') }}</view>
+				</view>
+				<view class="user-list">
+					<view class="focus-user">
+						<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
+						<view class="focus-user-msg">
+							<view class="focus-user-name">九亿少女的偶像ADHKA</view>
+							<view class="focus-user-gender">+500 {{ $t('user_card.gold_coin') }}</view>
+						</view>
+					</view>
+					<view class="close-focus">{{ $t('user_card.focus') }}</view>
+				</view>
+			</view>
+			
+			<view class="camera-lists" v-if="cindex == 4">
+				<view class="camera-list all-list">
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+				</view>
+			</view>
+			
+			<view class="camera-lists" v-if="cindex == 5">
+				<view class="camera-list all-list">
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+					<image class="camera" src="../../static/images/user/photo03.jpg"></image>
+				</view>
 			</view>
 			
 		</view>
 		
 		<view class="card-bottom">
-			<view class="focus">{{ $t('userCard.focus') }}</view>
-			<view class="message">{{ $t('userCard.message') }}</view>
+			<view class="focus">{{ $t('user_card.focus') }}</view>
+			<view class="message">{{ $t('user_card.message') }}</view>
 		</view>
 	</view>
 </template>
@@ -126,17 +236,23 @@
 				cindex: 0,
 				sortList: [{
 					id: 1,
-					title: this.$t('userCard').menyedihkan
+					title: this.$t('user_card').menyedihkan
 				},{
 					id: 2,
-					title: this.$t('userCard').focus
+					title: this.$t('user_card').focus
 				},{
 					id: 3,
-					title: this.$t('userCard').getting_noticed
+					title: this.$t('user_card').getting_noticed
 				},{
 					id: 4,
-					title: this.$t('userCard').be_rewarded
-				},]
+					title: this.$t('user_card').reward
+				},{
+					id: 5,
+					title: this.$t('user_card').album
+				},{
+					id: 6,
+					title: this.$t('user_card').video
+				}]
 			}
 		},
 		methods: {
@@ -536,15 +652,95 @@
 		color: #6A6A6C;
 	}
 	
+	/* 被关注用户列表 */
+	.user-list{
+		width: 690rpx;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-bottom: 30rpx;
+		border-bottom: 2rpx solid rgba(217,217,217,0.4);
+		margin-bottom: 30rpx;
+	}
+	.user-list:nth-last-child(1) {
+		border-bottom: none;
+	}
+	.focus-user{
+		width: 512rpx;
+		display: flex;
+		align-items: center;
+	}	.focus-user-photo{
+		width: 112rpx;
+		height: 112rpx;
+		display: block;
+		border-radius: 50%;
+	}	.focus-user-msg{
+		width: 380rpx;
+		margin-left: 20rpx;
+	}	.focus-user-name{
+		font-size: 30rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		color: #000000;
+	}	.focus-user-gender{
+		font-size: 26rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		color: #6A6A6C;
+		margin-top: 16rpx;
+	}	.close-focus{
+		min-width: 100rpx;
+		padding: 0 10rpx;
+		height: 56rpx;
+		background: rgba(26,29,38,0.1);
+		border-radius: 60rpx;
+		
+		font-size: 28rpx;
+		font-family: Inter-Regular;
+		font-weight: 400;
+		color: #1A1D26;
+		text-align: center;
+		line-height: 56rpx;
+	}
+	/* 相册 */
+	.camera-lists{
+		width: 690rpx;
+		margin: 40rpx auto 0;
+		box-sizing: border-box;
+	}
+	.camera-list {
+		width: 690rpx;
+		margin: 50rpx auto 0;
+		display: flex;
+		flex-wrap: wrap;
+		padding-bottom: 60rpx;
+	}
+	
+	.camera {
+		width: 210rpx;
+		height: 280rpx;
+		margin: 0 10rpx 20rpx;
+		border-radius: 20rpx 20rpx 20rpx 20rpx;
+	}
+	
+	.video-list {
+		width: 690rpx;
+		margin: 50rpx auto 0;
+		display: flex;
+		flex-wrap: wrap;
+		padding-bottom: 120rpx;
+	}
+	
 	/* 底部按鈕 */
 	.card-bottom{
-		width: 750rpx;
+		width: 690rpx;
+		padding: 0 30RPX;
 		height: 128rpx;
 		background: #FFFFFF;
 		
 		display: flex;
 		align-items: center;
-		justify-content: space-around;
+		justify-content: space-between;
 		position: fixed;
 		bottom: 0;
 		border-top: 2rpx solid #E9E9EA;

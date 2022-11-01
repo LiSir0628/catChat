@@ -1,6 +1,19 @@
 <template>
 	<view class="container">
-		<uni-nav-bar fixed left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :title="$t('search_topic.add_topic')">
+		<!-- <uni-nav-bar fixed left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :title="$t('search_topic.add_topic')">
+		</uni-nav-bar> -->
+		<uni-nav-bar fixed background-color="#ffffff">
+			<block slot="left">
+				<view class="back" @click="back">
+					<uni-icons type="back" color="#666" size="18" />
+				</view>
+			</block>
+			<view class="area-card-modular">
+				<view class="area-card-text">{{ $t('search_topic.add_topic') }}</view>
+			</view>
+			<block slot="right">
+				<view @click="complete">{{ $t('search_topic.complete') }}</view>
+			</block>
 		</uni-nav-bar>
 		
 		<view class="content">
@@ -10,7 +23,12 @@
 			</view>
 			
 			<view class="select-topic">
-				
+				<view class="select-modular-lists">
+					<view class="select-modular modular-active" v-for="item,index in topicLists">
+						<view>{{item.title}}</view>
+						<image class="del-logo" src="../../static/images/square/delete.png" @click="del(index)"></image>
+					</view>
+				</view>
 			</view>
 			
 			<view class="modular-lists">
@@ -65,6 +83,24 @@
 					title: 'Always lose weight',
 					isActive: false
 				}],
+				
+				topicLists: [{
+					id: 1,
+					title: 'Social expert',
+					isActive: true
+				},{
+					id: 2,
+					title: 'Handsome boy',
+					isActive: true
+				},{
+					id: 7,
+					title: 'Cook',
+					isActive: true
+				},{
+					id: 10,
+					title: 'i am  test',
+					isActive: true
+				}],
 				num: 3,
 				allNum: 5,
 			}
@@ -77,12 +113,18 @@
 			check() {
 				// 检查选择数量
 				let number = 0;
+				this.num = this.topicLists.length
+			},
+			del(index) {
 				for(let i in this.lists){
-					if(this.lists[i].isActive){
-						number = number + 1
+					if(this.lists[i].id == this.topicLists[index].id){
+						this.lists[i].isActive = false
+						break
 					}
 				}
-				this.num = number
+				this.topicLists.splice(index, 1)
+				this.check()
+				this.$forceUpdate()
 			},
 			goChoose(index) {
 				// 数量判断
@@ -96,8 +138,24 @@
 					return
 				}
 				this.lists[index].isActive = !this.lists[index].isActive
+				// 判断是添加还是删除
+				if(this.lists[index].isActive) {
+					this.topicLists.push(this.lists[index])
+				} else {
+					for(let i in this.topicLists){
+						if(this.topicLists[i].id == this.lists[index].id){
+							this.topicLists.splice(i, 1)
+							break
+						}
+					}
+				}
 				this.check()
 				this.$forceUpdate()
+			},
+			complete() {
+				console.log("确定")
+				console.log( this.topicLists )
+				this.back()
 			}
 		}
 	}
@@ -108,10 +166,59 @@
 		padding-bottom: 80rpx;
 	}
 	
-	/deep/ .uni-navbar--border {
-		border-bottom-color: white;
+	.back {
+		/* #ifndef APP-PLUS-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		width: 160rpx;
 	}
 	
+	.area-card-modular{
+		display: flex;
+		align-items: center;
+	}
+	
+	.area-card-logo{
+		width: 36rpx;
+		height: 44rpx;
+		display: block;
+	}
+	
+	.area-card-text{
+		font-size: 32rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		text-align: center;
+		/* margin-left: 8rpx; */
+	}
+	/deep/ .uni-navbar__header-btns-left{
+		/* position: static; */
+	}
+	/deep/ .uni-navbar__header-container {
+		justify-content: center;
+		padding: 0;
+	}
+	/deep/ .uni-navbar__header-btns-right {
+		width: 180rpx !important;
+		display: flex;
+		position: absolute;
+		right: 20rpx;
+		top: 0;
+		bottom: 0;
+		vertical-align: middle;
+		margin: auto 0;
+		
+	}
+	/deep/ .uniui-more-filled{
+		transform: rotate(90deg);
+	}
+	/deep/ .uni-navbar--border {
+		border-bottom-color: rgba(0,0,0,0);
+	}
+	/* 主要内容 */
 	.content {
 		padding: 24rpx 0 0;
 	}
@@ -160,6 +267,37 @@
 		box-sizing: border-box;
 		background: #F5F5F5;
 		margin: 40rpx auto 0;
+	}
+	
+	.select-modular-lists{
+		width: 690rpx;
+		/* overflow: hidden;
+		overflow-y: auto; */
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		margin: 40rpx auto;
+		padding: 50rpx 0;
+	}
+	.select-modular{
+		font-size: 28rpx;
+		line-height: 28rpx;
+		font-family: Inter-Regular;
+		font-weight: 400;
+		color: #1A1D26;
+		padding: 11rpx 19rpx;
+		background: rgba(26,29,38,0.1);
+		border-radius: 60rpx;
+		margin: 0 20rpx 30rpx 20rpx;
+		position: relative;
+	}
+	.del-logo{
+		width: 40rpx;
+		height: 40rpx;
+		display: block;
+		position: absolute;
+		top: -20rpx;
+		right: -20rpx;
 	}
 	/* 模块列表 */
 	.modular-lists{

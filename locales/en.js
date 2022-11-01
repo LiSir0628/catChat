@@ -61,6 +61,8 @@ export const lang = {
 		"order": "order",
 		"browse": "browse",
 		"invitation": "invitation",
+		"gift": "gift",
+		"reward": "reward",
 
 		"Menyedihkan": "Menyedihkan",
 		"Album": "Album",
@@ -68,6 +70,12 @@ export const lang = {
 		"Collection": "Collection",
 
 		"save_to_album": "Save to album",
+		
+		"focus": "Focus",
+		"getting_noticed": "Getting noticed",
+		"reward": "Reward",
+		"close": "Close",
+		"gold_coin": "Gold coin",
 	},
 	"browse": {
 		"browse": "browse",
@@ -158,7 +166,7 @@ export const lang = {
 		"date_none": "date...",
 		"position_none": "Positioning..."
 	},
-	"userCard": {
+	"user_card": {
 		"female": "Female",
 		"years_old": "years old",
 		"single": "Single",
@@ -166,10 +174,16 @@ export const lang = {
 		"menyedihkan": "Menyedihkan",
 		"focus": "Focus",
 		"getting_noticed": "Getting noticed",
-		"be_rewarded": "Be rewarded",
+		"reward": "Reward",
+		"album": "Album",
+		"video": "Video",
 		
 		"people_rewarded": "people rewarded",
 		"message": "Message",
+		
+		"close": "Close",
+		"focus": "Focus",
+		"gold_coin": "Gold coin",
 		
 	},
 	
@@ -351,9 +365,20 @@ export const lang = {
 	},
 	"search_topic": {
 		"add_topic": "Add topic",
+		"complete": "Complete",
 		"topic-placeholder": "Search Topics",
 	},
-	
+	"see": {
+		"who_can_see": "Who can see",
+		"complete": "Complete",
+		"public": "Public",
+		"friends": "Only visible to friends",
+		"yourself": "Visible only to yourself"
+	},
+	"postion": {
+		"postion": "postion",
+		"nearby-placeholder": "Search nearby",
+	},
 
 	"bottom": {
 		"Pair": "Pair",

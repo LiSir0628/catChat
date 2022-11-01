@@ -225,7 +225,7 @@
 		{
 			"path": "pages/chat/pair",
 			"style": {
-				// "navigationBarTitleText": "申请退款",
+				// "navigationBarTitleText": "聊天界面",
 				"app-plus": {
 					"titleNView": false
 				}
@@ -289,6 +289,24 @@
 			"path": "pages/square/searchTopic",
 			"style": {
 				// "navigationBarTitleText": "搜索添加主题",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/square/see",
+			"style": {
+				// "navigationBarTitleText": "谁可以看",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/square/postion",
+			"style": {
+				// "navigationBarTitleText": "定位",
 				"app-plus": {
 					"titleNView": false
 				}

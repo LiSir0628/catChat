@@ -3,7 +3,7 @@
 		<image class="icon05" src="../../static/images/user/icon05.png"></image>
 		<view class="top">
 			<view>
-				<image class="top-logo left-logo" src="../../static/images/user/icon08.png"></image>
+				<image class="top-logo left-logo" src="../../static/images/user/icon08.png" @click="editUser"></image>
 				<image class="top-logo" src="../../static/images/user/icon14.png" @click="invitationBtn"></image>
 			</view>
 			<!-- <image class="top-logo" src="../../static/images/user/icon02.png"></image> -->
@@ -45,24 +45,47 @@
 					<view class="level-open"> {{ $t('user.Go') }} </view>
 				</view>
 			</view>
-			<view class="nav-list">
+			<!-- <view class="nav-list">
 				<view class="logo-modular" v-for="item in navList" @click="goUrl(item)">
 					<image class="nav-logo" :style="item.styleClass" :src="item.image"></image>
 					<view>{{item.name}}</view>
 				</view>
-			</view>
+			</view> -->
+			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay"
+				:interval="interval" :duration="duration">
+				<swiper-item class="swiper-list">
+					<view class="logo-modular" v-for="item,index in navList" @click="goUrl(item)" v-if="index < 4">
+						<image class="nav-logo" :style="item.styleClass" :src="item.image"></image>
+						<view>{{item.name}}</view>
+					</view>
+				</swiper-item>
+				<swiper-item class="swiper-list">
+					<view class="logo-modular" v-for="item,index in navList" @click="goUrl(item)" v-if="index >= 4">
+						<image class="nav-logo" :style="item.styleClass" :src="item.image"></image>
+						<view>{{item.name}}</view>
+					</view>
+				</swiper-item>
+			</swiper>
 
 			<view class="scrib"></view>
 
 			<view class="video-modular">
-				<view class="video-nav">
+				<!-- <view class="video-nav">
 					<view class="video-nav-list">
 						<view class="video-text" :class="{'video-text-active': cindex == index }"
 							v-for="item,index in videoList" @click="switchTab(index)">
 							{{item.name}}
 						</view>
 					</view>
-				</view>
+				</view> -->
+				<scroll-view class="video-nav" scroll-x="true" @scroll="scroll"
+					:show-scrollbar="false">
+					<view class="video-nav-list">
+						<view class="video-text" v-for="item,index in videoList" :class="{'video-text-active': cindex == index}" @click="switchTab(index)">
+							{{item.name}}
+						</view>
+					</view>
+				</scroll-view>
 
 				<view class="meny-list all-list" v-if="cindex == 0">
 					<view class="meny">
@@ -153,6 +176,75 @@
 						</view>
 					</view>
 				</view>
+				
+				<view class="square-lists" v-else-if="cindex == 4">
+					<view class="user-list">
+						<view class="focus-user">
+							<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
+							<view class="focus-user-msg">
+								<view class="focus-user-name">九亿少女的偶像ADHKA</view>
+								<view class="focus-user-gender">Handsome boy</view>
+							</view>
+						</view>
+						<view class="close-focus">{{ $t('user.close') }}</view>
+					</view>
+					<view class="user-list">
+						<view class="focus-user">
+							<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
+							<view class="focus-user-msg">
+								<view class="focus-user-name">九亿少女的偶像ADHKA</view>
+								<view class="focus-user-gender">Handsome boy</view>
+							</view>
+						</view>
+						<view class="close-focus">{{ $t('user.focus') }}</view>
+					</view>
+				</view>
+				
+				<view class="square-lists" v-else-if="cindex == 5">
+					<view class="user-list">
+						<view class="focus-user">
+							<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
+							<view class="focus-user-msg">
+								<view class="focus-user-name">九亿少女的偶像ADHKA</view>
+								<view class="focus-user-gender">Handsome boy</view>
+							</view>
+						</view>
+						<view class="close-focus">{{ $t('user.close') }}</view>
+					</view>
+					<view class="user-list">
+						<view class="focus-user">
+							<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
+							<view class="focus-user-msg">
+								<view class="focus-user-name">九亿少女的偶像ADHKA</view>
+								<view class="focus-user-gender">Handsome boy</view>
+							</view>
+						</view>
+						<view class="close-focus">{{ $t('user.focus') }}</view>
+					</view>
+				</view>
+				
+				<view class="square-lists" v-else-if="cindex == 6">
+					<view class="user-list">
+						<view class="focus-user">
+							<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
+							<view class="focus-user-msg">
+								<view class="focus-user-name">九亿少女的偶像ADHKA</view>
+								<view class="focus-user-gender">+500 {{ $t('user.gold_coin') }}</view>
+							</view>
+						</view>
+						<view class="close-focus">{{ $t('user.close') }}</view>
+					</view>
+					<view class="user-list">
+						<view class="focus-user">
+							<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
+							<view class="focus-user-msg">
+								<view class="focus-user-name">九亿少女的偶像ADHKA</view>
+								<view class="focus-user-gender">+500 {{ $t('user.gold_coin') }}</view>
+							</view>
+						</view>
+						<view class="close-focus">{{ $t('user.focus') }}</view>
+					</view>
+				</view>
 			</view>
 		</view>
 
@@ -172,6 +264,11 @@
 	export default {
 		data() {
 			return {
+				indicatorDots: true,
+				autoplay: false,
+				interval: 60000,
+				duration: 500,
+				
 				userList: {
 					id: 89596665,
 					name: "Michael jackson",
@@ -217,6 +314,24 @@
 						width: '56rpx',
 						height: '53rpx'
 					},
+				}, {
+					id: 5,
+					name: this.$t('user').gift,
+					url: '',
+					image: "../../static/images/user/icon29.png",
+					styleClass: {
+						width: '56rpx',
+						height: '53rpx'
+					},
+				}, {
+					id: 6,
+					name: this.$t('user').reward,
+					url: '/pages/square/reward',
+					image: "../../static/images/user/icon30.png",
+					styleClass: {
+						width: '54rpx',
+						height: '55rpx'
+					},
 				}],
 				videoList: [{
 					id: 1,
@@ -230,6 +345,15 @@
 				}, {
 					id: 4,
 					name: this.$t('user').Collection
+				},{
+					id: 5,
+					name: this.$t('user').focus
+				},{
+					id: 6,
+					name: this.$t('user').getting_noticed
+				},{
+					id: 7,
+					name: this.$t('user').reward
 				}],
 
 				kindex: 4,
@@ -264,7 +388,7 @@
 					id: 4,
 					name: this.$t('bottom').News,
 					image: "../../static/images/user/icon04.png",
-					url: "",
+					url: "/pages/chat/pair",
 					styleClass: {
 						width: '42rpx',
 						height: '39rpx'
@@ -273,7 +397,7 @@
 					id: 5,
 					name: this.$t('bottom').Me,
 					image: "../../static/images/user/icon11.png",
-					url: "",
+					url: "/pages/user/user",
 					styleClass: {
 						width: '40rpx',
 						height: '44rpx'
@@ -290,6 +414,11 @@
 		methods: {
 			back() {
 				window.history.go(-1)
+			},
+			editUser() {
+				uni.navigateTo({
+					url: "personal"
+				});
 			},
 			invitationBtn() {
 				this.$refs.userMsg.open()
@@ -308,6 +437,11 @@
 					current: "https://api.domefish.com/storage/banner/6a3b5aeb6638e3c3eb166cf173cc4efe.png",
 					urls: ["https://api.domefish.com/storage/banner/6a3b5aeb6638e3c3eb166cf173cc4efe.png","https://api.domefish.com/storage/banner/7c29347477ba440a4ad17e9e3adc1e6e.png","https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/3639a3488a93425ca108e9ce85cc6f40~tplv-dx0w9n1ysr-origin-jpeg.jpeg"],
 				});
+			},
+			scroll(e) {
+				//this.scrollLeft = e.detail.scrollLeft
+				// console.log(e)
+				// console.log(this.scrollLeft)
 			},
 			goIndex(index) {
 				if (this.kindex == index) return
@@ -506,9 +640,11 @@
 	}
 
 	.logo-modular {
+		width: 20%;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+		margin: 0 2.5%;
 	}
 
 	.nav-logo {
@@ -518,13 +654,49 @@
 		margin: 0 auto 25rpx;
 		text-align: center;
 	}
-
+	
+	.swiper{
+		width: 750rpx;
+		height: 184rpx;
+		padding: 0 30rpx;
+		box-sizing: border-box;
+		font-size: 30rpx;
+		font-family: Inter-Regular;
+		font-weight: 400;
+		color: #1A1D26;
+		display: flex;
+		justify-content: space-between;
+		text-align: center;
+		margin: 50rpx auto 0;
+	}
+	
+	.swiper-list{
+		display: flex;
+		flex-wrap: wrap;
+		/* justify-content: space-between; */
+		align-items: start;
+	}
+	
+	/deep/ .uni-swiper-dot{
+		width: 32rpx;
+		height: 8rpx;
+		background: rgba(0,0,0,0.4);
+		border-radius: 8rpx;
+	} 
+	
+	/deep/ .uni-swiper-dot-active{
+		width: 32rpx;
+		height: 8rpx;
+		background: #000000;
+		border-radius: 8rpx;
+	}
+	
 	.scrib {
 		width: 690rpx;
 		height: 2rpx;
 		background: rgba(155, 155, 155, 0.4);
 		border-radius: 0px 0px 0px 0px;
-		margin: 45rpx auto 32rpx;
+		margin: 30rpx auto 32rpx;
 	}
 
 	/* 相册管理 */
@@ -540,6 +712,7 @@
 		width: 690rpx;
 		margin: 0 auto;
 		padding-top: 20rpx;
+		white-space: nowrap;
 	}
 
 	.video-nav-list {
@@ -547,12 +720,20 @@
 		display: flex;
 		justify-content: space-between;
 	}
-
+	/deep/ ::-webkit-scrollbar {
+		display: none;
+		width: 0 !important;
+		height: 0 !important;
+		-webkit-appearance: none;
+		background: transparent;
+	}
+	
 	.video-text {
 		font-size: 30rpx;
 		font-family: Inter-Medium;
 		font-weight: 500;
 		color: #6A6A6C;
+		margin-right: 54rpx;
 	}
 
 	.video-text-active {
@@ -703,6 +884,73 @@
 		bottom: 0;
 		right: 0;
 	}
+	/* 被关注用户列表 */
+	.square-lists{
+		width: 690rpx;
+		margin: 40rpx auto 0;
+		padding: 0 10rpx;
+		box-sizing: border-box;
+	}
+	.square-list{
+		display: flex;
+		margin-bottom: 60rpx;
+	}
+	.user-list{
+		width: 690rpx;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-bottom: 30rpx;
+		border-bottom: 2rpx solid rgba(217,217,217,0.4);
+		margin-bottom: 30rpx;
+	}
+	.user-list:nth-last-child(1) {
+		border-bottom: none;
+	}
+	.focus-user{
+		width: 512rpx;
+		display: flex;
+		align-items: center;
+	}
+	.focus-user-photo{
+		width: 112rpx;
+		height: 112rpx;
+		display: block;
+		border-radius: 50%;
+	}
+	.focus-user-msg{
+		width: 380rpx;
+		margin-left: 20rpx;
+		text-align: left;
+	}
+	.focus-user-name{
+		font-size: 30rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		color: #000000;
+	}
+	.focus-user-gender{
+		font-size: 26rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		color: #6A6A6C;
+		margin-top: 16rpx;
+	}
+	.close-focus{
+		min-width: 100rpx;
+		padding: 0 10rpx;
+		height: 56rpx;
+		background: rgba(26,29,38,0.1);
+		border-radius: 60rpx;
+		
+		font-size: 28rpx;
+		font-family: Inter-Regular;
+		font-weight: 400;
+		color: #1A1D26;
+		text-align: center;
+		line-height: 56rpx;
+	}
+	
 	/* 底部 */
 	.bottom {
 		width: 750rpx;

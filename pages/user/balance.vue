@@ -9,6 +9,10 @@
 				<view class="symbol" v-if="price">$</view>
 				<input type="number" class="price" v-model="price" :placeholder="$t('balance.quota')" />
 			</view>
+			<view class="gold-tips">
+				<view class="tips">152金币不可提现</view>
+				<view class="look">查看原因</view>
+			</view>
 			
 			<view class="bank-list">
 				<image class="bank-logo" :class="{'bank-logo-active': cindex === index}" v-for="item,index in bankList" :src="item.url" @click="openPay(item,index,'one')"></image>
@@ -167,7 +171,26 @@
 		color: #000000;
 		line-height: 89rpx;
 	}
-
+	
+	.gold-tips{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 30rpx;
+		margin-top: 20rpx;
+	}
+	.tips{
+		font-size: 30rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		color: #ED4C4C;
+	}
+	.look{
+		font-size: 30rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		color: #ED4C4C;
+	}
 	/* 银行列表 */
 	.bank-list {
 		margin-top: 63rpx;

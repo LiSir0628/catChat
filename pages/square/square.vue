@@ -236,7 +236,7 @@
 					id: 3,
 					name: this.$t('bottom').square,
 					image: "../../static/images/user/icon24.png",
-					url: "",
+					url: '/pages/square/square',
 					styleClass: {
 						width: '46rpx',
 						height: '46rpx'
@@ -245,7 +245,7 @@
 					id: 4,
 					name: this.$t('bottom').News,
 					image: "../../static/images/user/icon04.png",
-					url: "",
+					url: "/pages/chat/pair",
 					styleClass: {
 						width: '42rpx',
 						height: '39rpx'

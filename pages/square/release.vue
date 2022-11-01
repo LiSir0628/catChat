@@ -21,7 +21,7 @@
 						<view class="area-left-value red">{{area_name}}</view>
 					</template>
 				</view>
-				<view class="area-right">
+				<view class="area-right" @click="goPostion">
 					<view class="area-right-value" v-if="area_name" @click="goCancel">{{ $t('release.cancel') }}</view>
 					<image class="arrow" src="../../static/images/order/icon06.png"></image>
 				</view>
@@ -38,7 +38,7 @@
 						<view class="area-left-value red">{{ $t('release.add_topic') }}</view>
 					</template>
 				</view>
-				<view class="area-right">
+				<view class="area-right" @click="goSearch">
 					<image class="arrow" src="../../static/images/order/icon06.png"></image>
 				</view>
 			</view>
@@ -54,7 +54,7 @@
 						<view class="area-left-value red">{{ $t('release.whether_public') }}</view>
 					</template>
 				</view>
-				<view class="area-right">
+				<view class="area-right" @click="goSee">
 					<image class="arrow" src="../../static/images/order/icon06.png"></image>
 				</view>
 			</view>
@@ -92,6 +92,21 @@
 			
 			goCancel() {
 				this.area_name = ""
+			},
+			goPostion() {
+				uni.navigateTo({
+					url: "postion"
+				});
+			},
+			goSearch() {
+				uni.navigateTo({
+					url: "searchTopic"
+				});
+			},
+			goSee() {
+				uni.navigateTo({
+					url: "see"
+				});
 			},
 			switchChange(){
 				this.is_default = !this.is_default
