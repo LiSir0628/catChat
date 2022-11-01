@@ -39,7 +39,7 @@ function myRequest(options){
 	// console.log(timestamp)
 	// console.log(sign)
 	let headers={}
-	var Token = uni.getStorageSync('token') || '';
+	var Token = uni.getStorageSync('token') || 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsIkRvbWUiOiJodHRwczovL3d3dy5kb21lZmlzaC5jb20ifQ.eyJpc3MiOiJodHRwczovL3d3dy5kb21lZmlzaC5jb20iLCJhdWQiOiJodHRwczovL3d3dy5kb21lZmlzaC5jb20iLCJpYXQiOjE2NjcyNjcyODAuNDc4NDQzLCJleHAiOjE2OTg4MDMyODAuNDc4NDQzLCJpZCI6MSwia2V5IjoiMmIzNjg1ODY2NWI2MzdiNGJiYjI0YjliZWRjZDI5N2MiLCJwbHQiOiIxIiwiZGlkIjpudWxsfQ.RfIbQMnvqBSzbmwGzilb_fH2aHnre2bQBfTmr8yjNy4';
 	headers['sign'] = sign;
 	headers['timestamp'] = timestamp;
 	headers['lang'] = uni.getStorageSync('languageIso') || 'en';

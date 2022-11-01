@@ -37,6 +37,7 @@
 			<view class="send-list">
 				<image class="logo01" src="../../static/images/chat/chat/icon11.png"></image>
 				<input class="send" v-model="send_text" placeholder="your message">
+				<!-- <textarea class="send" v-model="send_text" placeholder="your message"></textarea> -->
 				<image class="logo02" src="../../static/images/chat/chat/icon09.png"></image>
 				<image class="logo03" src="../../static/images/chat/chat/icon01.png"></image>
 				<template v-if="!send_text">
@@ -44,7 +45,7 @@
 					<image class="logo05" src="../../static/images/chat/chat/icon12.png"></image>
 				</template>
 				<template v-if="send_text">
-					<view class="send-btn">send</view>
+					<view class="send-btn">Send</view>
 				</template>
 			</view>
 		</view>
@@ -291,7 +292,7 @@
 	.send-btn{
 		font-size: 28rpx;
 		font-family: Inter-Regular;
-		font-weight: 400;
+		font-weight: bold;
 		color: #FFFFFF;
 		
 		width: 148rpx;
