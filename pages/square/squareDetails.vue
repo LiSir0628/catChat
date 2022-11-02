@@ -5,7 +5,7 @@
 		
 		<view class="content" :style="contentHeight">
 			<view class="square-list">
-				<image class="user-logo" src="../../static/images/user/photo02.png"></image>
+				<!-- <image class="user-logo" src="../../static/images/user/photo02.png"></image>
 				<view class="user-notice">
 					<view class="user-msg">
 						<view class="user-msg-top"> 
@@ -14,12 +14,24 @@
 						</view>
 						<view class="user-btn">{{ $t('square_details.focus') }}</view>
 					</view>
+				</view> -->
+				<image class="user-logo" :src="list.avatar"></image>
+				<view class="user-notice">
+					<view class="user-msg">
+						<view class="user-msg-top"> 
+							<view class="user-name">{{list.nickname}}</view>
+							<view class="user-time">{{list.created_at}}</view>
+							<!-- <view class="user-time">{{list.intl_created_at}}</view> -->
+						</view>
+						<view class="user-btn" v-if="list.follow == 0" @click.stop="follow('on',list.uid)">{{ $t('square_details.focus') }}</view>
+						<view class="user-btn" v-else-if="list.follow == 1" @click.stop="follow('off',list.uid)">{{ $t('square_details.close') }}</view>
+					</view>
 				</view>
 			</view>
 			
 			<view class="meny-list">
 				<view class="meny">
-					<view class="space-title">你见过最阴暗的事是什么？</view>
+					<!-- <view class="space-title">你见过最阴暗的事是什么？</view>
 					<view class="space-content">
 						<view class="space-text">我有个女性朋友，叫许晴，在西南某大学读 研，然后去云南旅游的时候被人贩子差点给骗了</view>
 					</view>
@@ -42,33 +54,51 @@
 						<view class="space-topic">#内心深处的秘密</view>
 						<view class="space-topic">#痛苦的事</view>
 						<view class="space-topic">#内心深处的秘密</view>
+					</view> -->
+					<view class="space-title" v-if="list.title">{{list.title}}</view>
+					<view class="space-content" v-if="list.content">
+						<view class="space-text">{{list.content}}</view>
 					</view>
-					<!-- <view class="meny-comment">Very beautiful scenery</view>
-					<image class="meny-logo" src="../../static/images/user/photo03.jpg" @click="previewImage"></image> -->
+					<view class="space-images" v-if="list.pic && list.pic.length > 0 && list.pic[0]">
+						<view class="space-image-list" v-for="citem,cindex in list.pic" @click.stop="previewImage(list.pic,citem)">
+							<image class="space-image" :src="citem"></image>
+						</view>
+					</view>
+					<view class="space-topic-lists" v-if="list.topic && list.topic.length > 0">
+						<view class="space-topic" v-for="kitem,kindex in list.topic" @click.stop="goTopic(kitem)">
+							#{{kitem.title}}
+						</view>
+					</view>
+					
 					<view class="reward-modular">
 						<view class="talk-modular">
 							<view class="talk-list">
 								<image class="talk-logo" src="../../static/images/user/icon19.png"></image>
-								<view class="talk-text">150</view>
+								<view class="talk-text">{{list.comment_count}}</view>
 							</view>
 							<view class="talk-list">
-								<image class="talk-logo" src="../../static/images/user/icon26.png"></image>
-								<view class="talk-text">150</view>
+								<image class="talk-logo" v-if="list.favorite_status == 0" src="../../static/images/user/icon26.png" @click="favorite('on')"></image>
+								<image class="talk-logo" v-else-if="list.favorite_status == 1" src="../../static/images/user/icon27.png" @click="favorite('off')"></image>
+								<view class="talk-text">{{list.favorite_count}}</view>
 							</view>
 							<view class="talk-list">
-								<image class="talk-logo-zan" src="../../static/images/square/icon07.png"></image>
-								<!-- <image class="talk-logo" src="../../static/images/square/icon08.png"></image> -->
-								<view class="talk-text">150</view>
+								<!-- <image class="talk-logo-zan" src="../../static/images/square/icon07.png"></image>
+								<view class="talk-text">150</view> -->								
+								<image class="talk-logo-zan" v-if="list.vote_up_status == 0" src="../../static/images/square/icon07.png" @click.stop="vote('up','on',list)"></image>
+								<image class="talk-logo-zan" v-else-if="list.vote_up_status == 1" src="../../static/images/square/icon08.png" @click.stop="vote('up','off',list)"></image>
+								<view class="talk-text">{{list.vote_up_count}}</view>
 							</view>
 							<view class="talk-list">
-								<image class="talk-logo-zan" src="../../static/images/square/icon09.png"></image>
-								<!-- <image class="talk-logo" src="../../static/images/square/icon10.png"></image> -->
-								<view class="talk-text">150</view>
+								<!-- <image class="talk-logo-zan" src="../../static/images/square/icon09.png"></image>
+								<view class="talk-text">150</view> -->							
+								<image class="talk-logo-zan" v-if="list.vote_down_status == 0" src="../../static/images/square/icon09.png" @click.stop="vote('down','on',list)"></image>
+								<image class="talk-logo-zan" v-else-if="list.vote_down_status == 1" src="../../static/images/square/icon10.png" @click.stop="vote('down','off',list)"></image>
+								<view class="talk-text">{{list.vote_down_count}}</view>
 							</view>
 						</view>
 					</view>
 					<view class="reward">{{ $t('square_details.reward') }}</view>
-					<view class="rewarded-num">105 {{ $t('square_details.people_rewarded') }}</view>
+					<view class="rewarded-num">{{list.reward_count}} {{ $t('square_details.people_rewarded') }}</view>
 					<view class="reward-user">
 						<image class="reward-user-logo" src="../../static/images/user/photo02.png"></image>
 						<image class="reward-user-logo" src="../../static/images/user/photo02.png"></image>
@@ -181,13 +211,18 @@
 	export default {
 		data() {
 			return {
+				article_id: "",
 				contentHeight: {
 					'height': '1080rpx'
 				},
+				list: {}
 			}
 		},
 		onLoad(option) {
-			var that = this;
+			if(option.article_id) this.article_id = option.article_id
+			this.getHttpList()
+			
+			let that = this;
 			uni.getSystemInfo({
 				success(res) {
 					// #ifdef MP-WEIXIN
@@ -208,12 +243,195 @@
 			back() {
 				window.history.go(-1)
 			},
-			
-			previewImage() {
-				uni.previewImage({
-					current: "https://api.domefish.com/storage/banner/6a3b5aeb6638e3c3eb166cf173cc4efe.png",
-					urls: ["https://api.domefish.com/storage/banner/6a3b5aeb6638e3c3eb166cf173cc4efe.png","https://api.domefish.com/storage/banner/7c29347477ba440a4ad17e9e3adc1e6e.png","https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/3639a3488a93425ca108e9ce85cc6f40~tplv-dx0w9n1ysr-origin-jpeg.jpeg"],
+			getHttpList() {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
 				});
+				this.$myRequest({
+					method: 'GET',
+					url: '/api/ht/article/' + this.article_id,
+					data: {
+							
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.list = res.data.data
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
+			previewImage(list,item) {
+				uni.previewImage({
+					current: item,
+					urls: list,
+				});
+			},
+			follow(status,uid) {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'POST',
+					url: '/api/user/follow',
+					data: {
+						friend_id: uid,
+						status: status				
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.list.follow = !this.list.follow
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
+			goTopic(item) {
+				let id = item.topic_id || item.id
+				uni.navigateTo({
+					url: 'topic?topic_name=' + item.title + "&topic_id=" + id
+				});
+			},
+			favorite(status) {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'POST',
+					url: '/api/ht/article/favorite',
+					data: {
+						article_id: this.article_id,
+						status: status
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						if(status == "off"){
+							this.list.favorite_status = 0
+						} else {
+							this.list.favorite_status = 1
+						}
+						this.list.favorite_count = res.data.data
+						this.$forceUpdate()
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
+			vote(type,status,item) {
+				if(status == "on" && (item.vote_up_status == 1 || item.vote_down_status == 1)){
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').kudos_reminder,
+						confirmText: this.$t('common').confirm,
+						showCancel: false,
+					})
+					return
+				}
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'POST',
+					url: '/api/ht/article/vote',
+					data: {
+						article_id: item.id,
+						type: type,
+						status: status				
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						if(type == "up"){
+							if(status == "off"){
+								item.vote_up_status = 0
+							} else {
+								item.vote_up_status = 1
+							}
+							item.vote_up_count = res.data.data
+						} else if(type = "down"){
+							if(status == "off"){
+								item.vote_down_status = 0
+							} else {
+								item.vote_down_status = 1
+							}
+							item.vote_down_count = res.data.data
+						}
+						this.$forceUpdate()
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
 			},
 		}
 	}

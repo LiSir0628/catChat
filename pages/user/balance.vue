@@ -111,7 +111,7 @@
 				this.kindex = ""
 			},
 			goSwitch() {
-				this.isShowRecharge = !this.isShowRecharge
+				// this.isShowRecharge = !this.isShowRecharge
 			},
 			goAdd() {
 				this.$refs.payAdd.open()

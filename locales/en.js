@@ -176,6 +176,7 @@ export const lang = {
 		
 		"menyedihkan": "Menyedihkan",
 		"focus": "Focus",
+		"close": "Close",
 		"getting_noticed": "Getting noticed",
 		"reward": "Reward",
 		"album": "Album",
@@ -184,7 +185,6 @@ export const lang = {
 		"people_rewarded": "people rewarded",
 		"message": "Message",
 		
-		"close": "Close",
 		"gold_coin": "Gold coin",
 		
 	},
@@ -311,22 +311,26 @@ export const lang = {
 		"pm": "PM",
 		
 	},
+	"chat": {
+		
+	},
 
 	"square": {
 		"topic_tribe": "Topic Tribe",
 		"communication": "Communication",
 		"search_placeholder": "Enter search content",
 		"focus": "Focus",
+		"close": "Close",
 		"people_rewarded": "people rewarded"
 	},
 	"topic": {
-		"close": "Close",
 		"search_placeholder": "Enter search content",
 		"views": "views",
 		"number_people_published": "Number of people published",
 		"recommend": "Recommend",
 		"follow": "Follow",
 		"focus": "Focus",
+		"close": "Close",
 		"people_rewarded": "people rewarded",
 		"talking_with_them": "Talking with them",
 		
@@ -338,6 +342,7 @@ export const lang = {
 	"square_details":{
 		"content_details": "Content details",
 		"focus": "Focus",
+		"close": "Close",
 		"reward": "Reward",
 		"people_rewarded": "people rewarded",
 		"comments": "Comments",
@@ -403,5 +408,6 @@ export const lang = {
 		"Network": "Network error, please try again later",
 		"limit": "Cannot continue to select, the upper limit has been reached",
 		"success": "success",
+		"kudos_reminder": "You have chosen to like/dislike, please cancel before proceeding",
 	}
 }

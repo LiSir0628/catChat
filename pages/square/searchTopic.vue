@@ -19,7 +19,7 @@
 		<view class="content">
 			<view class="topic-modular">
 				<image class="search-logo" src="../../static/images/square/icon02.png"></image>
-				<input class="topic" placeholder-class="topic-placeholder" v-model="topic" :placeholder="$t('search_topic.topic-placeholder')" />
+				<input class="topic" placeholder-class="topic-placeholder" v-model="topic" :placeholder="$t('search_topic.topic-placeholder')" @confirm="getReTopicLists" />
 			</view>
 			
 			<view class="select-topic">
@@ -58,58 +58,72 @@
 					id: 3,
 					title: 'lovely',
 					isActive: false
-				},{
-					id: 4,
-					title: 'literature',
-					isActive: false
-				},{
-					id: 5,
-					title: 'dance',
-					isActive: false
-				},{
-					id: 6,
-					title: 'Punk',
-					isActive: false
-				},{
-					id: 7,
-					title: 'Cook',
-					isActive: true
-				},{
-					id: 8,
-					title: 'Walking food strategy',
-					isActive: false
-				},{
-					id: 9,
-					title: 'Always lose weight',
-					isActive: false
 				}],
 				
-				topicLists: [{
-					id: 1,
-					title: 'Social expert',
-					isActive: true
-				},{
-					id: 2,
-					title: 'Handsome boy',
-					isActive: true
-				},{
-					id: 7,
-					title: 'Cook',
-					isActive: true
-				},{
-					id: 10,
-					title: 'i am  test',
-					isActive: true
-				}],
-				num: 3,
-				allNum: 5,
+				topicLists: [],
+				num: 0,
+				allNum: 2,
 			}
+		},
+		created() {
+			this.getReTopicLists()
+		},
+		mounted() {
+			this.topicLists = this.$store.state.topicLists
 		},
 		methods: {
 			back() {
 				window.history.go(-1)
 			},
-			
+			getReTopicLists() {
+				this.lists = []
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'GET',
+					url: '/api/ht/topic',
+					data: {
+						keyword: this.topic,
+						page: 1,
+						limit: 20,
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.lists = res.data.data
+						//判断topicLists内 是否存在lists相同值，lists的isActive变为true
+						for(let i in this.topicLists){
+							for(let k in this.lists){
+								if(this.topicLists[i].id == this.lists[k].id){
+									this.lists[k].isActive = true
+									break
+								}
+							}
+						}
+						console.log(this.lists)
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
 			check() {
 				// 检查选择数量
 				let number = 0;
@@ -149,12 +163,14 @@
 						}
 					}
 				}
+				console.log(this.lists)
+				console.log(this.topicLists)
 				this.check()
 				this.$forceUpdate()
 			},
 			complete() {
-				console.log("确定")
-				console.log( this.topicLists )
+				this.$store.commit('searchTopicLists', this.topicLists) 
+				uni.setStorageSync('topicLists', this.topicLists)
 				this.back()
 			}
 		}
@@ -285,7 +301,7 @@
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #1A1D26;
-		padding: 11rpx 19rpx;
+		padding: 16rpx 20rpx;
 		background: rgba(26,29,38,0.1);
 		border-radius: 60rpx;
 		margin: 0 20rpx 30rpx 20rpx;
@@ -318,7 +334,7 @@
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #1A1D26;
-		padding: 11rpx 19rpx;
+		padding: 16rpx 20rpx;
 		background: rgba(26,29,38,0.1);
 		border-radius: 60rpx;
 		margin: 0 10rpx 30rpx 10rpx;

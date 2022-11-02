@@ -35,17 +35,27 @@
 		data() {
 			return {
 				current: 0,
-				value: "", //值
+				value: "1", //值
 				stateList: [{
-					value : "111",
+					value : "1",
 					title: this.$t('see').public,
 				},{
-					value : "222",
+					value : "2",
 					title: this.$t('see').friends,
 				},{
-					value : "333",
+					value : "3",
 					title: this.$t('see').yourself,
 				}]
+			}
+		},
+		mounted() {
+			this.value = this.$store.state.visible
+			if(this.value == 1){
+				this.current = 0
+			} else if(this.value == 2){
+				this.current = 1
+			} else if(this.value == 3){
+				this.current = 2
 			}
 		},
 		methods: {
@@ -63,8 +73,8 @@
 				}
 			},
 			complete() {
-				console.log("确定")
-				console.log(this.value)
+				this.$store.commit('visibleSee', this.value)
+				uni.setStorageSync('visible_see', this.value)
 				this.back()
 			}
 		}

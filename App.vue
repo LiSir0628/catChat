@@ -2,6 +2,13 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			
+			if(uni.getStorageSync('visible_see')){
+				this.$store.commit('visibleSee', uni.getStorageSync('visible_see'))
+			}
+			if(uni.getStorageSync('topicLists')){
+				this.$store.commit('searchTopicLists', uni.getStorageSync('topicLists'))
+			}
 		},
 		onShow: function() {
 			console.log('App Show')

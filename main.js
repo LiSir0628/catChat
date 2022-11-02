@@ -2,6 +2,10 @@ import App from './App'
 
 // #ifndef VUE3
 import Vue from 'vue'
+//引入vuex
+import store from './store'
+//把vuex定义成全局组件
+Vue.prototype.$store = store
 
 import utils from './common/util.js'
 Vue.prototype.$utils = utils;

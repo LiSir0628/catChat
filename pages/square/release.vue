@@ -12,24 +12,24 @@
 			
 			<view class="option-module">
 				<view class="area-left">
-					<template v-if="!area_name">
+					<template v-if="!local_name">
 						<image class="area-logo" src="../../static/images/square/release/icon03.png"></image>
 						<view class="area-left-value">{{ $t('release.positon') }}</view>
 					</template>
 					<template v-else>
 						<image class="area-logo" src="../../static/images/square/release/icon06.png"></image>
-						<view class="area-left-value red">{{area_name}}</view>
+						<view class="area-left-value red">{{local_name}}</view>
 					</template>
 				</view>
 				<view class="area-right" @click="goPostion">
-					<view class="area-right-value" v-if="area_name" @click="goCancel">{{ $t('release.cancel') }}</view>
+					<view class="area-right-value" v-if="local_name" @click="goCancel">{{ $t('release.cancel') }}</view>
 					<image class="arrow" src="../../static/images/order/icon06.png"></image>
 				</view>
 			</view>
 			
 			<view class="option-module">
 				<view class="area-left">
-					<template v-if="!topic_name">
+					<template v-if="!topic">
 						<image class="topic-logo" src="../../static/images/square/release/icon04.png"></image>
 						<view class="area-left-value">{{ $t('release.add_topic') }}</view>
 					</template>
@@ -55,17 +55,18 @@
 					</template>
 				</view>
 				<view class="area-right" @click="goSee">
+					<view class="area-right-value">{{visible_name}}</view>
 					<image class="arrow" src="../../static/images/order/icon06.png"></image>
 				</view>
 			</view>
 		</view>
 		
 		<view class="read-nav" @click="switchChange">
-			<checkbox :checked="is_default" color="#ffffff" />
+			<checkbox :checked="reward" color="#ffffff" />
 			<view class="read-text">{{ $t('release.read') }}</view>
 		</view>
 		
-		<view class="commit-btn">
+		<view class="commit-btn" @click="commit">
 			{{ $t('release.publish') }}
 		</view>
 	</view>
@@ -76,13 +77,53 @@
 		data() {
 			return {
 				title: "",
+				pic: "",
 				content: "",
+				longitude: "",
+				latitude: "",
+				local_name: "",
+				visible: "1",
+				reward: "1",
+				topic: "",
 				
-				area_name: "福州市",
-				topic_name: "话题之家",
-				visible: "123",
-				
-				is_default: false,
+				visible_name: "",
+				visibleList: [{
+					value : "1",
+					title: this.$t('see').public,
+				},{
+					value : "2",
+					title: this.$t('see').friends,
+				},{
+					value : "3",
+					title: this.$t('see').yourself,
+				}],
+				topic_name: "",
+			}
+		},
+		created() {
+			
+		},
+		onShow() {
+			this.visible = this.$store.state.visible
+			for(let i in this.visibleList){
+				if(this.visibleList[i].value == this.visible){
+					this.visible_name = this.visibleList[i].title
+					break
+				}
+			}
+			
+			this.topic = this.$store.state.topicLists
+			for(let i in this.topic){
+				if(this.topic_name) this.topic_name = this.topic_name + "," + this.topic[i].title
+				if(!this.topic_name) this.topic_name = this.topic[i].title
+			}
+			console.log(this.topic_name)
+		},
+		mounted() {
+			if(this.reward == -1){
+				this.reward = false
+			} else if(this.reward == 1){
+				this.reward = true
 			}
 		},
 		methods: {
@@ -91,7 +132,7 @@
 			},
 			
 			goCancel() {
-				this.area_name = ""
+				this.local_name = ""
 			},
 			goPostion() {
 				uni.navigateTo({
@@ -108,9 +149,69 @@
 					url: "see"
 				});
 			},
-			switchChange(){
-				this.is_default = !this.is_default
-				console.log(this.is_default)
+			switchChange(){	
+				if(this.reward == -1){
+					this.reward = true
+				} else if(this.reward == 1){
+					this.reward = false
+				} else {
+					this.reward = !this.reward
+				}
+				console.log(this.reward)
+			},
+			
+			commit() {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'POST',
+					url: '/api/ht/article',
+					data: {
+						title: this.title,
+						pic: this.pic,
+						content: this.content,
+						longitude: this.longitude,
+						latitude: this.latitude,
+						local_name: this.local_name,
+						visible: this.visible,
+						reward: this.reward == true ? "1" : -1,
+						topic: this.topic
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.back()
+						// uni.showModal({
+						// 	title: this.$t('common').Tip,
+						// 	content: res.data.data,
+						// 	confirmText: this.$t('common').confirm,
+						// 	showCancel: false,
+						// })
+						// setTimeout(()=>{
+						// 	this.back()
+						// },2000)
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
 			},
 		}
 	}
@@ -210,10 +311,18 @@
 		align-items: center;
 	}
 	.area-right-value{
+		width: 280rpx;
 		font-size: 30rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #666666;
+		text-align: right;
+		
+		overflow: hidden;
+		white-space: nowrap;
+		word-wrap: normal;
+		text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
 	}
 	.arrow{
 		width: 28rpx;
