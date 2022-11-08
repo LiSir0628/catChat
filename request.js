@@ -3,7 +3,8 @@ import md5 from "./md5.js";
 // let baseURL='https://fish.mini.zhishukongjian.com/';
 //let baseURL = 'https://user.mini.zhishukongjian.com/';
 // let baseURL='https://api.domefish.com/';
-let baseURL = 'http://domefish.test.io'
+let baseURL = 'http://domefish.test.io/api'
+// let baseURL = 'http://chat.mini.zhishukongjian.com/api'
 
 function myRequest(options){
 	let arr = [];
@@ -14,7 +15,13 @@ function myRequest(options){
 	for(let i in options.data){
 		arr.push(i)
 		if(options.data[i]){
-			obj[i] = options.data[i]
+			if(typeof options.data[i] == 'object' && Array.isArray(options.data[i]) && options.data[i].length <= 0){
+				//不添加
+			} else if(typeof options.data[i] == 'object' && !Array.isArray(options.data[i]) && Object.keys(options.data[i]).length <= 0) {
+				//不添加
+			} else {
+				obj[i] = options.data[i]
+			}
 		}
 	}
 	arr.sort((s1,s2)=>{
@@ -39,18 +46,18 @@ function myRequest(options){
 	// console.log(timestamp)
 	// console.log(sign)
 	let headers={}
-	var Token = uni.getStorageSync('token') || 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsIkRvbWUiOiJodHRwczovL3d3dy5kb21lZmlzaC5jb20ifQ.eyJpc3MiOiJodHRwczovL3d3dy5kb21lZmlzaC5jb20iLCJhdWQiOiJodHRwczovL3d3dy5kb21lZmlzaC5jb20iLCJpYXQiOjE2NjcyNjcyODAuNDc4NDQzLCJleHAiOjE2OTg4MDMyODAuNDc4NDQzLCJpZCI6MSwia2V5IjoiMmIzNjg1ODY2NWI2MzdiNGJiYjI0YjliZWRjZDI5N2MiLCJwbHQiOiIxIiwiZGlkIjpudWxsfQ.RfIbQMnvqBSzbmwGzilb_fH2aHnre2bQBfTmr8yjNy4';
+	var Token = 'Bearer ' + (uni.getStorageSync('token') || 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsIkRvbWUiOiJodHRwczovL3d3dy5kb21lZmlzaC5jb20ifQ.eyJpc3MiOiJodHRwczovL3d3dy5kb21lZmlzaC5jb20iLCJhdWQiOiJodHRwczovL3d3dy5kb21lZmlzaC5jb20iLCJpYXQiOjE2Njc0NDY2NzUuNjU2ODI1LCJleHAiOjE2OTg5ODI2NzUuNjU2ODI1LCJpZCI6MSwia2V5IjoiMjFmYzRhN2ViMDFiZWZkYWIzN2UwN2U1OWM0NzRiZDkiLCJ0aW1lciI6MH0.aK1ko73HQ5C_prXgjdxJxQt2Y8Hqjn996H43sc8z1k8');
+	//var Token = 'Bearer ' + (uni.getStorageSync('token') || 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsIkRvbWVDaGF0IjoiaHR0cDovL2NoYXQubWluaS56aGlzaHVrb25namlhbi5jb20ifQ.eyJpc3MiOiJodHRwOi8vY2hhdC5taW5pLnpoaXNodWtvbmdqaWFuLmNvbSIsImF1ZCI6Imh0dHA6Ly9jaGF0Lm1pbmkuemhpc2h1a29uZ2ppYW4uY29tIiwiaWF0IjoxNjY3NjE2MjQ4LjE0NzkzMSwiZXhwIjoxNjk5MTUyMjQ4LjE0NzkzMSwiaWQiOjI0LCJrZXkiOiJhOWIzNmMyNGRkYmQ1ZDVhYjFhOTUwMTdkNjczNTdlMyIsInRpbWVyIjpudWxsfQ.UHfb4CBHkb8_fPTdPrNmiZ4yuL6A7ubTyrEigj5Vd0U');
 	headers['sign'] = sign;
 	headers['timestamp'] = timestamp;
-	headers['lang'] = uni.getStorageSync('languageIso') || 'en';
 	headers['platform'] = 3;
 	headers['version'] = 1.01;
 	headers['brand'] = '';
-	headers['deviceid'] = '';
-	headers['devicemodel'] = '';
-	headers['signature'] = 'asdfghjkl';
+	headers['model'] = '';
+	headers['did'] = '';
+	headers['lang'] = uni.getStorageSync('languageIso') || 'en';
 	headers['Authorization'] = Token;
-	headers["Content-Type"] = 'application/x-www-form-urlencoded';
+	// headers["Content-Type"] = 'application/x-www-form-urlencoded';
 	// #ifdef MP-WEIXIN
 	headers["Isminiapp"] = "TRUE";
 	// #endif
@@ -72,7 +79,7 @@ function myRequest(options){
 					// uni.setStorageSync('areaName', "");
 					// uni.setStorageSync('token', "");
 					// uni.setStorageSync('index_is_refresh', "1");
-					// uni.redirectTo({url:'/pages/register/login'});
+					uni.redirectTo({url:'/pages/register/login'});
 					return false;
 				} else if(data.data.code==404){
 					//请求的内容为空

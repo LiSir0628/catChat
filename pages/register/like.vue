@@ -220,7 +220,7 @@
 		border-radius: 60rpx 60rpx 60rpx 60rpx;
 		opacity: 1;
 		
-		font-size: 30rpx;
+		font-size: 36rpx;
 		font-family: Inter-Bold;
 		font-weight: bold;
 		color: #FFFFFF;

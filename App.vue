@@ -3,11 +3,22 @@
 		onLaunch: function() {
 			console.log('App Launch')
 			
+			if(uni.getStorageSync('duomiList')){
+				this.$store.commit('editDuomi', uni.getStorageSync('duomiList'))
+			}
+			if(uni.getStorageSync('language')){
+				this.$store.commit('editLanguage', uni.getStorageSync('language'))
+			}
+			
 			if(uni.getStorageSync('visible_see')){
 				this.$store.commit('visibleSee', uni.getStorageSync('visible_see'))
 			}
 			if(uni.getStorageSync('topicLists')){
 				this.$store.commit('searchTopicLists', uni.getStorageSync('topicLists'))
+			}
+			
+			if(uni.getStorageSync('addressList')){
+				this.$store.commit('searchAddressList', uni.getStorageSync('addressList'))
 			}
 		},
 		onShow: function() {
@@ -25,6 +36,20 @@
 	}
 	/deep/ .uni-input-placeholder{
 		color: #999999;
+	}
+	/deep/ .uni-navbar__header{
+		height: 88rpx !important;
+	}
+	/deep/ .uni-navbar__header-btns-left{
+		top: 0;
+		bottom: 0;
+		vertical-align: middle;
+	}
+	/deep/ .uni-navbar__placeholder{
+		height: 88rpx !important;
+	}
+	/deep/ .uni-navbar__header-btns-right{
+		font-size: 24rpx;
 	}
 	/*每个页面公共css */
 	@font-face {

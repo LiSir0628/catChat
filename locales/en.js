@@ -37,6 +37,10 @@ export const lang = {
 		"number": "Phone number/Email",
 		"login": "login",
 		"next": "Next step",
+		
+		"account_tip": "Please enter your account number",
+		"password_tip": "Please enter your password",
+		"read_tip": "Please read the relevant agreement",
 	},
 	"sex": {
 		"title": "Choose your sex",

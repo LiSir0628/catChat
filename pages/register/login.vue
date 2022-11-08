@@ -11,10 +11,10 @@
 		<view class="content">
 			<view class="title">{{ $t('login.title') }}</view>
 			<view>
-				<input class="email" v-model="email" :placeholder="$t('login.email')" />
+				<input class="email" v-model="account" :placeholder="$t('login.email')" />
 				<input class="password" v-model="password" :placeholder="$t('login.password')" />
 			</view>
-			<view class="register">{{ $t('login.register') }}</view>
+			<view class="register" @click="goRegister">{{ $t('login.register') }}</view>
 			
 			<view class="login-btn" @click="goIndex">{{ $t('login.log') }}</view>
 			
@@ -36,7 +36,7 @@
 	export default {
 		data() {
 			return {
-				email: "",
+				account: "",
 				password: "",
 				is_default: false,
 				
@@ -48,11 +48,115 @@
 				this.is_default = !this.is_default
 				console.log(this.is_default)
 			},
-			
-			goIndex() {
+			goRegister() {
 				uni.navigateTo({
-					url: '/pages/user/user'
+					url: 'register'
 				});
+			},
+			goIndex() {
+				if(!this.account){
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('register').account_tip,
+						confirmText: this.$t('common').confirm,
+						showCancel: false,
+					})
+					return
+				} else if(!this.password) {
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('register').password_tip,
+						confirmText: this.$t('common').confirm,
+						showCancel: false,
+					})
+					return
+				} else if(!this.is_default){
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('register').read_tip,
+						confirmText: this.$t('common').confirm,
+						showCancel: false,
+					})
+					return
+				}
+				
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'POST',
+					url: '/login',
+					data: {
+						mail: this.account,
+						password: this.password
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						console.log(res.data.data);
+						uni.setStorageSync('token', res.data.data.token);
+						this.getUserList()
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
+			getUserList() {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'GET',
+					url: '/user/info',
+					data: {}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						console.log(res.data.data)
+						this.$store.commit('editDuomi', res.data.data)
+						uni.setStorageSync('duomiList', res.data.data);
+						//登录成功 跳转数据页。
+						uni.navigateTo({
+							url: '/pages/user/user'
+						});
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
 			},
 		}
 	}
@@ -102,7 +206,7 @@
 		margin-top: 96rpx;
 		padding: 13rpx 0;
 		
-		font-size: 28rpx;
+		font-size: 30rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		/* color: #999999; */
@@ -112,7 +216,7 @@
 		margin-top: 51rpx;
 		padding: 13rpx 0;
 		
-		font-size: 28rpx;
+		font-size: 30rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		/* color: #999999; */
@@ -134,7 +238,7 @@
 		border-radius: 60rpx 60rpx 60rpx 60rpx;
 		opacity: 1;
 		
-		font-size: 30rpx;
+		font-size: 36rpx;
 		font-family: Inter-Bold;
 		font-weight: bold;
 		color: #FFFFFF;

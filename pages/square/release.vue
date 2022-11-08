@@ -7,8 +7,15 @@
 			<input class="title" placeholder-class="title-placeholder" v-model="title" :placeholder="$t('release.title_placeholder')" />
 			
 			<textarea maxlength="2000" class="textarea" placeholder-class="textarea-placeholder" v-model="content" :placeholder="$t('release.content_placeholder')" />
-		
-			<image class="upload" src="../../static/images/square/release/icon01.png"></image>
+			
+			<view class="upload-lists">
+				<view class="upload-image-list" v-for="item,index in picLists">
+					<image class="upload" :src="item"></image>
+				</view>
+				<view class="upload-image-list" @click="upload">
+					<image class="upload" src="../../static/images/square/release/icon01.png"></image>
+				</view>
+			</view>
 			
 			<view class="option-module">
 				<view class="area-left">
@@ -18,18 +25,18 @@
 					</template>
 					<template v-else>
 						<image class="area-logo" src="../../static/images/square/release/icon06.png"></image>
-						<view class="area-left-value red">{{local_name}}</view>
+						<view class="area-left-value red local_name">{{local_name}}</view>
 					</template>
 				</view>
 				<view class="area-right" @click="goPostion">
-					<view class="area-right-value" v-if="local_name" @click="goCancel">{{ $t('release.cancel') }}</view>
+					<view class="area-right-value" v-if="local_name" @click.stop="goCancel">{{ $t('release.cancel') }}</view>
 					<image class="arrow" src="../../static/images/order/icon06.png"></image>
 				</view>
 			</view>
 			
 			<view class="option-module">
 				<view class="area-left">
-					<template v-if="!topic">
+					<template v-if="!topic || topic.length <= 0">
 						<image class="topic-logo" src="../../static/images/square/release/icon04.png"></image>
 						<view class="area-left-value">{{ $t('release.add_topic') }}</view>
 					</template>
@@ -39,6 +46,7 @@
 					</template>
 				</view>
 				<view class="area-right" @click="goSearch">
+					<view class="area-right-value">{{topic_name}}</view>
 					<image class="arrow" src="../../static/images/order/icon06.png"></image>
 				</view>
 			</view>
@@ -73,11 +81,16 @@
 </template>
 
 <script>
+	import {
+		pathToBase64,
+		base64ToPath
+	} from 'image-tools'
 	export default {
 		data() {
 			return {
 				title: "",
 				pic: "",
+				//pic: "https://media.domefish.com/images/images/a4907e146f5856fb2e313fb3c4c32946.webp|https://media.domefish.com/images/images/a4907e146f5856fb2e313fb3c4c32946.webp|https://media.domefish.com/images/images/a4907e146f5856fb2e313fb3c4c32946.webp|https://media.domefish.com/images/images/a4907e146f5856fb2e313fb3c4c32946.webp",
 				content: "",
 				longitude: "",
 				latitude: "",
@@ -98,12 +111,16 @@
 					title: this.$t('see').yourself,
 				}],
 				topic_name: "",
+				
+				fileLists: [],
+				picLists: [],
 			}
 		},
 		created() {
 			
 		},
 		onShow() {
+			//可见范围
 			this.visible = this.$store.state.visible
 			for(let i in this.visibleList){
 				if(this.visibleList[i].value == this.visible){
@@ -112,12 +129,27 @@
 				}
 			}
 			
+			//话题
+			this.topic_name = ""
 			this.topic = this.$store.state.topicLists
+			let arr = [];
+			let obj = {};
 			for(let i in this.topic){
+				obj = {}
 				if(this.topic_name) this.topic_name = this.topic_name + "," + this.topic[i].title
 				if(!this.topic_name) this.topic_name = this.topic[i].title
+				obj.id = this.topic[i].id
+				obj.title = this.topic[i].title
+				arr.push(obj)
 			}
-			console.log(this.topic_name)
+			this.topic = arr
+			console.log(this.topic)
+			
+			//经纬度
+			console.log(this.$store.state)
+			this.longitude = this.$store.state.addressList.longitude
+			this.latitude = this.$store.state.addressList.latitude
+			this.local_name = this.$store.state.addressList.local_name
 		},
 		mounted() {
 			if(this.reward == -1){
@@ -132,7 +164,11 @@
 			},
 			
 			goCancel() {
+				this.longitude = ""
+				this.latitude = ""
 				this.local_name = ""
+				this.$store.commit('searchAddressList', {})
+				uni.setStorageSync('addressList', {})
 			},
 			goPostion() {
 				uni.navigateTo({
@@ -159,15 +195,89 @@
 				}
 				console.log(this.reward)
 			},
-			
-			commit() {
+			upload() {
+				let _this = this;
+				_this.fileLists = [];
+				uni.chooseImage({
+					count: 9, //默认9
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['camera'], //拍照选择
+					success: (res)=> {
+						const tempFilePaths = res.tempFilePaths;
+						let imgLength = res.tempFilePaths.length;
+						console.log(res.tempFilePaths)
+						for(let i in res.tempFilePaths){
+							pathToBase64(res.tempFilePaths[i])
+							.then(path => {
+								_this.fileLists.push(path)
+								//上方为赋值，下方为上传
+								if(i >= (imgLength -1)){
+									_this.picLists = _this.picLists.concat(_this.fileLists)
+									_this.setUpload()
+								}
+							})
+							.catch(error => {
+								console.error(error)
+							})
+						}
+					}
+				});
+			},
+			setUpload() {
 				uni.showLoading({
 					title: this.$t('common').loading + '...',
 					mask: true
 				});
 				this.$myRequest({
 					method: 'POST',
-					url: '/api/ht/article',
+					url: '/upload',
+					data: {
+						file: this.fileLists
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						for(let i in res.data.data){
+							if(this.pic) {
+								this.pic = this.pic + "|" + res.data.data[i].path
+							} else {
+								this.pic = res.data.data[i].path
+							}
+						}
+					} else {
+						this.picLists.length = this.picLists.length - this.fileLists.length
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+					this.$forceUpdate()
+				})
+				.catch(err => {
+					uni.hideLoading();
+					this.picLists.length = this.picLists.length - this.fileLists.length
+					this.$forceUpdate()
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
+			commit() {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				console.log(JSON.stringify(this.topic))
+				this.$myRequest({
+					method: 'POST',
+					url: '/ht/article',
 					data: {
 						title: this.title,
 						pic: this.pic,
@@ -176,24 +286,26 @@
 						latitude: this.latitude,
 						local_name: this.local_name,
 						visible: this.visible,
-						reward: this.reward == true ? "1" : -1,
+						reward: this.reward == true ? "1" : "0",
 						topic: this.topic
 					}
 				})
 				.then(res => {
-					uni.hideLoading();
 					if (res.data.code == 200) {
-						this.back()
+						uni.setStorageSync('isRefreshSquare', "1")
+						//this.back()
 						// uni.showModal({
 						// 	title: this.$t('common').Tip,
 						// 	content: res.data.data,
 						// 	confirmText: this.$t('common').confirm,
 						// 	showCancel: false,
 						// })
-						// setTimeout(()=>{
-						// 	this.back()
-						// },2000)
+						setTimeout(()=>{
+							uni.hideLoading();
+							this.back()
+						},500)
 					} else {
+						uni.hideLoading();
 						uni.showModal({
 							title: this.$t('common').Tip,
 							content: res.data.msg,
@@ -265,11 +377,24 @@
 		font-weight: 400;
 		color: #999999;
 	}
+	.upload-lists{
+		display: flex;
+		align-content: center;
+		flex-wrap: wrap;
+	}
+	.upload-image-list {
+		width: 160rpx;
+		height: 160rpx;
+		display: block;
+		margin: 28rpx 6rpx 20rpx;
+		border-radius: 20rpx;
+		overflow: hidden;
+	}
 	.upload{
 		width: 160rpx;
 		height: 160rpx;
 		display: block;
-		margin: 28rpx 0 20rpx;
+		/* margin: 28rpx 20rpx 20rpx 0; */
 	}
 	
 	/* 选项模块 */
@@ -305,6 +430,14 @@
 	}
 	.red{
 		color: #ED4C4C;
+	}
+	.local_name{
+		width: 300rpx;
+		overflow: hidden;
+		white-space: nowrap;
+		word-wrap: normal;
+		text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
 	}
 	.area-right{
 		display: flex;

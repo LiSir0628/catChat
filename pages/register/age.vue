@@ -145,7 +145,7 @@
 	.nickname {
 		margin-top: 96rpx;
 		padding: 13rpx 0;
-		font-size: 28rpx;
+		font-size: 30rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		/* color: #999999; */
@@ -154,7 +154,7 @@
 
 	.age {
 		padding: 13rpx 0;
-		font-size: 28rpx;
+		font-size: 30rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		/* color: #999999; */
@@ -166,7 +166,7 @@
 		margin-top: 51rpx;
 		padding: 13rpx 0;
 
-		font-size: 28rpx;
+		font-size: 30rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		/* color: #999999; */
@@ -190,7 +190,7 @@
 		border-radius: 60rpx 60rpx 60rpx 60rpx;
 		opacity: 1;
 
-		font-size: 30rpx;
+		font-size: 36rpx;
 		font-family: Inter-Bold;
 		font-weight: bold;
 		color: #FFFFFF;

@@ -11,18 +11,18 @@
 		<view class="content">
 			<view class="title">{{ $t('register.title') }}</view>
 			<view>
-				<input class="phone" v-model="phone" :placeholder="$t('register.number')" />
+				<input class="phone" v-model="account" :placeholder="$t('register.number')" />
 				<view class="code-nav">
 					<input class="code" v-model="code" :placeholder="$t('login_phone.code')" />
-					<view class="code-btn">
-						{{ $t('login_phone.obtain') }}
+					<view class="code-btn" @click="getCode">
+						{{timeTitle}}
 					</view>
 				</view>
 				<input class="password" v-model="password" :placeholder="$t('login.password')" />
 			</view>
 			<view class="register" @click="login">{{ $t('register.login') }}</view>
 			
-			<view class="login-btn">{{ $t('register.next') }}</view>
+			<view class="login-btn" @click="sumbit">{{ $t('register.next') }}</view>
 			
 			<view class="read-nav">
 				<checkbox :checked="is_default" color="#ffffff" @click="switchChange" />
@@ -43,23 +43,229 @@
 	export default {
 		data() {
 			return {
-				phone: "",
+				account: "",
 				code: "",
 				password: "",
 				is_default: false,
 				
+				time: 59,
+				setTime: null,
+				timeTitle: this.$t('login_phone').obtain,
+				isSumbit: true,
+				
 				area: "美国"
 			}
+		},
+		mounted() {
+			clearInterval(this.setTime)
 		},
 		methods: {
 			switchChange(){
 				this.is_default = !this.is_default
 				console.log(this.is_default)
 			},
-			login() {
+			getCode(){
+				if(!this.account){
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('register').account_tip,
+						confirmText: this.$t('common').confirm,
+						showCancel: false,
+					})
+					return
+				} else if(!this.isSumbit){
+					return
+				}
+				
+				this.isSumbit = false
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'POST',
+					url: '/code',
+					data:{
+						mail: this.account
+					}
+				})
+				.then(res=>{
+					if(res.data.code == 200){
+						//验证码请求发出-开启计时器
+						this.openTimer()
+					} else {
+						this.isSumbit = true
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+					uni.hideLoading();
+				})
+				.catch(err=>{
+					this.isSumbit = true
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+				
+			},
+			openTimer() {
+				//避免计时器浪费1秒
+				if (this.time == 59) this.timeTitle =  60 + "s"
+				//计时器计算倒计时
+				this.setTime = setInterval(()=>{
+					if (this.time >= 0) {
+						this.timeTitle =  this.time + "s"
+						this.time = this.time - 1
+						this.isSumbit = false
+					} else{
+						this.timeTitle = this.$t('login_phone').obtain
+						this.time = 59
+						this.isSumbit = true
+						clearInterval(this.setTime);
+					} 
+				}, 1000);
+			},
+			
+			
+			login() {				
 				uni.navigateTo({
 					url: '/pages/register/login'
 				});
+			},
+			sumbit() {
+				if(!this.account){
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('register').account_tip,
+						confirmText: this.$t('common').confirm,
+						showCancel: false,
+					})
+					return
+				} else if(!this.password) {
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('register').password_tip,
+						confirmText: this.$t('common').confirm,
+						showCancel: false,
+					})
+					return
+				} else if(!this.is_default){
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('register').read_tip,
+						confirmText: this.$t('common').confirm,
+						showCancel: false,
+					})
+					return
+				}
+				
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'POST',
+					url: '/signup',
+					data:{
+						mail: this.account,
+						password: this.password,
+						code: this.code,
+						invite: "",
+					}
+				})
+				.then(res=>{
+					uni.hideLoading();
+					if(res.data.code == 200){
+						console.log(res.data.data);
+						uni.setStorageSync('token', res.data.data.token);
+						this.getUserList()
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err=>{
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+				
+			},
+			getUserList() {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				// this.$myRequest({
+				// 	method: 'POST',
+				// 	url: '/login',
+				// 	data: {
+				// 		mail: this.account,
+				// 		password: this.password,
+				// 		code: this.code,
+				// 	}
+				// })
+				this.$myRequest({
+					method: 'GET',
+					url: '/user/info',
+					data: {}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						console.log(res.data.data)
+						this.$store.commit('editDuomi', res.data.data)
+						uni.setStorageSync('duomiList', res.data.data);
+						//登录成功 跳转数据页。
+						uni.navigateTo({
+							url: '/pages/user/user'
+						});
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
+			
+			onUnload() {
+				//页面销毁、清除定时器
+				clearInterval(this.setTime);
+			},
+			onBeforeUnload() {
+				//页面销毁、清除定时器
+				clearInterval(this.setTime);
 			},
 		}
 	}
@@ -110,7 +316,7 @@
 		margin-top: 96rpx;
 		padding: 13rpx 0;
 		
-		font-size: 28rpx;
+		font-size: 30rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		/* color: #999999; */
@@ -124,7 +330,7 @@
 	.code{
 		width: 460rpx;
 		padding: 13rpx 0;	
-		font-size: 28rpx;
+		font-size: 30rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		/* color: #999999; */
@@ -137,7 +343,7 @@
 		margin-left: 20rpx;
 		background: #1A1D26;
 		border-radius: 200rpx 200rpx 200rpx 200rpx;
-		font-size: 28rpx;
+		font-size: 30rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #FFFFFF;
@@ -147,7 +353,7 @@
 		margin-top: 51rpx;
 		padding: 13rpx 0;
 		
-		font-size: 28rpx;
+		font-size: 30rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		/* color: #999999; */
@@ -169,7 +375,7 @@
 		border-radius: 60rpx 60rpx 60rpx 60rpx;
 		opacity: 1;
 		
-		font-size: 30rpx;
+		font-size: 36rpx;
 		font-family: Inter-Bold;
 		font-weight: bold;
 		color: #FFFFFF;

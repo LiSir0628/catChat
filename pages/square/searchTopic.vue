@@ -62,7 +62,7 @@
 				
 				topicLists: [],
 				num: 0,
-				allNum: 2,
+				allNum: 5,
 			}
 		},
 		created() {
@@ -70,6 +70,7 @@
 		},
 		mounted() {
 			this.topicLists = this.$store.state.topicLists
+			this.num = this.topicLists.length
 		},
 		methods: {
 			back() {
@@ -83,7 +84,7 @@
 				});
 				this.$myRequest({
 					method: 'GET',
-					url: '/api/ht/topic',
+					url: '/ht/topic',
 					data: {
 						keyword: this.topic,
 						page: 1,
@@ -169,6 +170,7 @@
 				this.$forceUpdate()
 			},
 			complete() {
+				console.log(this.topicLists)
 				this.$store.commit('searchTopicLists', this.topicLists) 
 				uni.setStorageSync('topicLists', this.topicLists)
 				this.back()
