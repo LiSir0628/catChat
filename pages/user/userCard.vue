@@ -140,9 +140,9 @@
 				</view> -->
 				<view class="user-list" v-for="item,index in focusLists">
 					<view class="focus-user">
-						<image class="focus-user-photo" :src="item.user_attribute.avatar"></image>
+						<image class="focus-user-photo" :src="item.me_follow.avatar"></image>
 						<view class="focus-user-msg">
-							<view class="focus-user-name">{{item.user_attribute.nickname}}</view>
+							<view class="focus-user-name">{{item.me_follow.nickname}}</view>
 							<view class="focus-user-gender">Handsome boy</view>
 						</view>
 					</view>
@@ -448,7 +448,8 @@
 						url: '/user/follow',
 						data: {
 							page: this.focus_page,
-							limit: this.focus_limit
+							limit: this.focus_limit,
+							type: "me_follow",  //me_follow我关注的用户  //follow_me关注我的用户
 						}
 					})
 					.then(res => {
