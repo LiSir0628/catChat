@@ -146,7 +146,7 @@
 							<view class="focus-user-gender">Handsome boy</view>
 						</view>
 					</view>
-					<view class="close-focus" @click.stop="follow('off',item.friend_id)">{{ $t('user_card.close') }}</view>
+					<view class="close-focus" @click.stop="follow('off',item.friend_id,index)">{{ $t('user_card.close') }}</view>
 				</view>
 			</view>
 
@@ -489,7 +489,7 @@
 					url: '/pages/square/squareDetails?article_id=' + (item.id || 3)
 				});
 			},
-			follow(status, uid) {
+			follow(status, uid,index) {
 				uni.showLoading({
 					title: this.$t('common').loading + '...',
 					mask: true
@@ -505,11 +505,7 @@
 					.then(res => {
 						uni.hideLoading();
 						if (res.data.code == 200) {
-							for (let i in this.topicLists) {
-								if (this.topicLists[i].uid == uid) {
-									this.topicLists[i].follow = !this.topicLists[i].follow
-								}
-							}
+							this.focusLists.splice(index,1)
 							this.$forceUpdate()
 						} else {
 							uni.showModal({

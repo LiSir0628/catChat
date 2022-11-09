@@ -1,7 +1,19 @@
 <script>
 	export default {
 		onLaunch: function() {
-			console.log('App Launch')
+			// 后端获取多国语言
+			// this.$myRequest({
+			// 	method: 'get',
+			// 	url: 'https://mock.apifox.cn/m1/1201885-0-default/test',
+			// 	data: {
+					
+			// 	}
+			// })
+			// .then(res => {
+			// 	uni.hideLoading();
+			// 	this.$i18n.mergeLocaleMessage('en', res.data)
+			// 	this.$forceUpdate()
+			// })
 			
 			if(uni.getStorageSync('duomiList')){
 				this.$store.commit('editDuomi', uni.getStorageSync('duomiList'))

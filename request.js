@@ -63,7 +63,7 @@ function myRequest(options){
 	// #endif
 	return new Promise((res,rej)=>{
 		uni.request({
-			url: options.url.indexOf("http") == -1 ? baseURL + options.url : options.url.replace("https://user.mini.zhishukongjian.com","https://api.domefish.com/api"),
+			url: options.url.indexOf("http") == -1 ? baseURL + options.url : options.url,
 			//url:baseURL + options.url,
 			method:options.method || 'GET',
 			data: obj,

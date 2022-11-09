@@ -3,7 +3,7 @@
 		<image class="icon05" src="../../static/images/user/icon05.png"></image>
 		<view class="top">
 			<view>
-				<image class="top-logo left-logo" src="../../static/images/user/icon08.png" @click="editUser"></image>
+				<image class="top-logo left-logo" src="../../static/images/user/icon31.png" @click="editSet"></image>
 				<image class="top-logo" src="../../static/images/user/icon14.png" @click="invitationBtn"></image>
 			</view>
 			<!-- <image class="top-logo" src="../../static/images/user/icon02.png"></image> -->
@@ -13,7 +13,7 @@
 			<view class="user-left">
 				<view class="name-modular">
 					<view>Michael jackson</view>
-					<!-- <image class="sex-logo" src="../../static/images/user/icon12.png"></image> -->
+					<image class="edit-logo" src="../../static/images/user/icon32.png" @click="goEdit"></image>
 				</view>
 
 				<view class="age">
@@ -415,7 +415,10 @@
 			back() {
 				window.history.go(-1)
 			},
-			editUser() {
+			editSet() {
+				console.log("设置")
+			},
+			goEdit() {
 				uni.navigateTo({
 					url: "personal"
 				});
@@ -517,9 +520,9 @@
 		color: #1A1D26;
 	}
 
-	.sex-logo {
-		width: 40rpx;
-		height: 40rpx;
+	.edit-logo {
+		width: 28rpx;
+		height: 28rpx;
 		margin-left: 14rpx;
 	}
 
