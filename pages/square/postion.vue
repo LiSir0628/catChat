@@ -57,8 +57,8 @@
 					"location": this.map,
 					"onSearchComplete": (data) => {
 						ac.hide()
-						this.lists = data.Xr
-						console.log(this.lists)
+						this.lists = data.Yr
+						console.log(data)
 					}
 				});
 		},

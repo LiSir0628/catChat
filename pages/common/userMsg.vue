@@ -3,10 +3,10 @@
 		<uni-popup class="user-popup" ref="popupUser" @maskClick="close">
 			<view class="user-card">
 				<view class="user-top">
-					<image class="user-photo" :src="userList.photo"></image>
+					<image class="user-photo" :src="userList.avatar"></image>
 					<view class="user-msg">
 						<view class="user-name">
-							{{userList.name}}
+							<view class="nickname">{{userList.nickname}}</view>
 							<image class="sex-logo" src="../../static/images/user/icon12.png"></image>
 						</view>
 						<view class="user-id">ID:{{userList.id}}</view>
@@ -104,12 +104,22 @@
 		margin-left: 18rpx;
 	}
 	.user-name{
+		width: 100%;
 		font-size: 34rpx;
+		line-height: 36rpx;
 		font-family: Inter-Bold;
 		font-weight: bold;
 		color: #1A1D26;
 		display: flex;
 		align-items: center;
+	}
+	.nickname{
+		max-width: 300rpx;
+		overflow: hidden;
+		white-space: nowrap;
+		word-wrap: normal;
+		text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
 	}
 	.sex-logo{
 		width: 40rpx;
@@ -121,6 +131,7 @@
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #333333;
+		margin-top: 6rpx;
 	}
 	.user-close{
 		width: 38rpx;

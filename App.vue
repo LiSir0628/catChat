@@ -14,6 +14,7 @@
 			// 	this.$i18n.mergeLocaleMessage('en', res.data)
 			// 	this.$forceUpdate()
 			// })
+			console.log(this.$i18n)
 			
 			if(uni.getStorageSync('duomiList')){
 				this.$store.commit('editDuomi', uni.getStorageSync('duomiList'))
@@ -34,10 +35,10 @@
 			}
 		},
 		onShow: function() {
-			console.log('App Show')
+			//console.log('App Show')
 		},
 		onHide: function() {
-			console.log('App Hide')
+			//console.log('App Hide')
 		}
 	}
 </script>

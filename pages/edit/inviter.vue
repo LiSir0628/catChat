@@ -3,7 +3,7 @@
 		<view class="top">
 			<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :title="$t('inviter.inviter')">
 			</uni-nav-bar>
-			<view class="determine" :class="{'isRed': code}" @click="commit">{{ $t('inviter.determine') }}</view>
+			<view class="determine" :class="{'isRed': code}" @click="commit">{{ $t('inviter.complete') }}</view>
 		</view>
 		
 		<view class="content">
@@ -73,8 +73,8 @@
 	}
 	
 	.content {
-		margin-top: 90rpx;
-		padding: 24rpx 30rpx 0;
+		/* margin-top: 90rpx; */
+		padding: 114rpx 30rpx 0;
 	}
 	
 	.title{

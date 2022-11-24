@@ -12,22 +12,29 @@
 		<view class="user-msg">
 			<view class="user-left">
 				<view class="name-modular">
-					<view>Michael jackson</view>
+					<view class="nickname">{{userList.nickname}}</view>
 					<image class="edit-logo" src="../../static/images/user/icon32.png" @click="goEdit"></image>
 				</view>
 
 				<view class="age">
-					26 {{ $t('user.old') }},
-					<template>male</template>
-					<!-- <template>female</template> -->
+					{{userList.sex}} , {{userList.age}} {{ $t('user.old') }}
 				</view>
 
-				<!-- <view class="inviter">
-					<image class="photo-small" src="../../static/images/user/photo02.png"></image>
-					<view>Mi Qiren</view>
-				</view> -->
+				<view class="inviter">
+					<!-- <image class="photo-small" src="../../static/images/user/photo02.png"></image>
+					<view>Mi Qiren</view> -->
+					<view class="state-modular" @click="goState"> +{{ $t('user.state') }} </view>
+					<view v-if="userList.hobbies && userList.hobbies.length > 0" class="interest-modular"  @click="interest">
+						<view class="state-modular"> +{{userList.hobbies[0]}} </view>
+						<view class="more">...</view>
+					</view>
+					<view v-else class="interest-modular" @click="interest">
+						<view class="state-modular"> +{{ $t('user.interest') }} </view>
+						<view class="more">...</view>
+					</view>
+				</view>
 			</view>
-			<image class="photo" src="../../static/images/user/photo01.jpg"></image>
+			<image class="photo" :src="userList.avatar"></image>
 		</view>
 
 		<view class="content">
@@ -408,6 +415,9 @@
 		components:{
 			userMsg,
 		},
+		onShow() {
+			this.userList = this.$store.state.duomiList
+		},
 		mounted() {
 			
 		},
@@ -425,6 +435,14 @@
 			},
 			invitationBtn() {
 				this.$refs.userMsg.open()
+			},
+			goState() {
+				
+			},
+			interest() {
+				uni.navigateTo({
+					url: "/pages/register/like"
+				});
 			},
 			goUrl(item) {
 				uni.navigateTo({
@@ -514,12 +532,19 @@
 		display: flex;
 		align-items: center;
 		font-size: 34rpx;
-		line-height: 34rpx;
+		line-height: 38rpx;
 		font-family: Inter-Bold;
 		font-weight: bold;
 		color: #1A1D26;
 	}
-
+	.nickname{
+		max-width: 480rpx;
+		overflow: hidden;
+		white-space: nowrap;
+		word-wrap: normal;
+		text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
+	}
 	.edit-logo {
 		width: 28rpx;
 		height: 28rpx;
@@ -532,7 +557,7 @@
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #333333;
-		margin: 16rpx 0 15rpx 0;
+		margin: 16rpx 0 20rpx 0;
 	}
 
 	.inviter {
@@ -544,7 +569,28 @@
 		font-weight: 400;
 		color: #6A6A6C;
 	}
-
+	
+	.state-modular {
+		font-size: 26rpx;
+		border-radius: 60rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		color: #1A1D26;
+		padding: 8rpx 20rpx;
+		background: rgba(26,29,38,0.1);
+	}
+	
+	.interest-modular {
+		display: flex;
+		align-items: flex-end;
+		margin-left: 20rpx;
+	}
+	
+	.more{
+		margin-left: 20rpx;
+		padding-bottom: 8rpx;
+	}
+	
 	.photo-small {
 		width: 48rpx;
 		height: 48rpx;

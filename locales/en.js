@@ -55,14 +55,22 @@ export const lang = {
 		"tip": "Can not be changed after sex is determined",
 	},
 	"like": {
-		"title": "Select Interests",
-		"Done": "Done",
+		"title": "Interests",
+		"add": "Add Interest",
+	},
+	"search_like": {
+		"add_interest": "Add Interest",
+		"complete": "Complete",
+		"interest_placeholder": "Search Interest",
 	},
 	"user": {
 		"old": "years old",
 		"level": "Membership level",
 		"not": "You're not a member yet",
 		"Go": "Go open",
+		"state": "State",
+		"interest": "Interest",
+		
 
 		"wallet": "wallet",
 		"order": "order",
@@ -92,13 +100,15 @@ export const lang = {
 	},
 	"wallet": {
 		"wallet": "wallet",
-		"coins": "My gold coins",
-		"fund": "Set off fund",
-		"exclusive": "My exclusive",
-		"money": "Gold coin",
-		"tips": "Available for amount deduction and consumption",
-		// "range": "No threshold",
-		"range": "",
+		"coins": "My Gold coin",
+		"withdrawal": "Withdrawal",
+		"non_withdrawable": "Gold coins are not available for withdrawal",
+		"see_why": "See why",
+		
+		"top_up_title": "Gold coin top-up",
+		"price": "Price",
+		"recharge_placeholder": "Please enter the recharge amount",
+		"top_up_btn": "Top up now",
 	},
 	"balance": {
 		"balance": "wallet",
@@ -126,7 +136,7 @@ export const lang = {
 		"determine": "Determine",
 
 		"balance_deduction": "Balance deduction",
-		"deductible_gold_coins": "Deductible gold coins",
+		"deductible_gold_coins": "Deductible Gold coin",
 		"insufficient_amount": "Insufficient amount",
 	},
 	"notice": {
@@ -144,6 +154,7 @@ export const lang = {
 	},
 	"personal": {
 		"edit_information": "Edit information",	
+		"avatar": "Avatar",
 		"name": "Nickname",
 		"location": "Location",
 		"mood": "Mood",
@@ -196,20 +207,33 @@ export const lang = {
 	"birthday": {
 		"birthday": "Edit birthday",
 		"date": "Enter date",
-		"determine": "determine",
+		"complete": "Complete",
 	},
 	"inviter": {
 		"inviter": "Edit inviter",
 		"code": "Enter invitation code",
-		"determine": "determine",
+		"complete": "Complete",
 	},
 	"occupation":{
-		"occupation": "Enter occupation",
+		"occupation": "Select occupation",
 		"title": "Enter your occupation",
-		"determine": "determine",
+		"complete": "Complete",
 	},
-	
-	
+	"edit": {
+		"edit": "Edit",
+		"complete": "Complete",
+		"please_enter_your": "Please enter your",
+		
+		"nickname": "Nickname",
+		"height_and_weight": "Height and Weight",
+		"height": "Height",
+		"weight": "Weight",
+		
+	},
+	"constellation": {
+		"constellation": "Edit Constellation",
+		"complete": "Complete",
+	},
 	
 	"order": {
 		"order": "order",
@@ -360,13 +384,14 @@ export const lang = {
 	"reward": {
 		"reward": "Reward",
 		"record": "Record",
-		"reward_placeholder": "Please enter your reward coins",
+		"reward_placeholder": "Please enter your reward Gold coin",
+		"price": "Price",
 		"determine": "Determine",
 		
 	},
 	"reward_record": {
 		"reward_record": "Reward record",
-		"reward_coins": "Reward coins",
+		"reward_coins": "Reward Gold coin",
 		
 	},
 	"release": {
@@ -383,7 +408,7 @@ export const lang = {
 	"search_topic": {
 		"add_topic": "Add topic",
 		"complete": "Complete",
-		"topic-placeholder": "Search Topics",
+		"topic_placeholder": "Search Topics",
 	},
 	"see": {
 		"who_can_see": "Who can see",
@@ -413,5 +438,8 @@ export const lang = {
 		"limit": "Cannot continue to select, the upper limit has been reached",
 		"success": "success",
 		"kudos_reminder": "You have chosen to like/dislike, please cancel before proceeding",
+		"cm": "cm",
+		"kg": "kg",
+		"gender_tip": "Gender is not allowed to change",
 	}
 }

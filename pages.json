@@ -88,6 +88,15 @@
 			}
 		},
 		{
+			"path": "pages/register/searchLike",
+			"style": {
+				// "navigationBarTitleText": "选择喜好",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
 			"path": "pages/user/user",
 			"style": {
 				// "navigationBarTitleText": "个人页面",
@@ -181,6 +190,24 @@
 			"path": "pages/edit/occupation",
 			"style": {
 				// "navigationBarTitleText": "编辑职业",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/edit/edit",
+			"style": {
+				// "navigationBarTitleText": "编辑信息",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/edit/constellation",
+			"style": {
+				// "navigationBarTitleText": "编辑星座",
 				"app-plus": {
 					"titleNView": false
 				}

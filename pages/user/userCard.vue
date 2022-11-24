@@ -151,18 +151,7 @@
 			</view>
 
 			<view class="square-lists" :class="{'square-lists-height': isShowTabHeight}" v-if="cindex == 2">
-				<view class="user-list">
-					<view class="focus-user">
-						<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
-						<view class="focus-user-msg">
-							<view class="focus-user-name">九亿少女的偶像ADHKA</view>
-							<view class="focus-user-gender">Handsome boy</view>
-						</view>
-					</view>
-					<!-- <view class="close-focus">{{ $t('user_card.focus') }}</view> -->
-					<view class="close-focus">{{ $t('user_card.close') }}</view>
-				</view>
-				<view class="user-list">
+				<!-- <view class="user-list">
 					<view class="focus-user">
 						<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
 						<view class="focus-user-msg">
@@ -171,6 +160,16 @@
 						</view>
 					</view>
 					<view class="close-focus">{{ $t('user_card.focus') }}</view>
+				</view> -->
+				<view class="user-list" v-for="item,index in fanLists">
+					<view class="focus-user">
+						<image class="focus-user-photo" :src="item.follow_me.avatar"></image>
+						<view class="focus-user-msg">
+							<view class="focus-user-name">{{item.follow_me.nickname}}</view>
+							<view class="focus-user-gender">Handsome boy</view>
+						</view>
+					</view>
+					<view class="close-focus" @click.stop="follow('off',item.friend_id,index)">{{ $t('user_card.close') }}</view>
 				</view>
 			</view>
 
@@ -294,8 +293,40 @@
 				focus_total_page: 0,
 				focusLists: [], //关注列表
 				
+				//被关注列表
+				fan_page: 1,
+				fan_limit: 20,
+				fan_total_limit: 0,
+				fan_total_page: 0,
+				fanLists: [], //被关注列表
+				
+				//打赏
+				reward_page: 1,
+				reward_limit: 20,
+				reward_total_limit: 0,
+				reward_total_page: 0,
+				rewardLists: [],
+				
+				//相册
+				album_page: 1,
+				album_limit: 20,
+				album_total_limit: 0,
+				album_total_page: 0,
+				albumLists: [],
+				
+				//视频列表
+				video_page: 1,
+				video_limit: 20,
+				video_total_limit: 0,
+				video_total_page: 0,
+				videoLists: [],
+						
 				A_TOP: 0,
-				b_TOP: 0,
+				B_TOP: 0,
+				C_TOP: 0,
+				D_TOP: 0,
+				E_TOP: 0,
+				F_TOP: 0,
 			}
 		},
 		created() {
@@ -329,6 +360,10 @@
 				// console.log(scroll);
 				if(this.cindex == 0) this.A_TOP = scroll
 				if(this.cindex == 1) this.B_TOP = scroll
+				if(this.cindex == 2) this.C_TOP = scroll
+				if(this.cindex == 3) this.D_TOP = scroll
+				if(this.cindex == 4) this.E_TOP = scroll
+				if(this.cindex == 5) this.F_TOP = scroll
 				if (scroll >= uni.upx2px(472)) {
 					// 分类 固定展示
 					this.isShowTabHeight = true
@@ -367,6 +402,30 @@
 					this.$nextTick(()=>{
 						this.goTop(this.B_TOP)
 					})
+				} else if (index == 2 && this.fanLists.length <= 0) {
+					this.getHttpFan()
+				} else if (index == 2) {
+					this.$nextTick(()=>{
+						this.goTop(this.C_TOP)
+					})
+				} else if (index == 3 && this.rewardLists.length <= 0) {
+					//this.getHttpFan()
+				} else if (index == 3) {
+					this.$nextTick(()=>{
+						this.goTop(this.D_TOP)
+					})
+				} else if (index == 4 && this.albumLists.length <= 0) {
+					this.getHttpAlbum()
+				} else if (index == 4) {
+					this.$nextTick(()=>{
+						this.goTop(this.E_TOP)
+					})
+				} else if (index == 5 && this.videoLists.length <= 0) {
+					this.getHttpVideo()
+				} else if (index == 5) {
+					this.$nextTick(()=>{
+						this.goTop(this.F_TOP)
+					})
 				}
 			},
 
@@ -385,6 +444,30 @@
 				this.focus_total_limit = 0
 				this.focus_total_page = 0
 				this.getFocus()
+			},
+			getHttpFan() {
+				this.fanLists = []
+				this.isRequest = true
+				this.fan_page = 1
+				this.fan_total_limit = 0
+				this.fan_total_page = 0
+				this.getFan()
+			},
+			getHttpAlbum() {
+				this.albumLists = []
+				this.isRequest = true
+				this.album_page = 1
+				this.album_total_limit = 0
+				this.album_total_page = 0
+				this.getAlbum()
+			},
+			getHttpVideo() {
+				this.videoLists = []
+				this.isRequest = true
+				this.video_page = 1
+				this.video_total_limit = 0
+				this.video_total_page = 0
+				this.getVideo()
 			},
 			getTopicLists() {
 				this.isRequest = false
@@ -464,6 +547,150 @@
 							this.focus_total_limit = res.data.data.total_limit
 							this.focus_total_page = Math.ceil(this.focus_total_limit / this.focus_limit)
 							console.log(this.focusLists)
+						} else {
+							uni.showModal({
+								title: this.$t('common').Tip,
+								content: res.data.msg,
+								confirmText: this.$t('common').confirm,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						this.isRequest = true
+						uni.hideLoading();
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
+							//content: err,
+							showCancel: false,
+						})
+					})
+			},
+			getFan() {
+				this.isRequest = false
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: '/user/follow',
+						data: {
+							page: this.fan_page,
+							limit: this.fan_limit,
+							type: "follow_me",  //me_follow我关注的用户  //follow_me关注我的用户
+						}
+					})
+					.then(res => {
+						this.isRequest = true
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							if (this.fanLists.length == 0) {
+								this.fanLists = res.data.data.lists
+							} else {
+								this.fanLists = this.fanLists.concat(res.data.data.lists)
+							}
+							this.fan_total_limit = res.data.data.total_limit
+							this.fan_total_page = Math.ceil(this.fan_total_limit / this.fan_limit)
+							console.log(this.fanLists)
+						} else {
+							uni.showModal({
+								title: this.$t('common').Tip,
+								content: res.data.msg,
+								confirmText: this.$t('common').confirm,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						this.isRequest = true
+						uni.hideLoading();
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
+							//content: err,
+							showCancel: false,
+						})
+					})
+			},
+			getAlbum() {
+				this.isRequest = false
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: '/user/albums/' + 0 + '/' + 0,
+						data: {
+							// private: 0,  1为私密内容,0为公共内容
+							// video: 0, 1为视频列表, 0为图片列表
+							// id: '', 用户id,
+						}
+					})
+					.then(res => {
+						this.isRequest = true
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							if (this.albumLists.length == 0) {
+								this.albumLists = res.data.data
+							} else {
+								this.albumLists = this.albumLists.concat(res.data.data)
+							}
+							this.album_total_limit = res.data.data.total_limit
+							this.album_total_page = Math.ceil(this.album_total_limit / this.album_limit)
+							console.log(this.albumLists)
+						} else {
+							uni.showModal({
+								title: this.$t('common').Tip,
+								content: res.data.msg,
+								confirmText: this.$t('common').confirm,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						this.isRequest = true
+						uni.hideLoading();
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
+							//content: err,
+							showCancel: false,
+						})
+					})
+			},
+			getVideo() {
+				this.isRequest = false
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: '/user/albums/' + 0 + '/' + 1,
+						data: {
+							// private: 0,  1为私密内容,0为公共内容
+							// video: 0, 1为视频列表, 0为图片列表
+							// id: '', 用户id,
+						}
+					})
+					.then(res => {
+						this.isRequest = true
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							if (this.videoLists.length == 0) {
+								this.videoLists = res.data.data
+							} else {
+								this.videoLists = this.videoLists.concat(res.data.data)
+							}
+							this.video_total_limit = res.data.data.total_limit
+							this.video_total_page = Math.ceil(this.video_total_limit / this.video_limit)
+							console.log(this.videoLists)
 						} else {
 							uni.showModal({
 								title: this.$t('common').Tip,
@@ -699,10 +926,17 @@
 	}
 
 	.user-card-name {
+		max-width: 580rpx;
 		font-size: 34rpx;
 		font-family: Inter-Bold;
 		font-weight: bold;
 		color: #1A1D26;
+		
+		overflow: hidden;
+		white-space: nowrap;
+		word-wrap: normal;
+		text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
 	}
 
 	.grade-logo {

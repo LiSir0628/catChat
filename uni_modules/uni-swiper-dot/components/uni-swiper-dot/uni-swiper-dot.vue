@@ -149,7 +149,7 @@
 		width: 8px;
 		border-radius: 100px;
 		margin-left: 6px;
-		background-color: rgba(0, 0, 0, 0.4);
+		background-color: rgba(0, 0, 0, 0.6);
 		/* #ifndef APP-NVUE */
 		cursor: pointer;
 		/* #endif */

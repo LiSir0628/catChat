@@ -608,7 +608,7 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		background-color: rgba(0, 0, 0, 0.4);
+		background-color: rgba(0, 0, 0, 0.6);
 		transition-property: opacity;
 		transition-duration: 0.3s;
 		opacity: 0;
@@ -670,7 +670,7 @@
 		/* #endif */
 		flex-direction: row;
 		justify-content: space-between;
-		border-top-color: rgba(0, 0, 0, 0.4);
+		border-top-color: rgba(0, 0, 0, 0.6);
 		border-top-style: solid;
 		border-top-width: 1px;
 	}

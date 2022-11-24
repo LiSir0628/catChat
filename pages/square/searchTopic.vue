@@ -19,7 +19,7 @@
 		<view class="content">
 			<view class="topic-modular">
 				<image class="search-logo" src="../../static/images/square/icon02.png"></image>
-				<input class="topic" placeholder-class="topic-placeholder" v-model="topic" :placeholder="$t('search_topic.topic-placeholder')" @confirm="getReTopicLists" />
+				<input class="topic" placeholder-class="topic-placeholder" v-model="topic" :placeholder="$t('search_topic.topic_placeholder')" @confirm="getReTopicLists" />
 			</view>
 			
 			<view class="select-topic">

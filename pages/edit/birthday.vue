@@ -3,7 +3,7 @@
 		<view class="top">
 			<uni-nav-bar left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :title="$t('birthday.birthday')">
 			</uni-nav-bar>
-			<view class="determine" :class="{'isRed': birthday}" @click="commit">{{ $t('birthday.determine') }}</view>
+			<view class="determine" :class="{'isRed': birthday}" @click="commit">{{ $t('birthday.complete') }}</view>
 		</view>
 		
 		<view class="content">
@@ -73,6 +73,7 @@
 			},
 			close() {
 				console.log(this.birthday)
+				this.getDate()
 				this.$refs.popup.close()
 			},
 			bindChange(e) {
@@ -82,10 +83,55 @@
 				this.day = this.days[val[2]].toString().length == 2 ? this.days[val[2]] : "0" + this.days[val[2]]
 				this.birthday = this.year + "/" + this.month + "/" + this.day
 			},
-			
+			getDate() {
+				let arr = this.birthday.split("/")
+				//判断年份位置
+				let index = 9999
+				for(let i in this.years){
+					if(this.years[i] == arr[0]) index = parseInt(i)
+				}
+				this.value = [ index, parseInt(arr[1]) - 1, parseInt(arr[2]) - 1]
+			},
 			commit() {
 				if(this.birthday){
 					console.log("触发" + this.birthday)
+					uni.showLoading({
+						title: this.$t('common').loading + '...',
+						mask: true
+					});
+					this.$myRequest({
+						method: 'POST',
+						url: '/user/editer',
+						data: {
+							birthday: this.birthday
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							this.$store.commit('editBirthday',this.birthday)
+							uni.setStorageSync('duomiList', this.$store.state.duomiList)
+							this.back()
+						} else {
+							uni.showModal({
+								title: this.$t('common').Tip,
+								content: res.data.msg,
+								confirmText: this.$t('common').confirm,
+								showCancel: false,
+							})
+						}
+						this.$forceUpdate()
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
+							//content: err,
+							showCancel: false,
+						})
+					})
 				} else {
 					console.log("不触发")
 				}
@@ -131,8 +177,8 @@
 	}
 	
 	.content {
-		margin-top: 90rpx;
-		padding: 24rpx 30rpx 0;
+		/* margin-top: 90rpx; */
+		padding: 114rpx 30rpx 0;
 	}
 	
 	.title{

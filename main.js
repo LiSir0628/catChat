@@ -21,6 +21,12 @@ Vue.use(VueClipboard)
 import VueI18n from 'vue-i18n'
 Vue.use(VueI18n);
 
+let en = require('./locales/en.js').lang
+let zh_CN = require('./locales/zh-CN.js').lang
+// en = JSON.stringify(en)
+// en = en.replace(/Gold coin/g, "money")
+// en = JSON.parse(en)
+
 const i18n = new VueI18n({
 	// #ifdef MP 	
 	locale: 'en', //初始化,保证刷新页面也保留
@@ -33,8 +39,8 @@ const i18n = new VueI18n({
 	// #endif
 	// 加载语言文件的内容
 	messages: {
-		'en': require('./locales/en.js').lang,
-		'zh-CN': require('./locales/zh-CN.js').lang
+		'en': en,
+		'zh-CN': zh_CN
 	}
 })
 Vue.prototype._i18n = i18n

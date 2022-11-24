@@ -238,7 +238,7 @@
 		left: 0;
 		color: #fff;
 		font-size: 12px;
-		background-color: rgba(0, 0, 0, 0.4);
+		background-color: rgba(0, 0, 0, 0.6);
 	}
 
 	.file-image {

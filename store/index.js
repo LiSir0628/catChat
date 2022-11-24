@@ -6,8 +6,19 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 	state: {
 		duomiList: {},
-		nickname: "",
 		avatar: "",
+		nickname: "",
+		sex: "",
+		heigh: "",
+		weight: "",
+		birthday: "",
+		job: "",
+		emotion: "",
+		constellation: "",
+		income: "",
+		hobbies: [],
+		
+		
 		mail: "",
 		
 		langText: "",
@@ -21,17 +32,55 @@ const store = new Vuex.Store({
 	mutations: {
 		editDuomi(state,duomi) {
 			state.duomiList = duomi
-			state.nickname = duomi.nickname
 			state.avatar = duomi.avatar
-		},
-		editName(state,name) {
-			state.nickname = name
-			state.duomiList.nickname = name
+			state.nickname = duomi.nickname
 		},
 		editAvatar(state,photo) {
 			state.avatar = photo
 			state.duomiList.avatar = photo
 		},
+		editName(state,name) {
+			state.nickname = name
+			state.duomiList.nickname = name
+		},
+		editSex(state,name) {
+			state.sex = name
+			state.duomiList.sex = name
+		},
+		editHeight(state,heigh) {
+			state.heigh = heigh
+			state.duomiList.heigh = heigh
+		},
+		editWeight(state,weight) {
+			state.weight = weight
+			state.duomiList.weight = weight
+		},
+		editBirthday(state,birthday) {
+			state.birthday = birthday
+			state.duomiList.birthday = birthday
+		},
+		editJob(state,job) {
+			state.job = job
+			state.duomiList.job = job
+		},
+		editEmotion(state,emotion) {
+			state.emotion = emotion
+			state.duomiList.emotion = emotion
+		},
+		editConstellation(state,constellation) {
+			state.constellation = constellation
+			state.duomiList.constellation = constellation
+		},
+		editIncome(state,income) {
+			state.income = income
+			state.duomiList.income = income
+		},
+		editHobbies(state,hobbies) {
+			state.hobbies = hobbies
+			state.duomiList.hobbies = hobbies
+		},
+
+
 		editEmail(state,email){
 			state.mail = email
 			state.duomiList.mail = email

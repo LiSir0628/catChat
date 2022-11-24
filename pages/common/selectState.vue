@@ -9,13 +9,14 @@
 						<template v-else-if="stateStyle == 3">Select {{ $t('personal.education') }}</template>
 						<template v-else-if="stateStyle == 4">Select {{ $t('personal.revenue') }}</template>
 						<template v-else-if="stateStyle == 5">Select {{ $t('personal.gender') }}</template>
+						<template v-else-if="stateStyle == 6">Select {{ $t('personal.emotional_state') }}</template>
 					</view>
 					<view class="state-close" @click="close">+</view>
 				</view>
 
 				<view class="stateList">
 					<radio-group @change="radioChange">
-						<label class="uni-list-cell uni-list-cell-pd" v-for="(item, index) in stateList"
+						<label class="uni-list-cell uni-list-cell-pd" :class="{'uni-list-cell-active': stateStyle == 6}" v-for="(item, index) in stateList"
 							:key="item.value">
 							<view>
 								<radio :value="item.value" :checked="index == current" />
@@ -150,9 +151,9 @@
 	}
 	
 	.stateList{
-		height: 450rpx;
+		height: 496rpx;
 		padding: 0 32rpx;
-		margin-top: 30rpx;
+		margin-top: 26rpx;
 		box-sizing: border-box;
 		overflow: hidden;
 		overflow-y: auto;
@@ -164,6 +165,9 @@
 	
 	.uni-list-cell{
 		margin-bottom: 30rpx;
+	}
+	.uni-list-cell-active{
+		margin-bottom: 20rpx;
 	}
 	.uni-list-cell-pd{
 		display: flex;
@@ -204,7 +208,7 @@
 		color: #FFFFFF;
 		text-align: center;
 		position: fixed;
-		bottom: 59rpx;
+		bottom: 50rpx;
 		left: 0;
 		right: 0;
 		margin: 0 auto;
