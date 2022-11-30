@@ -102,13 +102,30 @@ export const lang = {
 		"wallet": "wallet",
 		"coins": "My Gold coin",
 		"withdrawal": "Withdrawal",
-		"non_withdrawable": "Gold coins are not available for withdrawal",
+		"non_withdrawable": "Gold coin are not available for withdrawal",
 		"see_why": "See why",
 		
 		"top_up_title": "Gold coin top-up",
 		"price": "Price",
-		"recharge_placeholder": "Please enter the recharge amount",
+		"recharge_placeholder": "Enter the top-up Gold coin amount",
+		"gold_coin": "Gold coin needed",
 		"top_up_btn": "Top up now",
+		
+		"question01": "What is the use of Gold coin",
+		"des_title01": "Dating voice times redemption",
+		"des01": "The Gold coin obtained can be exchanged for chatting and dating voice times",
+		"des_title02": "Video Redemption",
+		"des02": "The Gold coin obtained can be exchanged for video chat sessions",
+		"des_title03": "Gift exchange giving",
+		"des03": "You can exchange gifts if you have enough Gold coin to increase the attractiveness of dating",
+		
+		"question02": "How to get Gold coin",
+		"des_title04": "Sign up to receive Gold coin",
+		"des04": "Sign in daily to receive Gold coin and redeem various benefits",
+		"des_title05": "Invite a friend to become a leader",
+		"des05": "Invite to get a fixed amount of Gold coin, invite friends to earn Gold coin for you anytime, anywhere",
+		"des_title06": "Gifts redeemable for Gold coin",
+		"des06": "The gifts received are converted into a certain number of Gold coin through conversion",
 	},
 	"balance": {
 		"balance": "wallet",
@@ -233,6 +250,11 @@ export const lang = {
 	"constellation": {
 		"constellation": "Edit Constellation",
 		"complete": "Complete",
+	},
+	"mood": {
+		"set_status": "Set Status",
+		"determine": "Determine",
+		"no_status": "No status",
 	},
 	
 	"order": {
@@ -441,5 +463,6 @@ export const lang = {
 		"cm": "cm",
 		"kg": "kg",
 		"gender_tip": "Gender is not allowed to change",
+		"payment_method_tip": "Please select a payment method",
 	}
 }

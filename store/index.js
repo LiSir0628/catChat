@@ -17,6 +17,7 @@ const store = new Vuex.Store({
 		constellation: "",
 		income: "",
 		hobbies: [],
+		mood: "",
 		
 		
 		mail: "",
@@ -79,6 +80,11 @@ const store = new Vuex.Store({
 			state.hobbies = hobbies
 			state.duomiList.hobbies = hobbies
 		},
+		editMood(state,mood) {
+			state.mood = mood
+			state.duomiList.mood = mood
+		},
+		
 
 
 		editEmail(state,email){

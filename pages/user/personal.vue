@@ -303,7 +303,7 @@
 			
 			if(this.userList.emotion) this.emotion_status = this.userList.emotion
 			
-			console.log(this.userList)
+			//console.log(this.userList)
 		},
 		created() {
 			// if(!this.userList.sex) this.getSex() //不进行限制
@@ -339,15 +339,15 @@
 					this.setEmotion(this.emotion_status_val,this.emotion_status)
 				}
 				
-				// console.log("名字education_status:" + this.education_status)
-				// console.log("名字education_status_val:" + this.education_status_val)
-				// console.log("名字revenue_status:" + this.revenue_status)
-				// console.log("名字revenue_status_val:" + this.revenue_status_val)
-				// console.log("名字gender_status:" + this.gender_status)
-				// console.log("名字gender_status_val:" + this.gender_status_val)
-				console.log(this.emotion_status)
-				console.log(this.emotion_status_val)
-				console.log("******")
+				//console.log("名字education_status:" + this.education_status)
+				//console.log("名字education_status_val:" + this.education_status_val)
+				//console.log("名字revenue_status:" + this.revenue_status)
+				//console.log("名字revenue_status_val:" + this.revenue_status_val)
+				//console.log("名字gender_status:" + this.gender_status)
+				//console.log("名字gender_status_val:" + this.gender_status_val)
+				//console.log(this.emotion_status)
+				//console.log(this.emotion_status_val)
+				//console.log("******")
 			},
 			
 			upload() {
@@ -572,7 +572,7 @@
 				this.$refs.selectState.open()
 			},
 			genderStatus() {
-				console.log(this.genderList[0].name)
+				//console.log(this.genderList[0].name)
 				if(this.userList.gender && this.userList.gender != this.genderList[0].name){
 					uni.showModal({
 						title: this.$t('common').Tip,
@@ -739,7 +739,7 @@
 							obj.name = res.data.data[i]
 							this.incomeList.push(obj)
 						}
-						console.log(this.incomeList)
+						//console.log(this.incomeList)
 					} else {
 						uni.showModal({
 							title: this.$t('common').Tip,

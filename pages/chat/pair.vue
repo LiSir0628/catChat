@@ -143,7 +143,7 @@
 					id: 1,
 					name: this.$t('bottom').Pair,
 					image: "../../static/images/user/icon03.png",
-					url: "",
+					url: "/pages/pair/pair",
 					styleClass: {
 						width: '50rpx',
 						height: '40rpx'

@@ -53,6 +53,13 @@
                         "appkey_ios" : "",
                         "appkey_android" : ""
                     }
+                },
+                "payment" : {
+                    "paypal" : {
+                        "__platform__" : [ "ios", "android" ],
+                        "returnURL_ios" : "",
+                        "returnURL_android" : ""
+                    }
                 }
             },
             "splashscreen" : {

@@ -64,6 +64,12 @@
 	/deep/ .uni-navbar__header-btns-right{
 		font-size: 24rpx;
 	}
+	/deep/ uni-modal{
+		z-index: 10001;
+	}
+	/deep/ uni-toast{
+		z-index: 10001;
+	}
 	/*每个页面公共css */
 	@font-face {
 		font-family: Inter-Bold;

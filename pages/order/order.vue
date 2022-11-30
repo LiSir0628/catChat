@@ -66,7 +66,7 @@
 							<view class="order-msg">
 								<view class="order-title">{{citem.title}}</view>
 								<view class="order-price">${{citem.price}}</view>
-								<view v-if="item.state == 1" class="order-method" @click="goPayment">{{ $t('order.payment') }}</view>
+								<view v-if="item.state == 1" class="order-method" @click="goPayment(item)">{{ $t('order.payment') }}</view>
 								<view class="wait" v-else-if="item.state == 3">
 									<view class="order-method logistics">{{ $t('order.logistics') }}</view>
 									<view class="order-method determine">{{ $t('order.determine') }}</view>
@@ -164,7 +164,7 @@
 			</view>
 		</view>
 		
-		<payment ref="payment"></payment>
+		<payment ref="payment" :objList="objList"></payment>
 	</view>
 </template>
 
@@ -514,6 +514,8 @@
 				}],
 				
 				isShowLove: false,
+				
+				objList: {}, //付款订单信息
 			}
 		},
 		components: {
@@ -536,7 +538,9 @@
 					url: 'orderDetail'
 				});
 			},
-			goPayment() {
+			goPayment(item) {
+				this.objList = {}
+				this.objList.price = item.total_price
 				this.$refs.payment.open()
 			},
 			scroll(e) {

@@ -31,54 +31,224 @@
 					<view class="coin-modular">
 						<image v-if="cindex == index" class="price-logo" src="../../static/images/square/icon14.png"></image>
 						<image v-else class="price-logo" src="../../static/images/square/icon15.png"></image>
-						<view class="price-text">{{item.num}}</view>
+						<view class="price-text">{{item.coin}}</view>
 					</view>
-					<view class="price">{{ $t('wallet.price') }}: $5</view>
+					<view class="price">{{ $t('wallet.price') }}: {{item.price_smbol}}</view>
 				</view>
 			</view>
-			<input class="reward-price" :placeholder="$t('wallet.recharge_placeholder')">
-			<view class="commit-btn">{{ $t('wallet.top_up_btn') }}</view>
+			<input type="number" class="reward-price" v-model="gold_num" :placeholder="$t('wallet.recharge_placeholder')" @input="input">
+			<view v-if="gold_num" class="total-price-tips">{{gold_num}} {{ $t('wallet.gold_coin') }}: {{total_price}}</view>
+			<view class="commit-btn" @click="goPay">{{ $t('wallet.top_up_btn') }}</view>
 		</view>
+		
+		<web-view v-if="pay_url" :src="pay_url" @message="message"></web-view>
 		<view class="des">
-			<view class="des-title">What is the use of gold coins</view>
+			<view class="des-title">{{ $t('wallet.question01') }}</view>
+			<view class="des-modular">
+				<view class="des-modular-top">
+					<image class="ok-logo" src="../../static/images/user/wallet/icon08.png"></image>
+					<view class="rule-title">{{ $t('wallet.des_title01') }}</view>
+				</view>
+				<view class="rule">{{ $t('wallet.des01') }}</view>
+			</view>
+			<view class="des-modular">
+				<view class="des-modular-top">
+					<image class="ok-logo" src="../../static/images/user/wallet/icon08.png"></image>
+					<view class="rule-title">{{ $t('wallet.des_title02') }}</view>
+				</view>
+				<view class="rule">{{ $t('wallet.des02') }}</view>
+			</view>
+			<view class="des-modular">
+				<view class="des-modular-top">
+					<image class="ok-logo" src="../../static/images/user/wallet/icon08.png"></image>
+					<view class="rule-title">{{ $t('wallet.des_title03') }}</view>
+				</view>
+				<view class="rule">{{ $t('wallet.des03') }}</view>
+			</view>
+			
+			<view class="des-title des-title02">{{ $t('wallet.question02') }}</view>
+			<view class="des-modular">
+				<view class="des-modular-top">
+					<image class="ok-logo" src="../../static/images/user/wallet/icon08.png"></image>
+					<view class="rule-title">{{ $t('wallet.des_title04') }}</view>
+				</view>
+				<view class="rule">{{ $t('wallet.des04') }}</view>
+			</view>
+			<view class="des-modular">
+				<view class="des-modular-top">
+					<image class="ok-logo" src="../../static/images/user/wallet/icon08.png"></image>
+					<view class="rule-title">{{ $t('wallet.des_title05') }}</view>
+				</view>
+				<view class="rule">{{ $t('wallet.des05') }}</view>
+			</view>
+			<view class="des-modular">
+				<view class="des-modular-top">
+					<image class="ok-logo" src="../../static/images/user/wallet/icon08.png"></image>
+					<view class="rule-title">{{ $t('wallet.des_title06') }}</view>
+				</view>
+				<view class="rule">{{ $t('wallet.des06') }}</view>
+			</view>
 		</view>
+		<payment ref="payment" :objList="objList"></payment>
 	</view>
 </template>
 
 <script>
+	import payment from "@/pages/common/payment.vue"
 	export default {
 		data() {
 			return {
 				cindex: 0,
-				goldList:[{
-					id: 1,
-					num: 500
-				},{
-					id: 2,
-					num: 500
-				},{
-					id: 3,
-					num: 500
-				},{
-					id: 4,
-					num: 500
-				},{
-					id: 5,
-					num: 500
-				},{
-					id: 6,
-					num: 500
-				}],
+				goldList: [],
+				// goldList:[{
+				// 	id: 1,
+				// 	coin: 500
+				// },{
+				// 	id: 2,
+				// 	coin: 500
+				// },{
+				// 	id: 3,
+				// 	coin: 500
+				// },{
+				// 	id: 4,
+				// 	coin: 500
+				// },{
+				// 	id: 5,
+				// 	coin: 500
+				// },{
+				// 	id: 6,
+				// 	coin: 500
+				// }],
+				
+				gold_num: "",
+				pay_url: "",
+				timer: null,
+				total_price: "",
+				
+				objList: {}, //付款订单信息
 			}
+		},
+		components: {
+			payment
+		},
+		created() {
+			this.getHttpLists()
 		},
 		methods: {
 			back() {
 				window.history.go(-1)
 			},
-			
+			getHttpLists() {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'GET',
+					url: '/discount',
+					data: {}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.goldList = res.data.data
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
+			getPrice(number) {
+				// uni.showLoading({
+				// 	title: this.$t('common').loading + '...',
+				// 	mask: true
+				// });
+				this.$myRequest({
+					method: 'GET',
+					url: '/discount/price',
+					data: {
+						number: number
+					}
+				})
+				.then(res => {
+					// uni.hideLoading();
+					if (res.data.code == 200) {
+						console.log(res.data.data)
+						this.total_price = res.data.data.price_symbol
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					// uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
 			goSwitch(index) {
 				if(this.cindex == index) return
+				clearInterval(this.timer);
 				this.cindex = index
+				this.gold_num = ""
+			},
+			input() {
+				clearInterval(this.timer);
+				this.cindex = undefined
+				this.total_price = ""
+				this.timer = setTimeout(()=>{
+					this.getPrice(this.gold_num)
+				},1200)
+			},
+			goPay() {
+				let id = "";
+				let price = "";
+				let num = "";
+				if((this.cindex || this.cindex === 0) && this.cindex != undefined){
+					//选择优惠充值，填值充值则无效
+					id = this.goldList[this.cindex].id
+					
+					// price = this.goldList[this.cindex].price
+					// num = this.goldList[this.cindex].coin
+					// console.log("价格：" + this.goldList[this.cindex].price)
+					// console.log("金币数量：" + this.goldList[this.cindex].coin)
+				} else {
+					//选择填值充值，优惠充值则无效
+					num = this.gold_num
+					
+					//console.log("gold_num(金币数量): " + this.gold_num)
+				}
+				this.objList = {};
+				this.objList.id = id
+				this.objList.price = price
+				this.objList.num = num
+				this.$refs.payment.open()
+			},
+			message(val) {
+				console.log("order_id：" + val.detail.data[0].order_id)
 			},
 		}
 	}
@@ -284,6 +454,15 @@
 	.reward-active .price{
 		color: #fff;
 	}
+	
+	.total-price-tips{
+		font-size: 24rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		color: #3CA365;
+		margin: 12rpx 0 0 10rpx;
+	}
+	
 	.commit-btn{
 		width: 640rpx;
 		height: 88rpx;
@@ -302,7 +481,7 @@
 	/* 金币介绍 */
 	.des{
 		margin-top: 50rpx;
-		padding: 42rpx 0 0 0;
+		padding: 42rpx 0 40rpx 0;
 		border-top: 20rpx solid #F3F3F3;
 	}
 	.des-title{
@@ -312,5 +491,36 @@
 		color: #1A1D26;
 		text-align: center;
 		margin-bottom: 40rpx;
+	}
+	.des-title02{
+		margin-top: 44rpx;
+	}
+	.des-modular{
+		width: 690rpx;
+		/* height: 198px; */
+		background: rgba(26,29,38,0.1);
+		border-radius: 26rpx;
+		box-sizing: border-box;
+		margin: 0 auto 20rpx;
+		padding: 34rpx 26rpx 38rpx 26rpx;
+	}	.des-modular-top{
+		display: flex;
+		align-items: center;
+	}	.ok-logo{
+		width: 26rpx;
+		height: 19rpx;
+	}	.rule-title{
+		font-size: 30rpx;
+		font-family: Inter-SemiBold;
+		font-weight: normal;
+		color: #1A1D26;
+		margin-left: 18rpx;
+	}	.rule{
+		font-size: 28rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		color: #6A6A6C;
+		margin-left: 44rpx;
+		margin-top: 18rpx;
 	}
 </style>

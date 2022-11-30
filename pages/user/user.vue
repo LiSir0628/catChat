@@ -23,7 +23,8 @@
 				<view class="inviter">
 					<!-- <image class="photo-small" src="../../static/images/user/photo02.png"></image>
 					<view>Mi Qiren</view> -->
-					<view class="state-modular" @click="goState"> +{{ $t('user.state') }} </view>
+					<view class="state-modular" v-if="userList.mood" @click="goState"> {{userList.mood}} </view>
+					<view class="state-modular" v-else @click="goState"> +{{ $t('user.state') }} </view>
 					<view v-if="userList.hobbies && userList.hobbies.length > 0" class="interest-modular"  @click="interest">
 						<view class="state-modular"> +{{userList.hobbies[0]}} </view>
 						<view class="more">...</view>
@@ -276,12 +277,7 @@
 				interval: 60000,
 				duration: 500,
 				
-				userList: {
-					id: 89596665,
-					name: "Michael jackson",
-					tel: "152xxxxxxx",
-					photo: "../../static/images/user/photo01.jpg",
-				},
+				userList: {},
 				isMember: false,
 				
 				cindex: 0,
@@ -368,7 +364,7 @@
 					id: 1,
 					name: this.$t('bottom').Pair,
 					image: "../../static/images/user/icon03.png",
-					url: "",
+					url: "/pages/pair/pair",
 					styleClass: {
 						width: '50rpx',
 						height: '40rpx'
@@ -417,6 +413,12 @@
 		},
 		onShow() {
 			this.userList = this.$store.state.duomiList
+			let arr = [];
+			for(let i in this.userList.hobbies){
+				arr.push(this.userList.hobbies[i])
+			}
+			this.userList.hobbies = arr
+			this.$forceUpdate()
 		},
 		mounted() {
 			
@@ -437,7 +439,9 @@
 				this.$refs.userMsg.open()
 			},
 			goState() {
-				
+				uni.navigateTo({
+					url: "/pages/edit/mood"
+				});
 			},
 			interest() {
 				uni.navigateTo({

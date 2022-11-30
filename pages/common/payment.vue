@@ -9,10 +9,10 @@
 				<view class="payment-content">
 					<view class="payment-bank-list">
 						<image class="payment-bank-logo" :class="{'payment-bank-logo-active': cindex === index}"
-							v-for="item,index in bankList" :src="item.url" @click="openPay(item,index,'one')"></image>
+							v-for="item,index in bankList" :src="item.logo" @click="openPay(item,index,'one')"></image>
 					</view>
 						
-					<view class="payment-balance-modular">
+					<!-- <view class="payment-balance-modular">
 						<view class="payment-balance-title">{{ $t('payment.balance_deduction') }}</view>
 						<view class="amount-msg">
 							<image class="payment-bank-logo" src="../../static/images/order/icon03.png" @click="goPay"></image>
@@ -24,16 +24,16 @@
 								</view>
 							</view>
 						</view>
-					</view>
+					</view> -->
 					
-					<view class="payment-online-bank">
+					<!-- <view class="payment-online-bank">
 						<view class="payment-online-title">{{ $t('balance.banking') }}</view>
 						<view class="payment-bank-list">
 							<image class="payment-bank-logo" :class="{'payment-bank-logo-active': kindex === index}"
-								v-for="item,index in onlineBankList" :src="item.url" @click="openPay(item,index)">
+								v-for="item,index in onlineBankList" :src="item.logo" @click="openPay(item,index)">
 							</image>
 						</view>
-					</view>
+					</view> -->
 
 					<view class="payment-card-upload" @click="goAdd">
 						<image class="payment-upload" src="../../static/images/user/balance/icon08.png"></image>
@@ -57,38 +57,25 @@
 			return {
 				cindex: "",
 				kindex: "",
-				bankList: [{
-					id: 0,
-					name: "",
-					url: "../../static/images/user/balance/icon10.png"
-				}, {
-					id: 1,
-					name: "测试01",
-					url: "../../static/images/user/balance/icon05.png"
-				}, {
-					id: 2,
-					name: "测试02",
-					url: "../../static/images/user/balance/icon06.png"
-				}, {
-					id: 3,
-					name: "测试03",
-					url: "../../static/images/user/balance/icon03.png"
-				}, {
-					id: 4,
-					name: "测试04",
-					url: "../../static/images/user/balance/icon04.png"
-				}],
+				payment_id: "",
+				bankList: [],
 				onlineBankList: [{
 					id: 1,
 					name: "测试01",
-					url: "../../static/images/user/balance/icon01.png"
+					logo: "../../static/images/user/balance/icon01.png"
 				}, {
 					id: 2,
 					name: "测试02",
-					url: "../../static/images/user/balance/icon02.png"
+					logo: "../../static/images/user/balance/icon02.png"
 				}],
 				
 				isInsufficient: true, //true为不足  false为足够
+			}
+		},
+		props:{
+			objList:{
+				type: Object,
+				default: true
 			}
 		},
 		components: {
@@ -96,23 +83,60 @@
 			payAdd,
 		},
 		created() {
-
+			this.getHttpLists()
 		},
 		mounted() {
 
 		},
 		methods: {
-			open() {
+			getHttpLists() {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'GET',
+					url: '/payment',
+					data: {}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.bankList = res.data.data.payments
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
+			open() { 
 				this.$refs.popupPayment.open("bottom")
+				// this.$nextTick(()=>{
+				// 	console.log(this.objList)
+				// })
 			},
 			close() {
 				this.$refs.popupPayment.close()
 				//this.$emit("goClose", "")
 			},
-
+			
 			openPay(item, index, type) {
-				console.log(item)
-				this.$refs.pay.open()
+				// console.log(item)
+				// this.$refs.pay.open()  //密码开启
 				if (type == "one") {
 					this.cindex = index
 					this.kindex = ""
@@ -120,6 +144,7 @@
 					this.cindex = ""
 					this.kindex = index
 				}
+				this.payment_id = item.id
 			},
 			goClose() {
 				this.cindex = ""
@@ -137,7 +162,65 @@
 				}
 			},
 			commit() {
-
+				if(!this.payment_id){
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').payment_method_tip,
+						confirmText: this.$t('common').confirm,
+						showCancel: false,
+					})
+					return
+				}
+				// console.log(this.payment_id)
+				// console.log(this.objList)
+				// return
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+					method: 'POST',
+					url: '/payment/points',
+					data: {
+						payment: this.payment_id,
+						id: this.objList.id,
+						price: this.objList.price,
+						num: this.objList.num,
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						console.log(res.data.data)
+						// APP
+						// #ifdef APP-PLUS
+							this.pay_url = "http://192.168.0.27:8848/111/aaa.html"
+							//this.pay_url = res.data.data.url
+						// #endif
+						 
+						// H5:
+						// #ifdef H5
+							window.location.href = res.data.data.url
+						// #endif
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
 			}
 		}
 	}
@@ -221,10 +304,13 @@
 		height: 96rpx;
 		display: block;
 		margin: 0 14rpx 20rpx;
+		border: 4rpx solid rgba(0,0,0,0);
+		border-radius: 20rpx;
+		box-sizing: border-box;
 	}
 
 	.payment-bank-logo-active {
-		border: 6rpx solid #1A1D26;
+		border: 4rpx solid #1A1D26;
 		border-radius: 20rpx;
 		box-sizing: border-box;
 	}

@@ -97,6 +97,15 @@
 			}
 		},
 		{
+			"path": "pages/pair/pair",
+			"style": {
+				// "navigationBarTitleText": "首页",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
 			"path": "pages/user/user",
 			"style": {
 				// "navigationBarTitleText": "个人页面",
@@ -208,6 +217,15 @@
 			"path": "pages/edit/constellation",
 			"style": {
 				// "navigationBarTitleText": "编辑星座",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/edit/mood",
+			"style": {
+				// "navigationBarTitleText": "编辑心情",
 				"app-plus": {
 					"titleNView": false
 				}
