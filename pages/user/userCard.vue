@@ -128,17 +128,7 @@
 			</view>
 
 			<view class="square-lists" :class="{'square-lists-height': isShowTabHeight}" v-if="cindex == 1">
-				<!-- <view class="user-list">
-					<view class="focus-user">
-						<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
-						<view class="focus-user-msg">
-							<view class="focus-user-name">九亿少女的偶像ADHKA</view>
-							<view class="focus-user-gender">Handsome boy</view>
-						</view>
-					</view>
-					<view class="close-focus">{{ $t('user_card.close') }}</view>
-				</view> -->
-				<view class="user-list" v-for="item,index in focusLists">
+				<view class="user-list" v-for="item,index in focusLists" v-if="item.me_follow">
 					<view class="focus-user">
 						<image class="focus-user-photo" :src="item.me_follow.avatar"></image>
 						<view class="focus-user-msg">
@@ -151,17 +141,7 @@
 			</view>
 
 			<view class="square-lists" :class="{'square-lists-height': isShowTabHeight}" v-if="cindex == 2">
-				<!-- <view class="user-list">
-					<view class="focus-user">
-						<image class="focus-user-photo" src="../../static/images/user/photo01.jpg"></image>
-						<view class="focus-user-msg">
-							<view class="focus-user-name">九亿少女的偶像ADHKA</view>
-							<view class="focus-user-gender">Handsome boy</view>
-						</view>
-					</view>
-					<view class="close-focus">{{ $t('user_card.focus') }}</view>
-				</view> -->
-				<view class="user-list" v-for="item,index in fanLists">
+				<view class="user-list" v-for="item,index in fanLists" v-if="item.follow_me">
 					<view class="focus-user">
 						<image class="focus-user-photo" :src="item.follow_me.avatar"></image>
 						<view class="focus-user-msg">

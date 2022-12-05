@@ -4,21 +4,25 @@
 			<!-- <image class="banner" src="../../static/images/register/icon01.png"></image> -->
 			<view class="sort-modular">
 				<view class="top-left">
-					<view class="sort-friends" :class="{'sort-chat-active': cindex == 0}" @click="goSwitch(0)">{{ $t('pair.chat') }}</view>
-					<view class="sort-friends" :class="{'sort-chat-active': cindex == 1}" @click="goSwitch(1)">{{ $t('pair.friends') }}</view>
+					<view class="search-modular">
+						<image class="search-logo" src="../../static/images/chat/icon03.png"></image>
+						<input class="search-input" :placeholder="$t('pair.search_placeholder')"/>
+					</view>
+					<!-- <view class="sort-friends" :class="{'sort-chat-active': cindex == 0}" @click="goSwitch(0)">{{ $t('pair.chat') }}</view>
+					<view class="sort-friends" :class="{'sort-chat-active': cindex == 1}" @click="goSwitch(1)">{{ $t('pair.friends') }}</view> -->
 				</view>
 				<view class="top-right">
-					<image class="tips-logo" src="../../static/images/chat/icon01.png"></image>
-					<image class="tips-logo" src="../../static/images/chat/icon02.png"></image>
+					<image class="tips-logo" src="../../static/images/chat/icon01.png" @click="goCountry"></image>
+					<image class="tips-logo" src="../../static/images/chat/icon02.png" @click="goNotice"></image>
 				</view>
 			</view>
-			<view class="search-modular">
+			<!-- <view class="search-modular">
 				<image class="search-logo" src="../../static/images/chat/icon03.png"></image>
 				<input class="search-input" :placeholder="$t('pair.search_placeholder')"/>
-			</view>
+			</view> -->
 		</view>
 		<view class="content">
-			<view class="user-lists" :class="{'user-list-gary': isSticky}">
+			<view class="user-lists" :class="{'user-list-gary': isSticky}" @click="goChat">
 				<view class="user-list">
 					<view class="user-photo">
 						<image class="photo-logo" src="../../static/images/user/photo01.jpg"></image>
@@ -31,74 +35,6 @@
 					</view>
 					<view class="time-modular">
 						<view class="times">35</view>
-						<view class="time">3:26{{ $t('pair.pm') }}</view>
-					</view>
-				</view>
-			</view>
-			<view class="user-lists" :class="{'user-list-gary': isSticky}">
-				<view class="user-list">
-					<view class="user-photo">
-						<image class="photo-logo" src="../../static/images/user/photo01.jpg"></image>
-						<view class="circle-green"></view>
-						<!-- <view class="circle-gray"></view> -->
-					</view>
-					<view class="user-msg">
-						<view class="user-name">九亿少女的偶像ADHKA</view>
-						<view class="msg">Welcome to my birthday party</view>
-					</view>
-					<view class="time-modular">
-						<view class="times">35</view>
-						<view class="time">3:26{{ $t('pair.pm') }}</view>
-					</view>
-				</view>
-			</view>
-			<view class="user-lists" :class="{'user-list-gary': !isSticky}">
-				<view class="user-list">
-					<view class="user-photo">
-						<image class="photo-logo" src="../../static/images/user/photo01.jpg"></image>
-						<view class="circle-green"></view>
-						<!-- <view class="circle-gray"></view> -->
-					</view>
-					<view class="user-msg">
-						<view class="user-name">九亿少女的偶像ADHKA</view>
-						<view class="msg">Welcome to my birthday party</view>
-					</view>
-					<view class="time-modular">
-						<!-- <view class="times">35</view> -->
-						<view class="time">3:26{{ $t('pair.pm') }}</view>
-					</view>
-				</view>
-			</view>
-			<view class="user-lists" :class="{'user-list-gary': !isSticky}">
-				<view class="user-list">
-					<view class="user-photo">
-						<image class="photo-logo" src="../../static/images/user/photo01.jpg"></image>
-						<view class="circle-green"></view>
-						<!-- <view class="circle-gray"></view> -->
-					</view>
-					<view class="user-msg">
-						<view class="user-name">九亿少女的偶像ADHKA</view>
-						<view class="msg">Welcome to my birthday party</view>
-					</view>
-					<view class="time-modular">
-						<!-- <view class="times">35</view> -->
-						<view class="time">3:26{{ $t('pair.pm') }}</view>
-					</view>
-				</view>
-			</view>
-			<view class="user-lists" :class="{'user-list-gary': !isSticky}">
-				<view class="user-list">
-					<view class="user-photo">
-						<image class="photo-logo" src="../../static/images/user/photo01.jpg"></image>
-						<view class="circle-green"></view>
-						<!-- <view class="circle-gray"></view> -->
-					</view>
-					<view class="user-msg">
-						<view class="user-name">九亿少女的偶像ADHKA</view>
-						<view class="msg">Welcome to my birthday party</view>
-					</view>
-					<view class="time-modular">
-						<!-- <view class="times">35</view> -->
 						<view class="time">3:26{{ $t('pair.pm') }}</view>
 					</view>
 				</view>
@@ -128,15 +64,20 @@
 				<view :class="{'bottom-nav-active': kindex == index}">{{item.name}}</view>
 			</view>
 		</view>
+		
+		<select-country ref="selectCountry" :countryId="countryId" @countryValue="countryValue"></select-country>
 	</view>
 </template>
 
 <script>
+	import selectCountry from "../common/selectCountry.vue"
 	export default {
 		data() {
 			return {
 				cindex: 0,
 				isSticky: true,
+				
+				countryId: "",
 				
 				kindex: 3,
 				bottomList: [{
@@ -187,11 +128,38 @@
 				}]
 			}
 		},
+		components: {
+			selectCountry
+		},
+		mounted() {
+
+		},
+		onShow() {
+			//国家选择id
+			this.countryId = this.$store.state.chatCountryId
+		},
 		methods: {
 			back() {
 				window.history.go(-1)
 			},
-			
+			countryValue(value) {
+				//国家最新选择id
+				this.countryId = this.$store.state.chatCountryId
+			},
+			goCountry() {
+				this.$refs.selectCountry.open()
+			},
+						
+			goNotice() {
+				uni.navigateTo({
+					url: "./notice"
+				});
+			},
+			goChat() {
+				uni.navigateTo({
+					url: "./chat"
+				});
+			},
 			goSwitch(index) {
 				if(this.cindex == index) return
 				this.cindex = index
@@ -261,21 +229,21 @@
 	
 	/* 搜索框 */
 	.search-modular{
-		margin: 30rpx auto 0;
+		margin: 0 auto 0;
 		position: relative;
 	}
 	.search-logo{
 		width: 32rpx;
 		height: 32rpx;
 		position: absolute;
-		left: 60rpx;
+		left: 30rpx;
 		top: 0;
 		bottom: 0;
 		margin: auto;
 		vertical-align: middle;
 	}
 	.search-input{
-		width: 690rpx;
+		width: 496rpx;
 		height: 88rpx;
 		box-sizing: border-box;
 		background: #F5F5F5;
@@ -396,6 +364,7 @@
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #6A6A6C;
+		z-index: 100;
 	}
 	
 	.bottom-list {

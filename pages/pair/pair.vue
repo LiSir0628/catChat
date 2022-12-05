@@ -5,45 +5,45 @@
 			<view class="sort-modular">
 				<view class="top-left">
 					<view class="sort-chat" :class="{'sort-active': cindex == 0}" @click="switchA">
-						<!-- {{ $t('square.topic_tribe') }} --> Matching
+						{{ $t('matching.matching') }}
 					</view>
 					<view class="sort-friends" :class="{'sort-active02': cindex == 1}" @click="switchB">
-						Choicest
+						{{ $t('matching.choicest') }}
 					</view>
 				</view>
 			</view>
 		</view>
 		<view v-if="cindex == 0">
-			<view class="chat-sort">
+			<!-- <view class="chat-sort">
 				<view class="chat01">
-					<view class="chat-title">语音聊天</view>
-					<view class="times">今日剩余次数 8 次</view>
-					<view class="go-chat">去聊天</view>
-					<!-- <view class="go-chat">金币兑换</view> -->
+					<view class="chat-title">{{ $t('matching.voice_chat') }}</view>
+					<view class="times">{{ $t('matching.remaining_times') }}:8</view>
+					<view class="go-chat">{{ $t('matching.go_chat') }}</view>
 				</view>
 				<view class="chat02">
-					<view class="chat-title">视频聊天</view>
-					<view class="times">今日剩余次数 0 次</view>
-					<!-- <view class="go-chat">去聊天</view> -->
-					<view class="go-chat">金币兑换</view>
+					<view class="chat-title">{{ $t('matching.video_chat') }}</view>
+					<view class="times">{{ $t('matching.remaining_times') }}:0 </view>
+					<view class="go-chat">{{ $t('matching.exchange') }}</view>
 				</view>
-			</view>
+			</view> -->
+			
+			<view class="chat-sort"></view>
 			
 			<view class="banner01">
 				<image class="banner-logo" src="../../static/images/pair/icon04.png"></image>
-				<view class="banner-title">挥手招呼</view>
-				<view class="banner-tip">和心灵契合的人聊天</view>
-				<view class="banner-start">开始打招呼</view>
+				<view class="banner-title">{{ $t('matching.wave_hello') }}</view>
+				<view class="banner-tip">{{ $t('matching.heart') }}</view>
+				<view class="banner-start">{{ $t('matching.start_greeting') }}</view>
 			</view>
 			<view class="banner02">
 				<image class="banner-logo" src="../../static/images/pair/icon05.png"></image>
-				<view class="banner-title">实时匹配</view>
-				<view class="banner-tip">今日剩余10次</view>
-				<view class="banner-start banner-start02">开始匹配</view>
+				<view class="banner-title">{{ $t('matching.real_matching') }}</view>
+				<view class="banner-tip">{{ $t('matching.remaining_today') }}:10</view>
+				<view class="banner-start banner-start02">{{ $t('matching.start_matching') }}</view>
 			</view>
 			<view class="rank-modular">
 				<view class="rank">
-					<view class="rank-title">排行榜</view>
+					<view class="rank-title">{{ $t('matching.rankings') }}</view>
 					<image class="rank-title-logo" src="../../static/images/pair/icon06.png"></image>
 				</view>
 				<view class="rank-sort-lists">
@@ -55,18 +55,44 @@
 				<scroll-view class="scroll-logo-list" scroll-x="true" @scroll="scroll" :show-scrollbar="false">
 					<view class="logo-list">
 						<view class="logo-list-other" v-for="item,index in reTopicLists">
+							<image class="rank-logo" v-if="index == 0" src="../../static/images/pair/icon01.png"></image>
+							<image class="rank-logo" v-else-if="index == 1" src="../../static/images/pair/icon02.png"></image>
+							<image class="rank-logo" v-else-if="index == 2" src="../../static/images/pair/icon03.png"></image>
 							<view class="logo-modular">
 								<image class="many-logo" :src="item.image"></image>
-								<image class="topic-logo" src="../../static/images/square/icon06.png"></image>
 							</view>
-							<view class="topic-title">{{item.name}}</view>
+							<view class="topic-title-name">{{item.name}}</view>
+							<view class="topic-title" v-if="aindex == 0">{{ $t('matching.value') }}：{{item.charisma_val}}</view>
+							<view class="topic-title" v-else-if="aindex == 1">{{ $t('matching.value') }}：{{item.magnificence_val}}</view>
+							<view class="topic-title" v-else-if="aindex == 2">{{ $t('matching.value') }}：{{item.vitality_val}}</view>
 						</view>
 					</view>
 				</scroll-view>
+				<view class="more">{{ $t('matching.view_more') }}</view>
 			</view>
 		</view>
-		<view v-else>
-			
+		<view class="cover-modular" v-else>
+			<view class="cover-list">
+				<image class="cover" src="../../static/images/user/photo06.jpg"></image> 
+				<view class="online-state">
+					<template>
+						<view class="circle-green"></view>
+						<view class="online-title">{{ $t('matching.online') }}</view>
+					</template>
+					<!-- <template>
+						<view class="circle-green circle-gary"></view>
+						<view class="online-title">{{ $t('matching.no_online') }}</view>
+					</template> -->
+				</view>
+				<view class="user-msg">
+					<view class="user-msg-left">
+						<view class="user-name">Rika 26</view>
+						<view class="user-des">Like playing games, playing ...</view>
+					</view>
+					<image class="love" src="../../static/images/pair/icon07.png"></image>
+				</view>
+				<view class="mask"></view>
+			</view>
 		</view>	
 		
 		<view class="bottom">
@@ -85,12 +111,29 @@
 				cindex: 0,
 				
 				aindex: 0,
-				rankLists:[{id: 1,name: "Charisma"},{id: 2,name: "Magnificence"},{id: 3,name: "Vitality"}],
+				rankLists:[{id: 1,name: this.$t('matching').charisma},{id: 2,name: this.$t('matching').magnificence},{id: 3,name: this.$t('matching').vitality}],
 						
 				reTopicLists: [{
 					id: 1,
-					name: "reigitn sinraia aidhai isnai siaidia",
 					image: "../../static/images/user/photo01.jpg",
+					name: "reigitn sinraia aidhai isnai siaidia",
+					charisma_val: 100,
+					magnificence_val: 200,
+					vitality_val: 300,
+				},{
+					id: 1,
+					image: "../../static/images/user/photo01.jpg",
+					name: "reigitn sinraia aidhai isnai siaidia",
+					charisma_val: 100,
+					magnificence_val: 200,
+					vitality_val: 300,
+				},{
+					id: 1,
+					image: "../../static/images/user/photo01.jpg",
+					name: "reigitn sinraia aidhai isnai siaidia",
+					charisma_val: 100,
+					magnificence_val: 200,
+					vitality_val: 300,
 				}],
 						
 				kindex: 0,
@@ -180,10 +223,10 @@
 	}
 	.container {
 		width: 100%;
-		height: 100%;
+		min-height: 100%;
 		background-color: #1A1D26;
 		position: relative;
-		/* padding-bottom: 120rpx; */
+		padding-bottom: 140rpx;
 	}
 	
 	.top {
@@ -192,7 +235,7 @@
 		top: 0;
 		left: 0;
 		background-color: #1A1D26;
-		z-index: 1;
+		z-index: 100;
 	}
 	
 	.bg-color{
@@ -306,7 +349,7 @@
 		height: 280rpx;
 		box-sizing: border-box;
 		border-radius: 20rpx;
-		margin: 30rpx auto 0;
+		margin: 6rpx auto 0;
 		position: relative;
 		z-index: 2;	
 		padding: 22rpx 26rpx 40rpx;
@@ -336,6 +379,7 @@
 		color: #FFFFFF;
 	}
 	.banner-tip{
+		width: 344rpx;
 		font-size: 28rpx;
 		font-family: Inter-Medium;
 		font-weight: 500;
@@ -355,7 +399,11 @@
 		font-weight: 400;
 		color: #FD312D;
 		text-align: center;
-		margin-top: 50rpx;
+		/* margin-top: 30rpx; */
+		position: absolute;
+		left: 26rpx;
+		bottom: 30rpx;
+		
 	}
 	.banner-start02{
 		color: #3E4794;
@@ -396,6 +444,8 @@
 	}
 	.rank-sort-active{
 		color: #FFFFFF;
+		padding-bottom: 6rpx;
+		border-bottom: 3rpx solid #FFFFFF;
 	}
 	/* 排行榜滑动 */
 	/deep/ ::-webkit-scrollbar {
@@ -408,65 +458,180 @@
 	
 	.scroll-logo-list {
 		width: 690rpx;
-		margin: 0 auto;
+		margin: 30rpx auto 0;
 		white-space: nowrap;
 	}
 	
 	.logo-list {
 		display: flex;
-		margin-top: 40rpx;
 	}
 	
 	.logo-list-other {
-		margin-right: 30rpx;
-	}
-	
-	.logo-modular {
-		width: 128rpx;
-		height: 128rpx;
-		padding: 4rpx;
-		/* box-sizing: border-box; */
-		border: 2rpx solid #ED4C4C;
-		border-radius: 50%;
+		width: 100%;
+		/* margin-right: 30rpx; */
+		white-space: initial;
+		margin-right: 20rpx;
+		
+		width: 260rpx;
+		height: 293rpx;
+		background: rgba(255,255,255,0.1);
+		border-radius: 20rpx;
+		text-align: center;
+		padding: 50rpx 20rpx;
+		box-sizing: border-box;
 		position: relative;
 	}
 	
+	.rank-logo {
+		width: 84rpx;
+		height: 48rpx;
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	
+	.logo-modular {
+		width: 80rpx;
+		height: 80rpx;
+		/* box-sizing: border-box; */
+		/* border: 2rpx solid #ED4C4C; */
+		border-radius: 50%;
+		position: relative;
+		margin: 0 auto;
+	}
+	
 	.many-logo {
-		width: 128rpx;
-		height: 128rpx;
+		width: 80rpx;
+		height: 80rpx;
 		display: block;
 		border-radius: 50%;
 		margin: 0 auto;
 	}
 	
-	.topic-logo {
-		width: 40rpx;
-		height: 40rpx;
-		position: absolute;
-		display: block;
-		bottom: 0;
-		right: 0;
-	}
-	
-	.topic-title {
-		width: 140rpx;
-		font-size: 28rpx;
-		font-family: Inter-Regular;
-		font-weight: 400;
-		color: #000000;
-		white-space: initial;
-		margin-top: 12rpx;
-		text-align: center;
-	
+	.topic-title-name{
+		width: 220rpx;
+		font-size: 32rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		color: #FFFFFF;
+		margin-top: 24rpx;
+		
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 1;
 		overflow: hidden;
 	}
-	
-	
-	
-	
+	.topic-title {
+		width: 220rpx;
+		font-size: 28rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		color: #FFFFFF;
+		margin-top: 8rpx;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 1;
+		overflow: hidden;
+	}
+	.more{
+		width: 600rpx;
+		height: 88rpx;
+		box-sizing: border-box;
+		background: #FFFFFF;
+		border-radius: 60rpx;
+		
+		font-size: 32rpx;
+		font-family: Inter-Bold;
+		font-weight: bold;
+		color: #1A1D26;
+		text-align: center;
+		line-height: 88rpx;
+		margin: 40rpx auto;
+	}
+	/* 封面 */
+	.cover-modular{
+		text-align: center;
+		padding: 106rpx 0 0;
+	}
+	.cover-list{
+		position: relative;
+		margin-bottom: 20rpx;
+	}
+	.cover{
+		width: 690rpx;
+		height: 1000rpx;
+		border-radius: 60rpx;
+		display: block;
+		margin: 0 auto;
+	}
+	.online-state{
+		/* width: 142rpx;
+		height: 48rpx; */
+		width: max-content;
+		background: #1A1D26;
+		border-radius: 50rpx;
+		padding: 8rpx 20rpx;
+		display: flex;
+		align-items: center;
+		position: absolute;
+		top: 40rpx;
+		left: 70rpx;
+		z-index: 2;
+	}	.circle-green{
+		width: 10rpx;
+		height: 10rpx;
+		background: #01E25B;
+		border-radius: 50%;
+	}
+	.circle-gary{
+		background: #E9E9EA;
+	}	.online-title{
+		font-size: 28rpx;
+		font-family: Inter-Regular;
+		font-weight: 400;
+		color: #FFFFFF;
+		margin-left: 8rpx;
+	}	.user-msg{
+		width: 630rpx;
+		position: absolute;
+		bottom: 64rpx;
+		left: 60rpx;
+		right: 30rpx;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		text-align: left;
+		z-index: 2;
+	}	.user-msg-left{
+		
+	}	.user-name{
+		font-size: 46rpx;
+		font-family: Inter-Bold;
+		font-weight: bold;
+		color: #FFFFFF;
+	}	.user-des{
+		font-size: 30rpx;
+		font-family: Inter-Regular;
+		font-weight: 400;
+		color: #FFFFFF;
+		margin-top: 6rpx;
+	}	.love{
+		width: 120rpx;
+		height: 120rpx;
+	}
+	.mask{
+		width: 690rpx;
+		height: 285rpx;
+		background: linear-gradient(180deg, rgba(26,29,38,0) 0%, rgba(26,29,38,0.67) 100%);
+		border-radius: 0rpx 0rpx 60rpx 60rpx;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		z-index: 0;
+	}
 	
 	
 	
@@ -487,6 +652,7 @@
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #6A6A6C;
+		z-index: 100;
 	}
 	
 	.bottom-list {

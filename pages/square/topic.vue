@@ -48,80 +48,15 @@
 					</image>
 				</view>
 
-				<view class="nav-list">
+				<!-- <view class="nav-list">
 					<view class="nav-sort" :class="{'nav-sort-active': cindex == 0}" @click="goSort(0)">
 						{{ $t('topic.recommend') }}
 					</view>
 					<view class="nav-sort" :class="{'nav-sort-active': cindex == 1}" @click="goSort(1)">
 						{{ $t('topic.follow') }}
 					</view>
-				</view>
-
-				<!-- <view class="square-lists">
-				<view class="square-list" @click="goDetail">
-					<image class="user-logo" src="../../static/images/user/photo02.png"></image>
-					<view class="user-notice">
-						<view class="user-msg">
-							<view class="user-msg-top"> 
-								<view class="user-name">九亿少女的偶像ADHKA</view>
-								<view class="user-time">2022-08-02 22:12:12</view>
-							</view>
-							<view class="user-btn">{{ $t('topic.focus') }}</view>
-						</view>
-						<view class="space-title">你见过最阴暗的事是什么？</view>
-						<view class="space-content">
-							<view class="space-text">我有个女性朋友，叫许晴，在西南某大学读 研，然后去云南旅游的时候被人贩子差点给骗了</view>
-						</view>
-						<view class="space-images" @click.stop="previewImage">
-							<view class="space-image-list">
-								<image class="space-image" src="../../static/images/user/photo03.jpg"></image>
-							</view>
-							<view class="space-image-list">
-								<image class="space-image" src="../../static/images/user/photo04.jpg"></image>
-							</view>
-							<view class="space-image-list">
-								<image class="space-image" src="../../static/images/user/photo05.jpg"></image>
-							</view>
-							<view class="space-image-list">
-								<image class="space-image" src="../../static/images/user/photo06.jpg"></image>
-							</view>
-						</view>
-						<view class="space-topic-lists">
-							<view class="space-topic">#痛苦的事</view>
-							<view class="space-topic">#内心深处的秘密</view>
-							<view class="space-topic">#痛苦的事</view>
-							<view class="space-topic">#内心深处的秘密</view>
-						</view>
-						
-						<view class="reward-modular">
-							<view class="reward-user">
-								<image class="reward-user-logo" src="../../static/images/user/photo02.png"></image>
-								<image class="reward-user-logo" src="../../static/images/user/photo02.png"></image>
-								<image class="reward-user-logo" src="../../static/images/user/photo02.png"></image>
-								<image class="reward-user-logo" src="../../static/images/user/photo02.png"></image>
-								<image class="reward-user-logo" src="../../static/images/user/photo02.png"></image>
-							</view>
-							<view class="reward-sm">105 {{ $t('topic.people_rewarded') }}</view>
-						</view>
-						
-						<view class="talk-modular">
-							<view class="area-modular">
-								<image class="area-logo" src="../../static/images/square/icon05.png"></image>
-								<view class="area-text">Fuzhou City</view>
-							</view>
-							<view class="talk-lists">
-								<view class="talk-list">
-									<image class="talk-logo" src="../../static/images/square/icon07.png"></image>
-									<view class="talk-text">15</view>
-								</view>
-								<view class="talk-list">
-									<view class="talk-text">15</view>
-								</view>
-							</view>
-						</view>
-					</view>
-				</view>
-			</view> -->
+				</view> -->
+				
 				<view class="square-lists">
 					<view class="square-list" v-for="item,index in topicLists" @click="goDetail(item)">
 						<image class="user-logo" :src="item.avatar"></image>

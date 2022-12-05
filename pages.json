@@ -115,6 +115,15 @@
 			}
 		},
 		{
+			"path": "pages/user/members",
+			"style": {
+				// "navigationBarTitleText": "购买会员",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
 			"path": "pages/user/browse",
 			"style": {
 				// "navigationBarTitleText": "足迹",
@@ -280,6 +289,15 @@
 			"path": "pages/chat/pair",
 			"style": {
 				// "navigationBarTitleText": "聊天列表",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/chat/notice",
+			"style": {
+				// "navigationBarTitleText": "通知页面",
 				"app-plus": {
 					"titleNView": false
 				}

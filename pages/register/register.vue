@@ -236,7 +236,8 @@
 						uni.setStorageSync('duomiList', res.data.data);
 						//登录成功 跳转数据页。
 						uni.navigateTo({
-							url: '/pages/user/user'
+							url: '/pages/pair/pair'
+							// url: '/pages/user/user'
 						});
 					} else {
 						uni.showModal({

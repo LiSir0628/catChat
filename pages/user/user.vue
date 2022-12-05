@@ -39,14 +39,14 @@
 		</view>
 
 		<view class="content">
-			<view class="level-modular" v-if="isMember">
+			<view class="level-modular" v-if="isMember" @click="goMember">
 				<image class="icon01" src="../../static/images/user/icon01.png"></image>
 				<view class="level">
 					<view class="level-text"> {{ $t('user.level') }} </view>
 					<view class="level-num"> 4 </view>
 				</view>
 			</view>
-			<view class="level-modular" v-else>
+			<view class="level-modular" v-else @click="goMember">
 				<image class="icon01" src="../../static/images/user/icon17.png"></image>
 				<view class="no-level">
 					<view class="level-text"> {{ $t('user.not') }} </view>
@@ -446,6 +446,11 @@
 			interest() {
 				uni.navigateTo({
 					url: "/pages/register/like"
+				});
+			},
+			goMember() {
+				uni.navigateTo({
+					url: "./members"
 				});
 			},
 			goUrl(item) {
@@ -1021,6 +1026,7 @@
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #6A6A6C;
+		z-index: 100;
 	}
 
 	.bottom-list {

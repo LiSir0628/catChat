@@ -303,7 +303,8 @@
 			
 			if(this.userList.emotion) this.emotion_status = this.userList.emotion
 			
-			//console.log(this.userList)
+			// console.log(this.userList)
+			console.log("修改个人信息，我触发拉！！！")
 		},
 		created() {
 			// if(!this.userList.sex) this.getSex() //不进行限制
@@ -355,7 +356,7 @@
 				uni.chooseImage({
 					count: 1, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					sourceType: ['camera'], //拍照选择
+					sourceType: ['album','camera'], //拍照选择
 					success: function(res) {
 						const tempFilePaths = res.tempFilePaths;
 						// _this.userList.avatar = res.tempFilePaths[0]

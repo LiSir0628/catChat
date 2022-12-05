@@ -19,6 +19,8 @@ const store = new Vuex.Store({
 		hobbies: [],
 		mood: "",
 		
+		chatCountryId: "",
+		
 		
 		mail: "",
 		
@@ -85,6 +87,9 @@ const store = new Vuex.Store({
 			state.duomiList.mood = mood
 		},
 		
+		editChatCountry(state,chatCountryId) {
+			state.chatCountryId = chatCountryId
+		},
 
 
 		editEmail(state,email){

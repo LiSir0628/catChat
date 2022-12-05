@@ -201,7 +201,7 @@
 				uni.chooseImage({
 					count: 9, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					sourceType: ['camera'], //拍照选择
+					sourceType: ['album','camera'], //拍照选择
 					success: (res)=> {
 						const tempFilePaths = res.tempFilePaths;
 						let imgLength = res.tempFilePaths.length;

@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<view class="container" @longpress="long" @click.stop="close">
 		<!-- <uni-nav-bar fixed left-icon="back" @clickLeft="back" background-color="#ffffff" color="#000000" :title="$t('invitation.invitation')">
 		</uni-nav-bar> -->
 		<uni-nav-bar fixed background-color="#ffffff">
@@ -17,7 +17,7 @@
 		</uni-nav-bar>
 		<view class="content">
 			<view class="chat-time">Today:3:26PM</view>
-			<view class="friend-modular">
+			<view class="friend-modular" @longpress="longpress">
 				<image class="friend-photo" src="../../static/images/user/photo01.jpg"></image>
 				<view class="friend-msg">
 					<view class="friend-name">九亿少女的偶像ADHKA</view>
@@ -32,7 +32,31 @@
 				<image class="friend-photo myself-photo" src="../../static/images/user/photo01.jpg"></image>
 			</view>
 		</view>
-		
+		<view>
+			<view style="margin: 0 auto;text-align: center;">
+				<zb-tooltip placement="bottom" ref="tooltip" color="#47494E" :visible.sync="isShow">
+					<view slot="content">
+						<view class="content-nav">
+							<view class="features-list">
+								<image class="features-logo" src="../../static/images/chat/chat/icon10.png"></image>
+								<view class="features-name">Translate</view>
+							</view>
+							<view class="features-list" @click.stop="del">
+								<image class="features-logo" src="../../static/images/chat/chat/icon10.png"></image>
+								<view class="features-name">Delete</view>
+							</view>
+							<view class="features-list">
+								<image class="features-logo" src="../../static/images/chat/chat/icon10.png"></image>
+								<view class="features-name">Copy</view>
+							</view>
+						</view>
+						<view class="choose-language" @click.stop="configs">
+							选择其他语言
+						</view>
+					</view>
+				</zb-tooltip>
+			</view>
+		</view>
 		<view class="bottom">
 			<view class="send-list">
 				<image class="logo01" src="../../static/images/chat/chat/icon11.png"></image>
@@ -57,13 +81,61 @@
 		data() {
 			return {
 				send_text: "",
+				
+				isShow: false,
 			}
+		},
+		created() {
+			// uni.showModal({
+			// 	content: this.$t('common').is_delete,
+			// 	cancelText: this.$t('common').no,
+			// 	confirmText: this.$t('common').ok,
+			// 	success: (res) =>{
+			// 		if(res.confirm){
+			// 			console.log('confirm')
+			// 		} else {
+			// 			console.log('cancel')
+			// 		}
+			// 	}
+			// })
 		},
 		methods: {
 			back() {
 				window.history.go(-1)
 			},
 			
+			long() {
+				console.log("长按事件")
+			},
+			longpress() {
+				this.isShow = true
+				this.$forceUpdate()
+			},
+			close() {
+				this.isShow = false
+				//this.$refs['tooltip'].close()
+			},
+			del() {
+				this.isShow = false
+				uni.showModal({
+					content: this.$t('common').is_delete,
+					cancelText: this.$t('common').no,
+					confirmText: this.$t('common').ok,
+					success: (res) =>{
+						if(res.confirm){
+							console.log('确定删除')
+						} else {
+							console.log('不删除')
+						}
+					}
+				})
+			},
+			configs() {
+				this.isShow = false
+				//this.$refs['tooltip'].close()
+			},
+
+
 			focus() {
 				console.log("确定关注、取关")
 			}
@@ -304,5 +376,52 @@
 		
 		position: absolute;
 		right: 50rpx;
+	}
+	
+	/* 长按功能 */
+	.content-mask {
+		display: flex;
+		flex-direction: column;
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		top: 0;
+	}
+	/deep/ .zb_tooltip__popper{
+		padding: 30rpx 0 0;
+		border-radius: 20rpx;
+	}
+	.content-nav{
+		display: flex;
+		align-items: center;
+		text-align: center;
+		padding: 0 26rpx 30rpx;
+	}
+	.features-list{
+		width: 30%;
+		margin: 0 20rpx;
+	}
+	.features-logo{
+		width: 30rpx;
+		height: 34rpx;
+	}
+	.features-name{
+		font-size: 26rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		color: #FFFFFF;
+		margin-top: 14rpx;
+		letter-spacing: 1rpx;
+	}
+	.choose-language{
+		font-size: 28rpx;
+		font-family: Inter-Medium;
+		font-weight: 500;
+		color: #FFFFFF;
+		text-align: center;
+		padding: 28rpx 0 26rpx;
+		border-top: 2rpx solid #666666;
+		letter-spacing: 2rpx;
 	}
 </style>

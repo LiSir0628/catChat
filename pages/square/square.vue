@@ -7,9 +7,9 @@
 					<view class="sort-chat" :class="{'sort-active': cindex == 0}" @click="switchA">
 						{{ $t('square.topic_tribe') }}
 					</view>
-					<view class="sort-friends" :class="{'sort-active': cindex == 1}" @click="switchB">
+					<!-- <view class="sort-friends" :class="{'sort-active': cindex == 1}" @click="switchB">
 						{{ $t('square.communication') }}
-					</view>
+					</view> -->
 				</view>
 				<view class="top-right" @click="goRelease">
 					<image class="tips-logo" src="../../static/images/square/icon01.png"></image>
@@ -107,7 +107,7 @@
 				</view> -->
 
 				<view class="square-list" v-for="item,index in topicLists" @click="goDetail(item)">
-					<image class="user-logo" :src="item.avatar"></image>
+					<image class="user-logo" :src="item.avatar" @click.stop="others(item)"></image>
 					<view class="user-notice">
 						<view class="user-msg">
 							<view class="user-msg-top">
@@ -583,6 +583,11 @@
 					url: 'squareDetails?article_id=' + (item.id || 3)
 				});
 			},
+			others(item) {
+				uni.navigateTo({
+					url: '/pages/user/userCard?user_id=' + item.uid
+				});
+			},
 			previewImage(list, item) {
 				uni.previewImage({
 					current: item,
@@ -1037,6 +1042,7 @@
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #6A6A6C;
+		z-index: 100;
 	}
 
 	.bottom-list {

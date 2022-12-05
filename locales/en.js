@@ -92,6 +92,77 @@ export const lang = {
 		"close": "Close",
 		"gold_coin": "Gold coin",
 	},
+	"matching": {
+		"matching": "Matching",
+		"choicest": "Choicest",
+		"voice_chat": "Voice Chat",
+		"go_chat": "Go to chat",
+		"remaining_times": "Remaining times today",
+		
+		"video_chat": "Video Chat",
+		"exchange": "Exchange times",
+		
+		"wave_hello": "Wave hello",
+		"heart": "Talk to someone who is in tune with your heart",
+		"start_greeting": "Start greeting",
+		
+		"real_matching": "Real-time matching",
+		"remaining_today": "Remaining today",
+		"start_matching": "Start matching",
+		
+		"rankings": "Rankings",
+		"charisma": "Charisma",
+		"magnificence": "Magnificence",
+		"vitality": "Vitality",
+		"value": "value",
+		
+		"view_more": "View more",
+		
+		"online": "Online",
+		"no_online": "It's not online",		
+	},
+	"members": {
+		"members_title": "Open membership",
+		"grade": "Grade",
+		
+		"shareholder_members": "Shareholder Members",
+		"expired_on": "Expired on",
+		"not_member": "You're not a member yet",
+		"open_member": "Open members and enjoy benefits",
+		
+		"growth": "growth value upgrade required",
+		"rapid_upgrade": "Rapid upgrade",
+		
+		"limited_time_offer": "Limited time offer",
+		"consent_agreement": "Agree to the VIP Member Service Agreement and VIP Member Subscription Service Agreement",
+		
+		"bag": "Monthly Gold coin bag",
+		"universal_in_kind": "Universal in kind",
+		"no_threshold": "No threshold",
+		
+		"vip": "VIP",
+		"membership_interests": "Membership Interests",
+		
+		"benefits_title01": "Free matching object",
+		"benefits01": "Monthly benefits",
+		"benefits_title02": "Excessive chat duration",
+		"benefits02": "Talk at any time",
+		"benefits_title03": "Renewal equity",
+		"benefits03": "Fast and convenient",
+		"benefits_title04": "Gold coin exchange",
+		"benefits04": "Value added benefits",
+		"benefits_title05": "Account guarantee",
+		"benefits05": "Safe and guaranteed",
+		"benefits_title06": "Flash refund",
+		"benefits06": "Fast and fast",
+		"benefits_title07": "Revenue acceleration",
+		"benefits07": "Earnings remain stable",
+		"benefits_title08": "Double exposure",
+		"benefits08": "Attract the opposite sex",
+		
+		
+		"subscribe_now": "Subscribe Now"
+	},
 	"browse": {
 		"browse": "browse",
 		"three_days_ago": "Three days ago",
@@ -225,6 +296,7 @@ export const lang = {
 		"birthday": "Edit birthday",
 		"date": "Enter date",
 		"complete": "Complete",
+		"determine": "Determine",
 	},
 	"inviter": {
 		"inviter": "Edit inviter",
@@ -364,6 +436,10 @@ export const lang = {
 	"chat": {
 		
 	},
+	"notice": {
+		"notice": "Notice",
+	},
+	
 
 	"square": {
 		"topic_tribe": "Topic Tribe",
@@ -464,5 +540,9 @@ export const lang = {
 		"kg": "kg",
 		"gender_tip": "Gender is not allowed to change",
 		"payment_method_tip": "Please select a payment method",
+		
+		"is_delete": "Are you sure you want to delete",
+		"ok": "OK",
+		"no": "NO",
 	}
 }

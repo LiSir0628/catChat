@@ -19,6 +19,11 @@
 			if(uni.getStorageSync('duomiList')){
 				this.$store.commit('editDuomi', uni.getStorageSync('duomiList'))
 			}
+			
+			if(uni.getStorageSync('chatCountryId')){
+				this.$store.commit('editChatCountry', uni.getStorageSync('chatCountryId'))
+			}
+			
 			if(uni.getStorageSync('language')){
 				this.$store.commit('editLanguage', uni.getStorageSync('language'))
 			}
@@ -69,6 +74,15 @@
 	}
 	/deep/ uni-toast{
 		z-index: 10001;
+	}
+	/deep/ .uni-modal__bd{
+		color: #1A1D26 !important;
+	}
+	/deep/ uni-modal .uni-modal__btn_default{
+		color: #F14E49 !important;
+	}
+	/deep/ uni-modal .uni-modal__btn_primary{
+		color: #F14E49 !important;
 	}
 	/*每个页面公共css */
 	@font-face {
