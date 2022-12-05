@@ -17,7 +17,7 @@
 		</uni-nav-bar>
 		<view class="content">
 			<view class="chat-time">Today:3:26PM</view>
-			<view class="friend-modular" @longpress="longpress">
+			<view class="friend-modular" @longpress="longpress(0)">
 				<image class="friend-photo" src="../../static/images/user/photo01.jpg"></image>
 				<view class="friend-msg">
 					<view class="friend-name">九亿少女的偶像ADHKA</view>
@@ -31,9 +31,57 @@
 				</view>
 				<image class="friend-photo myself-photo" src="../../static/images/user/photo01.jpg"></image>
 			</view>
+			
+			<view class="friend-modular">
+				<image class="friend-photo" src="../../static/images/user/photo01.jpg"></image>
+				<view class="friend-msg">
+					<view class="friend-name">九亿少女的偶像ADHKA</view>
+					<view class="friend-content action-content">
+						<!-- <image class="video-logo" src="../../static/images/chat/chat/icon07.png"></image> -->
+						<image class="audio-logo" src="../../static/images/chat/chat/icon04.png"></image>
+						<view>已取消</view>
+					</view>
+				</view>
+			</view>
+			<view class="friend-modular">
+				<image class="friend-photo" src="../../static/images/user/photo01.jpg"></image>
+				<view class="friend-msg">
+					<view class="friend-name">九亿少女的偶像ADHKA</view>
+					<view class="friend-content action-content">
+						<image class="video-logo" src="../../static/images/chat/chat/icon07.png"></image>
+						<!-- <image class="audio-logo" src="../../static/images/chat/chat/icon04.png"></image> -->
+						<view>已取消</view>
+					</view>
+				</view>
+			</view>
+			<view class="myself-modular">
+				<view class="friend-msg myself-msg">
+					<view class="friend-name myself-name">九亿少女的偶像ADHKA</view>
+					<view class="friend-content myself-content action-content">
+						<image class="video-logo" src="../../static/images/chat/chat/icon02.png"></image>
+						<view>已取消</view>
+					</view>
+				</view>
+				<image class="friend-photo myself-photo" src="../../static/images/user/photo01.jpg"></image>
+			</view>
+			<!-- 图片 -->
+			<!-- <view class="friend-modular">
+				<image class="friend-photo" src="../../static/images/user/photo01.jpg"></image>
+				<view class="friend-msg">
+					<view class="friend-name">九亿少女的偶像ADHKA</view>
+					<image class="msg-logo" mode="widthFix" src="../../static/images/chat/chat/ceshi01.jpg"></image>
+				</view>
+			</view>
+			<view class="myself-modular">
+				<view class="friend-msg myself-msg">
+					<view class="friend-name myself-name">九亿少女的偶像ADHKA</view>
+					<image class="msg-logo" mode="widthFix" src="../../static/images/chat/chat/ceshi02.jpg"></image>
+				</view>
+				<image class="friend-photo myself-photo" src="../../static/images/user/photo01.jpg"></image>
+			</view> -->
 		</view>
-		<view>
-			<view style="margin: 0 auto;text-align: center;">
+		<view class="press">
+			<!-- <view style="margin: 0 auto;text-align: center;"> -->
 				<zb-tooltip placement="bottom" ref="tooltip" color="#47494E" :visible.sync="isShow">
 					<view slot="content">
 						<view class="content-nav">
@@ -55,7 +103,7 @@
 						</view>
 					</view>
 				</zb-tooltip>
-			</view>
+			<!-- </view> -->
 		</view>
 		<view class="bottom">
 			<view class="send-list">
@@ -99,6 +147,12 @@
 			// 	}
 			// })
 		},
+		onPageScroll(res){
+			console.log(res.scrollTop);
+			
+			// 滑动时关闭长按事件弹窗
+			this.close()
+		},
 		methods: {
 			back() {
 				window.history.go(-1)
@@ -107,7 +161,8 @@
 			long() {
 				console.log("长按事件")
 			},
-			longpress() {
+			longpress(id) {
+				console.log(id)
 				this.isShow = true
 				this.$forceUpdate()
 			},
@@ -131,8 +186,7 @@
 				})
 			},
 			configs() {
-				this.isShow = false
-				//this.$refs['tooltip'].close()
+				this.close()
 			},
 
 
@@ -218,7 +272,7 @@
 		transform: rotate(90deg);
 	}
 	/deep/ .uni-navbar--border {
-		border-bottom-color: rgba(0,0,0,0);
+		border-bottom-color: white;
 	}
 	/* 主要内容 */
 	.content {
@@ -231,12 +285,12 @@
 		font-weight: 400;
 		color: #6A6A6C;
 		text-align: center;
-		margin: 24rpx 0 8rpx;
+		margin: 24rpx 0 14rpx;
 	}
 	
 	.friend-modular{
 		display: flex;
-		margin-top: 30rpx;
+		padding: 16rpx 0;
 	}
 	
 	.friend-photo{
@@ -260,6 +314,7 @@
 	}
 	
 	.friend-content{
+		width: fit-content;
 		font-size: 30rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
@@ -274,7 +329,7 @@
 	.myself-modular{
 		display: flex;
 		justify-content: flex-end;
-		margin-top: 30rpx;
+		padding: 16rpx 0;
 	}
 	.myself-msg{
 		margin-left: 0;
@@ -289,11 +344,34 @@
 		color: #FFFFFF;
 		
 		background: #1A1D26;
+		margin: 16rpx 0 0 auto;
 	}
 	.myself-photo{
 		margin-left: 30rpx;
 	}
 	
+	.msg-logo{
+		/* max-width: 300rpx;
+		max-height: 400rpx; */
+		width: 100%;
+		
+		margin-top: 10px;
+		border-radius: 20rpx;
+	}
+	.action-content{
+		display: flex;
+		align-items: center;
+	}
+	.video-logo{
+		width: 48rpx;
+		height: 32rpx;
+		margin-right: 14rpx;
+	}
+	.audio-logo{
+		width: 39rpx;
+		height: 39rpx;
+		margin-right: 14rpx;
+	}
 	/* 底部样式 */
 	.bottom{
 		width: 750rpx;
@@ -388,9 +466,22 @@
 		left: 0;
 		top: 0;
 	}
+	.press{
+		width: 690rpx;
+		margin: 0 auto;
+		text-align: center;
+	}
 	/deep/ .zb_tooltip__popper{
 		padding: 30rpx 0 0;
 		border-radius: 20rpx;
+	}
+	/deep/ .zb-tooltip{
+		/* background: red; */
+		/* display: grid; */
+	}
+	/deep/ .zb_tooltip_content{
+		display: flex;
+		justify-content: center;
 	}
 	.content-nav{
 		display: flex;

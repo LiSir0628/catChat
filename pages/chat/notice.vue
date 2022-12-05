@@ -7,16 +7,15 @@
 				<view class="user-list">
 					<view class="user-photo">
 						<image class="photo-logo" src="../../static/images/user/photo01.jpg"></image>
-						<view class="circle-green"></view>
-						<!-- <view class="circle-gray"></view> -->
+						<image class="love-logo" src="../../static/images/chat/notice/icon01.png"></image>
 					</view>
 					<view class="user-msg">
 						<view class="user-name">九亿少女的偶像ADHKA</view>
-						<view class="msg">Welcome to my birthday party</view>
+						<view class="msg">心动异性</view>
 					</view>
 					<view class="time-modular">
 						<view class="times">35</view>
-						<view class="time">3:26{{ $t('pair.pm') }}</view>
+						<view class="time">22/10/13</view>
 					</view>
 				</view>
 			</view>
@@ -24,16 +23,29 @@
 				<view class="user-list">
 					<view class="user-photo">
 						<image class="photo-logo" src="../../static/images/user/photo01.jpg"></image>
-						<view class="circle-green"></view>
-						<!-- <view class="circle-gray"></view> -->
 					</view>
 					<view class="user-msg">
 						<view class="user-name">九亿少女的偶像ADHKA</view>
-						<view class="msg">Welcome to my birthday party</view>
+						<view class="msg">等待关注</view>
 					</view>
 					<view class="time-modular">
-						<!-- <view class="times">35</view> -->
-						<view class="time">3:26{{ $t('pair.pm') }}</view>
+						<view class="state">obsolete</view>
+						<view class="time">22/10/13</view>
+					</view>
+				</view>
+			</view>
+			<view class="user-lists">
+				<view class="user-list">
+					<view class="user-photo">
+						<image class="photo-logo" src="../../static/images/chat/notice/icon02.png"></image>
+					</view>
+					<view class="user-msg">
+						<view class="user-name">官方客服小贝</view>
+						<view class="msg">您好，请输入您的问题...</view>
+					</view>
+					<view class="time-modular">
+						<view class="times">1</view>
+						<view class="time">22/10/13</view>
 					</view>
 				</view>
 			</view>
@@ -47,6 +59,9 @@
 			return {
 				
 			}
+		},
+		mounted() {
+			
 		},
 		methods: {
 			back() {
@@ -110,6 +125,14 @@
 		right: 0;
 		bottom: 0;
 	}
+	.love-logo{
+		width: 38rpx;
+		height: 38rpx;
+		border-radius: 50%;
+		position: absolute;
+		right: 0;
+		bottom: 0;
+	}
 	.circle-gray{
 		width: 20rpx;
 		height: 20rpx;
@@ -166,5 +189,11 @@
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #6A6A6C;
+	}
+	.state{
+		font-size: 28rpx;
+		font-family: Inter-Regular;
+		font-weight: 400;
+		color: #999999;
 	}
 </style>
