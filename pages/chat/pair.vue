@@ -79,6 +79,8 @@
 				
 				countryId: "",
 				
+				lists: [],
+				
 				kindex: 3,
 				bottomList: [{
 					id: 1,
@@ -131,8 +133,11 @@
 		components: {
 			selectCountry
 		},
+		created() {
+			this.getHttpList()
+		},
 		mounted() {
-
+		
 		},
 		onShow() {
 			//国家选择id
@@ -149,7 +154,44 @@
 			goCountry() {
 				this.$refs.selectCountry.open()
 			},
-						
+			
+			getHttpList() {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.$myRequest({
+						method: 'GET',
+						url: 'https://test.mini.zhishukongjian.com/api/chatlist',
+						data: {
+							id: 19
+						}
+					})
+					.then(res => {
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							this.lists = res.data.data
+							console.log(this.lists)
+						} else {
+							uni.showModal({
+								title: this.$t('common').Tip,
+								content: res.data.msg,
+								confirmText: this.$t('common').confirm,
+								showCancel: false,
+							})
+						}
+					})
+					.catch(err => {
+						uni.hideLoading();
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: this.$t('common').Network,
+							confirmText: this.$t('common').confirm,
+							//content: err,
+							showCancel: false,
+						})
+					})
+			},
 			goNotice() {
 				uni.navigateTo({
 					url: "./notice"

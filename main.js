@@ -16,6 +16,9 @@ Vue.prototype.$myRequest = myRequest
 import VueClipboard from 'vue-clipboard2'
 Vue.use(VueClipboard)
 
+// 消息切换
+import protoRoot from "@/src/proto/chat.js";
+Vue.prototype.$protoRoot = protoRoot
 
 // 语法切换
 import VueI18n from 'vue-i18n'

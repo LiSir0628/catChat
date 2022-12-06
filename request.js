@@ -1,10 +1,7 @@
 import md5 from "./md5.js";
 
-// let baseURL='https://fish.mini.zhishukongjian.com/';
-//let baseURL = 'https://user.mini.zhishukongjian.com/';
-// let baseURL='https://api.domefish.com/';
-// let baseURL = 'http://domefish.test.io/api'
-let baseURL = 'http://chat.mini.zhishukongjian.com/api'
+// let baseURL = 'http://chat.mini.zhishukongjian.com/api'
+let baseURL = 'https://fish.mini.zhishukongjian.com/api'
 
 function myRequest(options){
 	let arr = [];
