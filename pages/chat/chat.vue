@@ -108,7 +108,7 @@
 		<view class="bottom">
 			<view class="send-list">
 				<image class="logo01" src="../../static/images/chat/chat/icon11.png"></image>
-				<input class="send" v-model="send_text" placeholder="your message">
+				<input class="send" v-model="send_text" placeholder="your message" @confirm="send">
 				<!-- <textarea class="send" v-model="send_text" placeholder="your message"></textarea> -->
 				<image class="logo02" src="../../static/images/chat/chat/icon09.png"></image>
 				<image class="logo03" src="../../static/images/chat/chat/icon01.png"></image>
@@ -117,7 +117,7 @@
 					<image class="logo05" src="../../static/images/chat/chat/icon12.png"></image>
 				</template>
 				<template v-if="send_text">
-					<view class="send-btn">Send</view>
+					<view class="send-btn" @click="send">Send</view>
 				</template>
 			</view>
 		</view>
@@ -128,28 +128,46 @@
 	export default {
 		data() {
 			return {
+				lists: [],
 				send_text: "",
 				
 				isShow: false,
+				
+				roomId: 0,
+				userId: 0,
+				
+				setTime: null,
 			}
 		},
+		onLoad(option) {
+			if (option.roomId) this.roomId = option.roomId
+			if (option.userId) this.userId = option.userId
+		},
 		created() {
-			// uni.showModal({
-			// 	content: this.$t('common').is_delete,
-			// 	cancelText: this.$t('common').no,
-			// 	confirmText: this.$t('common').ok,
-			// 	success: (res) =>{
-			// 		if(res.confirm){
-			// 			console.log('confirm')
-			// 		} else {
-			// 			console.log('cancel')
-			// 		}
-			// 	}
-			// })
+			if(uni.getStorageSync('isWebsocketLogin') != 1){
+				//websocket关闭 不允许发送消息
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				//计时器判断是否开启,开启后关闭遮罩
+				this.setTime = setInterval(()=>{
+					if(uni.getStorageSync('isWebsocketLogin') == 1){
+						// uni.hideLoading()
+						this.getHttpLists()
+						clearInterval(this.setTime)
+					}
+				}, 300);
+			} else {
+				uni.showLoading({
+					title: this.$t('common').loading + '...',
+					mask: true
+				});
+				this.getHttpLists()
+			}
 		},
 		onPageScroll(res){
-			console.log(res.scrollTop);
-			
+			// console.log(res.scrollTop);
 			// 滑动时关闭长按事件弹窗
 			this.close()
 		},
@@ -158,6 +176,50 @@
 				window.history.go(-1)
 			},
 			
+			getHttpLists() {
+				this.$myRequest({
+					method: 'GET',
+					url: 'https://test.mini.zhishukongjian.com/api/readmsg',
+					data: {
+						id: this.$store.state.duomiList.id,
+						uid: this.userId
+					}
+				})
+				.then(res => {
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.lists = res.data.data
+						for(let i in this.lists){		
+							var now = new Date(this.lists[i].last_time*1000),
+							y = now.getFullYear(),
+							m = now.getMonth() + 1,
+							d = now.getDate(),
+							x = y + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d) + " " + now.toTimeString().substr(0, 5);
+							//x = y + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d) + " " + now.toTimeString().substr(0, 8); // 2018-05-18 00:00:00
+							this.lists[i].last_time = x
+							this.$forceUpdate()
+						}
+						console.log(this.lists)
+					} else {
+						uni.showModal({
+							title: this.$t('common').Tip,
+							content: res.data.msg,
+							confirmText: this.$t('common').confirm,
+							showCancel: false,
+						})
+					}
+				})
+				.catch(err => {
+					uni.hideLoading();
+					uni.showModal({
+						title: this.$t('common').Tip,
+						content: this.$t('common').Network,
+						confirmText: this.$t('common').confirm,
+						//content: err,
+						showCancel: false,
+					})
+				})
+			},
 			long() {
 				console.log("长按事件")
 			},
@@ -189,10 +251,60 @@
 				this.close()
 			},
 
-
+			
 			focus() {
 				console.log("确定关注、取关")
-			}
+			},
+			
+			send() {
+				if(!this.send_text) return
+				
+				if(uni.getStorageSync('isWebsocketLogin') != 1){
+					//websocket关闭 不允许发送消息
+					uni.showLoading({
+						title: this.$t('common').loading + '...',
+						mask: true
+					});
+					//计时器判断是否开启,开启后关闭遮罩
+					this.setTime = setInterval(()=>{
+						if(uni.getStorageSync('isWebsocketLogin') == 1){
+							// uni.hideLoading()
+							this.send()
+							clearInterval(this.setTime)
+						}
+					}, 300);	
+					return
+				}
+				
+				let testobj = this.$protoRoot.lookup("Chat").create({
+					Id: "1",
+					From: this.$store.state.duomiList.id,
+					To: this.userId, //群聊发0
+					Room: this.roomId,
+					Data: {
+						Data: this.send_text,
+						Type: "1",
+						Size: "1"
+					}
+				});
+				let testObjBuffer = this.$protoRoot.lookup("Chat").encode(testobj).finish(); //encode数据
+				//console.log("编译:", testObjBuffer);
+				let testdata = this.$protoRoot.lookup("Chat").decode(testObjBuffer); //decode数据
+				//console.log("反编译:", testdata);
+				this.$store.state.socketTask.send(testObjBuffer);
+				
+				uni.hideLoading()
+				this.send_text = ""
+			},
+			
+			onUnload() {
+				//页面销毁、清除定时器
+				clearInterval(this.setTime);
+			},
+			onBeforeUnload() {
+				//页面销毁、清除定时器
+				clearInterval(this.setTime);
+			},
 		}
 	}
 </script>

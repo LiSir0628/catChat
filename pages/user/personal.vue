@@ -42,6 +42,15 @@
 				</view>
 				
 				<view class="label-list">
+					<view class="label-title">{{ $t('personal.signature') }}</view>
+					<view class="label-right" @click="goSignature">
+						<view class="label-value" v-if="userList.signature">{{userList.signature}}</view>
+						<view class="label-value gray" v-else>{{ $t('personal.input_none') }}</view>
+						<image class="arrow" src="../../static/images/order/icon06.png"></image>
+					</view>
+				</view>
+				
+				<view class="label-list">
 					<view class="label-title">{{ $t('personal.location') }}</view>
 					<view class="label-right">
 						<view class="label-value" v-if="userList.location">{{userList.location}}</view>
@@ -51,7 +60,7 @@
 				</view>
 				
 				<view class="label-list">
-					<view class="label-title">{{ $t('personal.height') }}</view>
+					<view class="label-title">{{ $t('personal.height') }}({{ $t('common.cm') }}/{{ $t('common.kg') }})</view>
 					<view class="label-right" @click="goHeight">
 						<view class="label-value" v-if="userList.height">{{userList.height}}</view>
 						<view class="label-value gray" v-else>{{ $t('personal.input_none') }}</view>
@@ -224,6 +233,7 @@
 					avatar: "",
 					nickname: "",
 					gender: "",
+					signature: "",
 					location: "",
 					height: "",
 					birthday: "",
@@ -292,11 +302,12 @@
 			if(this.userList.sex) this.userList.gender = this.userList.sex
 			
 			if(this.userList.heigh && this.userList.weight){
-				this.userList.height = this.userList.heigh + this.$t('common').cm + "/" + this.userList.weight + this.$t('common').kg
+				this.userList.height = this.userList.heigh + "/" + this.userList.weight
+				//this.userList.height = this.userList.heigh + this.$t('common').cm + "/" + this.userList.weight + this.$t('common').kg
 			} else if(this.userList.heigh) {
-				this.userList.height = this.userList.heigh + this.$t('common').cm
+				this.userList.height = this.userList.heigh
 			} else if(this.userList.weight){
-				this.userList.height = this.userList.weight + this.$t('common').kg
+				this.userList.height = this.userList.weight
 			}
 			
 			if(this.userList.job) this.userList.occupation = this.userList.job
@@ -456,6 +467,11 @@
 						showCancel: false,
 					})
 				})
+			},
+			goSignature() {
+				uni.navigateTo({
+					url: '/pages/edit/edit?style=3'
+				});
 			},
 			setEmotion(val,name) {
 				uni.showLoading({

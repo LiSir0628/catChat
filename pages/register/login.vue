@@ -43,6 +43,13 @@
 				area: "美国"
 			}
 		},
+		created() {
+			if(uni.getStorageSync('isWebsocketLogin') == 1 && !uni.getStorageSync('token')){
+				// Websocket已打开，token失效
+				uni.setStorageSync('isWebsocketLogin', "0")
+				this.$store.state.socketTask.close();
+			}
+		},
 		methods: {
 			switchChange(){
 				this.is_default = !this.is_default
@@ -134,6 +141,14 @@
 						console.log(res.data.data)
 						this.$store.commit('editDuomi', res.data.data)
 						uni.setStorageSync('duomiList', res.data.data);
+						
+						if(uni.getStorageSync('isWebsocketLogin') == 1){
+							// 已经链接过了，关闭在链接
+							uni.setStorageSync('isWebsocketLogin', "0")
+							this.$store.state.socketTask.close();
+						}
+						this.$store.commit('WEBSOCKET_INIT', "wss://test.mini.zhishukongjian.com/conn")
+						
 						//登录成功 跳转数据页。
 						uni.navigateTo({
 							url: '/pages/pair/pair'

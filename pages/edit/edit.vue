@@ -45,6 +45,8 @@
 				this.title = this.$t('edit').height_and_weight
 				if(option.height) this.value = option.height
 				if(option.weight) this.value02 = option.weight
+			} else if(option.style == 3){
+				this.title = this.$t('edit').signature
 			}
 			
 		},
@@ -65,7 +67,7 @@
 						if(this.value) obj.heigh = this.value
 						if(this.value02) obj.weight = this.value02
 					}
-					
+					if(this.style == 3) obj.signature = this.value
 					uni.showLoading({
 						title: this.$t('common').loading + '...',
 						mask: true
@@ -85,6 +87,9 @@
 							if(this.style == 2) {
 								if(this.value) this.$store.commit('editHeight', this.value)
 								if(this.value02) this.$store.commit('editWeight', this.value02)
+							}
+							if(this.style == 3) {
+								this.$store.commit('editSignature', this.value)
 							}
 							uni.setStorageSync('duomiList', this.$store.state.duomiList)
 							this.back()

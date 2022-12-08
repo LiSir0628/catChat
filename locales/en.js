@@ -317,6 +317,7 @@ export const lang = {
 		"height_and_weight": "Height and Weight",
 		"height": "Height",
 		"weight": "Weight",
+		"signature": "Signature",
 		
 	},
 	"constellation": {

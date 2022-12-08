@@ -209,7 +209,6 @@
 						for(let i in res.tempFilePaths){
 							pathToBase64(res.tempFilePaths[i])
 							.then(path => {
-								console.log(path)
 								_this.fileLists.push(path)
 								//上方为赋值，下方为上传
 								if(i >= (imgLength -1)){

@@ -2,6 +2,8 @@
 	// import protoRoot from "@/src/proto/chat.js";
 	export default {
 		onLaunch: function() {
+			uni.setStorageSync('isWebsocketLogin', "0") //刷新或者刚刚进入 websocket都未连接。
+			
 			// 后端获取多国语言
 			// this.$myRequest({
 			// 	method: 'get',
@@ -15,47 +17,15 @@
 			// 	this.$i18n.mergeLocaleMessage('en', res.data)
 			// 	this.$forceUpdate()
 			// })
+			
 			console.log(this.$i18n)
-
+			
+			if (uni.getStorageSync('token')) {
+				this.$store.commit('WEBSOCKET_INIT', "wss://test.mini.zhishukongjian.com/conn")
+			}
+			
 			if (uni.getStorageSync('duomiList')) {
 				this.$store.commit('editDuomi', uni.getStorageSync('duomiList'))
-
-				// let testobj = this.$protoRoot.lookup("Chat").create({
-				// 	Id: "1",
-				// 	From: "19",
-				// 	To: "18",
-				// 	Room: "0",
-				// 	Data: {
-				// 		Data: "1",
-				// 		Type: "2",
-				// 		Size: "3"
-				// 	}
-				// });
-				// let testObjBuffer = this.$protoRoot.lookup("Chat").encode(testobj).finish(); //encode数据
-				// console.log("testObjBuffer:", testObjBuffer);
-				// let testdata = this.$protoRoot.lookup("Chat").decode(testObjBuffer); //decode数据
-				// console.log("testdata：", testdata);
-				
-				this.initScokets()
-				
-				// uni.connectSocket({
-				// 	url: 'wss://test.mini.zhishukongjian.com/conn?token=' + (uni.getStorageSync('token')) + "&platform=" + 3
-				// });
-				// uni.onSocketOpen(function(res) {
-				// 	console.log('WebSocket连接已打开！');
-				// 	// setTimeout(()=>{
-				// 	// 	 console.log("111111111111111111")
-				// 	// 	 uni.sendSocketMessage({
-				// 	// 	       data: testObjBuffer
-				// 	// 	 });
-				// 	//  },1000)
-				// });
-				// uni.onSocketError(function(res) {
-				// 	console.log('WebSocket连接打开失败，请检查！');
-				// });
-				// uni.onSocketMessage(function(res) {
-				// 	console.log(res);
-				// });
 			}
 
 			if (uni.getStorageSync('chatCountryId')) {
@@ -84,112 +54,7 @@
 			//console.log('App Hide')
 		},
 		methods: {
-			//具体流程
-			// 判断是否已连接
-			initScokets() {
-				let that = this;
-				uni.connectSocket({
-					url: 'wss://test.mini.zhishukongjian.com/conn?token=' + (uni.getStorageSync('token')) + "&platform=" + 3,
-					success(res) {
-						console.log("正在连接WebSocket.... connectSocket=", res);
-						that.open(); //1、判断是否打开连接
-						that.scoketMessage(); //2、判断websocket服务器是否返回信息
-						that.TimeOut(); //3、websocket超时操作
-					},
-					fail(err) {
-						console.log("WebSocket连接失败 connectSocket=", err);
-						that.error();
-					},
-				});
-			},
-			//连接成功
-			open() {
-			 let that = this;
-				uni.onSocketOpen((res) => {
-					console.log("WebSocket连接成功....");
-					that.reset(); //连接成功之后做两秒的一次连接(心跳机制)
-				});
-			},
-			//服务器返回信息
-			scoketMessage() {
-				let that = this;
-				uni.onSocketMessage(function(res) { //获取服务器返回内容，并获取当前时间戳以作服务器超时判断
-					console.log("收到服务器内容：" + res.data);
-					that.serveTime = new Date().getTime(); //以下可以写服务器返回之后具体操作
-
-				});
-			},
-			//超时响应
-			TimeOut() {
-				let that = this;
-				setInterval(function() {
-					let times = new Date().getTime();
-					if (times - that.serveTime > 30000) {
-						//以下做超时后的操作
-						console.log("超时了？")
-					}
-				}, 500);
-			},
-			// 连接失败
-			error() {
-				let that = this;
-				uni.onSocketError(function(res) {
-					console.log("WebSocket连接打开失败，请检查！");
-					that.initScokets(); //连接失败之后，重新向服务器发起连接
-				});
-			},
-			// 心跳响应
-			reset() {
-				console.log(111)
-				return
-				let that = this;
-				clearInterval(that.timeoutObj);
-				that.timeoutObj = setInterval(function() {
-					uni.sendSocketMessage({
-						//data: `{"event":"pushStatus","tpid":"${that.transferValue.tipId}"}`, //data值根据实际需求赋值
-						data: "ping",
-						success: (res) => {
-							console.log("正在发送....");
-							console.log(res)
-						},
-						fail: (err) => {
-							console.log("发送失败,重新连接....");
-							that.initScokets();
-						},
-					});
-					//做一个判断：在没有获取某个值或者其他需求下，做个无响应的websocket连接。否则就做一个有响应的连接
-						// if () {
-						// 	that.startSend()
-						// } else {
-						// 	uni.sendSocketMessage({
-						// 		//data: `{"event":"pushStatus","tpid":"${that.transferValue.tipId}"}`, //data值根据实际需求赋值
-						// 		data: "ping",
-						// 		success: (res) => {
-						// 			console.log("正在发送....");
-						// 			console.log(res)
-						// 		},
-						// 		fail: (err) => {
-						// 			console.log("发送失败,重新连接....");
-						// 			that.initScokets();
-						// 		},
-						// 	});
-						// }
-						//（这里做的是其他状态的判断）if (  ) {  that.startSend()  }
-
-				}, 30000);
-			},
-			//发送信息
-			startSend() {
-				uni.sendSocketMessage({
-					data: "{}", //data值根据实际需求赋值
-					success: (res) => {
-						console.log("WebSocket连接中....");
-					},
-					fail: (err) => {
-						console.log("发送失败，重新连接....");
-					},
-				});
-			},
+			
 		}
 	}
 </script>

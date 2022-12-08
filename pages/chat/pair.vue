@@ -6,7 +6,7 @@
 				<view class="top-left">
 					<view class="search-modular">
 						<image class="search-logo" src="../../static/images/chat/icon03.png"></image>
-						<input class="search-input" :placeholder="$t('pair.search_placeholder')"/>
+						<input class="search-input" :placeholder="$t('pair.search_placeholder')" />
 					</view>
 					<!-- <view class="sort-friends" :class="{'sort-chat-active': cindex == 0}" @click="goSwitch(0)">{{ $t('pair.chat') }}</view>
 					<view class="sort-friends" :class="{'sort-chat-active': cindex == 1}" @click="goSwitch(1)">{{ $t('pair.friends') }}</view> -->
@@ -22,12 +22,46 @@
 			</view> -->
 		</view>
 		<view class="content">
-			<view class="user-lists" :class="{'user-list-gary': isSticky}" @click="goChat">
+			<!-- 暂无是否置顶 -->
+			<!-- <view class="user-lists" :class="{'user-list-gary': isSticky}"> -->
+			<view class="user-lists">
+				<!-- <view class="user-list" v-for="item,index in lists" @click="goChat(item)">
+					<view class="user-photo">
+						<image class="photo-logo" :src="item.avatar"></image>
+						<view v-if="item.online == 1" class="circle-green"></view>
+						<view v-else class="circle-gray"></view>
+					</view>
+					<view class="user-msg">
+						<view class="user-name">{{item.name}}</view>
+						<view class="msg">{{item.last_msg}}</view>
+					</view>
+					<view class="time-modular">
+						<view class="times" v-if="item.no_read > 0">{{item.no_read}}</view>
+						<view class="time">{{item.last_time}}{{ $t('pair.pm') }}</view>
+					</view>
+				</view> -->
+				<view class="user-list" v-for="item,index in ownLists" @click="goChat(item)">
+					<view class="user-photo">
+						<image class="photo-logo" :src="item.avatar"></image>
+						<view v-if="item.online == 1" class="circle-green"></view>
+						<view v-else class="circle-gray"></view>
+					</view>
+					<view class="user-msg">
+						<view class="user-name">{{item.name}}</view>
+						<view class="msg">{{item.last_msg}}</view>
+					</view>
+					<view class="time-modular">
+						<view class="times" v-if="item.no_read > 0">{{item.no_read}}</view>
+						<view class="time">{{item.last_time}}{{ $t('pair.pm') }}</view>
+					</view>
+				</view>
+			</view>
+			<!-- <view class="user-lists" :class="{'user-list-gary': !isSticky}">
 				<view class="user-list">
 					<view class="user-photo">
 						<image class="photo-logo" src="../../static/images/user/photo01.jpg"></image>
 						<view class="circle-green"></view>
-						<!-- <view class="circle-gray"></view> -->
+						<view class="circle-gray"></view>
 					</view>
 					<view class="user-msg">
 						<view class="user-name">九亿少女的偶像ADHKA</view>
@@ -38,33 +72,16 @@
 						<view class="time">3:26{{ $t('pair.pm') }}</view>
 					</view>
 				</view>
-			</view>
-			<view class="user-lists" :class="{'user-list-gary': !isSticky}">
-				<view class="user-list">
-					<view class="user-photo">
-						<image class="photo-logo" src="../../static/images/user/photo01.jpg"></image>
-						<view class="circle-green"></view>
-						<!-- <view class="circle-gray"></view> -->
-					</view>
-					<view class="user-msg">
-						<view class="user-name">九亿少女的偶像ADHKA</view>
-						<view class="msg">Welcome to my birthday party</view>
-					</view>
-					<view class="time-modular">
-						<!-- <view class="times">35</view> -->
-						<view class="time">3:26{{ $t('pair.pm') }}</view>
-					</view>
-				</view>
-			</view>
+			</view> -->
 		</view>
-		
+
 		<view class="bottom">
 			<view class="bottom-list" v-for="item,index in bottomList" @click="goIndex(index)">
 				<image class="bottom-logo" :style="item.styleClass" :src="item.image"></image>
 				<view :class="{'bottom-nav-active': kindex == index}">{{item.name}}</view>
 			</view>
 		</view>
-		
+
 		<select-country ref="selectCountry" :countryId="countryId" @countryValue="countryValue"></select-country>
 	</view>
 </template>
@@ -76,11 +93,33 @@
 			return {
 				cindex: 0,
 				isSticky: true,
-				
+
 				countryId: "",
 				
 				lists: [],
-				
+				ownLists: [],
+				// ownLists: [{
+				// 		"room_id": 0,
+				// 		"user": 1,
+				// 		"name": "叶哥1号",
+				// 		"online": 1,
+				// 		"avatar": "../../static/images/user/photo01.jpg",
+				// 		"no_read": 2,
+				// 		"last_time": "3:26",
+				// 		"last_msg": "测试第一句",
+				// 	},
+				// 	{
+				// 		"room_id": 0,
+				// 		"user": 19,
+				// 		"name": "李19号",
+				// 		"online": 0,
+				// 		"avatar": "../../static/images/user/photo01.jpg",
+				// 		"no_read": 0,
+				// 		"last_time": "5:26",
+				// 		"last_msg": "测试第二句",
+				// 	}
+				// ],
+
 				kindex: 3,
 				bottomList: [{
 					id: 1,
@@ -137,7 +176,7 @@
 			this.getHttpList()
 		},
 		mounted() {
-		
+
 		},
 		onShow() {
 			//国家选择id
@@ -154,8 +193,18 @@
 			goCountry() {
 				this.$refs.selectCountry.open()
 			},
-			
+
 			getHttpList() {
+				//有逻辑 有逻辑要处理！！！
+				if(uni.getStorageSync('isWebsocketLogin') == 1){
+					// 连接成功，不阻止操作
+				} else if(uni.getStorageSync('ownLists') && uni.getStorageSync('ownLists').length > 0){
+					this.ownLists = uni.getStorageSync('ownLists')
+					return
+				} else {
+					// 无缓存，无数据
+					return
+				}
 				uni.showLoading({
 					title: this.$t('common').loading + '...',
 					mask: true
@@ -164,14 +213,28 @@
 						method: 'GET',
 						url: 'https://test.mini.zhishukongjian.com/api/chatlist',
 						data: {
-							id: 19
+							id: this.$store.state.duomiList.id
 						}
 					})
 					.then(res => {
 						uni.hideLoading();
 						if (res.data.code == 200) {
 							this.lists = res.data.data
+							for(let i in this.lists){		
+								var now = new Date(this.lists[i].last_time*1000),
+								y = now.getFullYear(),
+								m = now.getMonth() + 1,
+								d = now.getDate(),
+								x = now.toTimeString().substr(0, 5);
+								// x = y + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d) + " " + now.toTimeString().substr(0, 8); // 2018-05-18 00:00:00
+								this.lists[i].last_time = x
+								if(!this.lists[i].chatLists) this.lists[i].chatLists = []
+							}
+							this.ownLists = this.lists
+							uni.setStorageSync('ownLists', this.lists);
 							console.log(this.lists)
+							
+							this.$forceUpdate()
 						} else {
 							uni.showModal({
 								title: this.$t('common').Tip,
@@ -197,13 +260,13 @@
 					url: "./notice"
 				});
 			},
-			goChat() {
+			goChat(item) {
 				uni.navigateTo({
-					url: "./chat"
+					url: "./chat?roomId=" + item.room_id + "&userId=" + item.user
 				});
 			},
 			goSwitch(index) {
-				if(this.cindex == index) return
+				if (this.cindex == index) return
 				this.cindex = index
 			},
 			goIndex(index) {
@@ -222,11 +285,11 @@
 	.container {
 		padding-bottom: 120rpx;
 	}
-	/* 顶部数据 */
-	.top{
 
-	}
-	.banner{
+	/* 顶部数据 */
+	.top {}
+
+	.banner {
 		width: 750rpx;
 		height: 323rpx;
 		display: block;
@@ -234,47 +297,54 @@
 		top: 0;
 		left: 0;
 	}
-	.sort-modular{
+
+	.sort-modular {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		padding: 20rpx 30rpx;
 	}
-	.top-left{
+
+	.top-left {
 		display: flex;
 		align-items: center;
-		
+
 	}
-	.sort-friends{
+
+	.sort-friends {
 		font-size: 28rpx;
 		font-family: Inter-Medium;
 		font-weight: 500;
 		color: #999999;
 		margin-right: 36rpx;
 	}
-	.sort-chat-active{
+
+	.sort-chat-active {
 		font-size: 36rpx;
 		font-family: Inter-Bold;
 		font-weight: bold;
 		color: #1A1D26;
 	}
-	.top-right{
+
+	.top-right {
 		display: flex;
 		align-items: center;
-		
+
 	}
-	.tips-logo{
+
+	.tips-logo {
 		width: 56rpx;
 		height: 56rpx;
 		margin-left: 20rpx;
 	}
-	
+
 	/* 搜索框 */
-	.search-modular{
+	.search-modular {
 		margin: 0 auto 0;
 		position: relative;
 	}
-	.search-logo{
+
+	.search-logo {
 		width: 32rpx;
 		height: 32rpx;
 		position: absolute;
@@ -284,7 +354,8 @@
 		margin: auto;
 		vertical-align: middle;
 	}
-	.search-input{
+
+	.search-input {
 		width: 496rpx;
 		height: 88rpx;
 		box-sizing: border-box;
@@ -292,40 +363,48 @@
 		border-radius: 60rpx;
 		margin: 0 auto;
 		padding: 0 80rpx;
-		
+
 		font-size: 28rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		/* color: #999999; */
 	}
-	
+
 	/* 主要内容 */
-	.content{
+	.content {
 		margin: 30rpx auto;
 	}
-	.user-list{
+
+	.user-list {
 		width: 690rpx;
 		margin: 0 auto;
 		display: flex;
 		/* align-items: center; */
 		justify-content: space-between;
 		padding: 30rpx 0;
-		border-bottom: 2rpx solid rgba(217,217,217,0.4);
+		border-bottom: 2rpx solid rgba(217, 217, 217, 0.4);
 	}
-	.user-list-gary{
-		background: rgba(217,217,217,0.2);
+
+	.user-list-gary {
+		background: rgba(217, 217, 217, 0.2);
 	}
-	.user-lists:nth-last-child(1) .user-list{
+
+	.user-lists:nth-last-child(1) .user-list {
 		border-bottom: none;
 	}
-	.user-photo{
+
+	.user-photo {
 		position: relative;
-	}	.photo-logo{
+	}
+
+	.photo-logo {
 		width: 120rpx;
 		height: 120rpx;
 		display: block;
 		border-radius: 50%;
-	}	.circle-green{
+	}
+
+	.circle-green {
 		width: 20rpx;
 		height: 20rpx;
 		background: #01E25B;
@@ -335,7 +414,8 @@
 		right: 0;
 		bottom: 0;
 	}
-	.circle-gray{
+
+	.circle-gray {
 		width: 20rpx;
 		height: 20rpx;
 		background: #E9E9EA;
@@ -344,36 +424,60 @@
 		position: absolute;
 		right: 0;
 		bottom: 0;
-	}	.user-msg{
+	}
+
+	.user-msg {
 		width: 404rpx;
 		margin-left: 30rpx;
 		padding: 15rpx 0 0;
-	}	.user-name{
+		
+	}
+
+	.user-name {
+		width: 404rpx;
 		font-size: 30rpx;
 		font-family: Inter-Medium;
 		font-weight: 500;
 		color: #1A1D26;
-	}	.msg{
+		
+		overflow: hidden;
+		white-space: nowrap;
+		word-wrap: normal;
+		text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
+		
+	}
+
+	.msg {
+		width: 404rpx;
 		font-size: 28rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #6A6A6C;
 		margin-top: 20rpx;
+		
+		overflow: hidden;
+		white-space: nowrap;
+		word-wrap: normal;
+		text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
 	}
-	.time-modular{
+
+	.time-modular {
 		width: 136rpx;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: flex-end;
 		padding: 20rpx 0 0;
 	}
-	.times{
+
+	.times {
 		width: 44rpx;
 		height: 44rpx;
 		line-height: 44rpx;
 		text-align: center;
 		background: #F14E49;
-		
+
 		font-size: 26rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
@@ -382,13 +486,15 @@
 		margin-right: 6rpx;
 		margin-bottom: 2rpx;
 		margin-top: -6rpx;
-	}	.time{
+	}
+
+	.time {
 		font-size: 24rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #6A6A6C;
 	}
-	
+
 	/* 底部 */
 	.bottom {
 		width: 750rpx;
@@ -401,27 +507,27 @@
 		bottom: 0;
 		background: #FFFFFF;
 		border-top: 2rpx solid rgba(155, 155, 155, 0.1);
-	
+
 		font-size: 22rpx;
 		font-family: Inter-Regular;
 		font-weight: 400;
 		color: #6A6A6C;
 		z-index: 100;
 	}
-	
+
 	.bottom-list {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: space-between;
 	}
-	
+
 	.bottom-logo {
 		width: 50rpx;
 		height: 40rpx;
 		display: block;
 	}
-	
+
 	.bottom-nav-active {
 		color: #1A1D26;
 	}
