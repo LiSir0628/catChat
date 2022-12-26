@@ -1,7 +1,10 @@
 import md5 from "./md5.js";
 
 // let baseURL = 'http://chat.mini.zhishukongjian.com/api'
-let baseURL = 'https://fish.mini.zhishukongjian.com/api'
+// let baseURL = 'https://fish.mini.zhishukongjian.com/api'
+
+// 最新域名
+let baseURL = 'https://course.mini.zhishukongjian.com/api'
 
 function myRequest(options){
 	let arr = [];
